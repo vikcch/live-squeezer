@@ -1,0 +1,44 @@
+/* cards-input */
+.cards-abbr {
+    /*     font-family: "Lucida Console", Monaco, monospace;
+        font-size: 9pt; */
+        padding: 2px;
+        letter-spacing: 1px;    
+        color: #ccc;
+    }
+    
+    div.card-small-ps {
+        width: 16px;
+        height: 20px;
+    
+        /* important porque o child tem relative em viewport (popup.css) e precisa no popup */
+    
+        position: absolute !important; 
+    
+        top: 2px;
+    }
+    
+    div.first-card {
+        left: 3px;
+    }
+    
+    div.second-card {
+        left: 28px;
+    }
+    
+    div.third-card {
+        left: 53px;
+    }
+    
+    div.wrapper-cards {
+        position: relative;
+    }
+    div.viewport {
+        overflow: hidden;
+        position: relative; 
+    }
+    
+    img.clipped {
+        display: block;
+        position: absolute;
+    }

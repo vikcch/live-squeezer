@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+    box-sizing: border-box;
+    /* user-select: none; */
+}
+
+input, select {
+	font-family: "Lucida Console", Monaco, monospace;	
+	font-size: 12px;
+	width: 100%;
+	min-width: 0;
+	height: 23px;
+}
+
+mark {
+    padding: 0px 4px;
+    color: #6a737c;
+    background-color: #d6d9dc;
+    border-radius: 4px;
+}
+
+.text-info {
+	color: #468ccf;
+}
+
+.small-text {
+	font-size: 14px;
+}
+.very-small-text {
+	font-size: 10px;
+}
+
+.fa-info-circle{
+    cursor: pointer;
+}
+
+.train {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.ladder {
+	display: flex;
+	flex-direction: column;
+
+	height: 100%;
+}
+
+.bullseye {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.divorced {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.married {
+    display: flex;
+    align-items: center;    
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tm-s {
+    margin-top: 4px;
+}
+
+.tm-m {
+    margin-top: 8px;
+}
+
+.tm-l {
+    margin-top: 16px;
+}
+
+.rm-s {
+	margin-right: 4px;
+}
+
+.rm-m {
+	margin-right: 8px;
+}
+
+.bm-l {
+	margin-bottom: 16px;
+}
+
+.bm-m {
+	margin-bottom: 8px;
+}
+
+.bm-s {
+	margin-bottom: 4px;
+}
+
+.bm-xs {
+	margin-bottom: 2px;
+}
+
+.lm-s {
+	margin-left: 4px;
+}
+
+.lm-m {
+	margin-left: 8px;
+}
+
+.lm-l {
+	margin-left: 16px;
+}
+
+.hide-overflow {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.no-scroll {
+    position: fixed;  
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.hh-popup {
+	border: 1px #d6d9dc solid;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 12px;
+	padding: 2px;
+	text-align: left;
+	margin-top: 24px;
+	white-space: pre-wrap;
+	line-height: 1.25;
+}
+
+.input--large {
+	width: 100px;
+}
+
+.swal2-popup {
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}

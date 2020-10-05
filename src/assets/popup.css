@@ -1,0 +1,108 @@
+.popup-content {
+    /* width: 312px;   */  /* 308 + 4 */
+    margin: 0 auto;  
+    display: inline-block;
+}
+
+.popup-content > :first-child{
+    margin-bottom: 12px; 
+}
+
+.cards-wrapper {
+    width: 312px;    /* 308 + 4 */
+/*     margin: 0 auto; */
+
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 20px;
+    height: 27px;
+
+    z-index: 1;
+    margin: 0 4px 4px 0;
+}
+
+.card--hoverable:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+.card--disabled {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.card--picked-field {
+    background-color: rgba(255, 0, 0, .3);
+}
+
+.card--picked-field:hover {
+    background-color: rgba(0, 0, 255, .3);
+}
+
+.card--picked {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card--hoverable:active {
+    background-color: rgba(0, 0, 255, .5);
+}
+
+
+
+.card-place-holder{
+    background-color: rgba(0, 0, 0, .1);
+    border: 1px rgba(0, 0, 0, .3) solid; 
+    border-radius: 3px;
+}
+
+
+#cards-popup {
+    /* position: relative; */
+    /* background-color: rgba(0, 255, 0, 0.4); */
+    width: 308px;
+    height: 120px;
+
+}
+
+/* Tambem usado na input holecards e street (viewport e clipped) */
+div.viewport {
+    overflow: hidden;
+    position: relative; 
+}
+
+img.clipped {
+    display: block;
+    position: absolute;
+}
+
+/* .popup-dash-board {
+    margin: 6px 4px 0 0;
+}
+ */
+.badge {
+    background-color: #fafafb;     
+    border: 1px solid #d6d9dc;
+    /*             color: #6a737c; */
+    padding: 9px 12px;
+    border-radius: 8px;
+   /*  margin-top: 12px; */
+}
+
+.v-center{
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+	
+    .swal2-container{
+        padding: 0px;        
+    }
+
+    .swal2-popup{
+        padding: 1.25em 0em;
+    }
+} 
+

@@ -1,0 +1,67 @@
+/* https://www.html-code-generator.com */
+.css-button {
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    /* font-family: Arial;     */
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    border-radius: 5px;  
+}
+
+.css-button:active {
+    position: relative;
+    top: 1px;
+}
+.css-button-text {
+    padding: 5px 18px;
+    float: left;
+}
+.css-button-icon {
+    /* border-right: 1px solid rgba(255, 255, 255, 0.16); */
+    box-shadow: rgba(0, 0, 0, 0.14) -1px 0px 0px inset;    
+    border-radius: 5px 0 0 5px;
+    padding: 5px 10px;
+    float: left;
+}
+
+.button--blue {
+    border: solid 1px #3866a3;
+    background: linear-gradient(180deg, #63B8EE 5%, #468ccf 100%);
+    text-shadow: 1px 1px 0px #528ecc;
+    box-shadow: inset 1px 1px 0px 0px #bbdaf7;
+}
+
+.button--blue:hover {
+    background: linear-gradient(180deg, #468ccf 5%, #63B8EE 100%);
+}
+
+.button--green{
+    border: solid 1px #74b807;
+    background: linear-gradient(180deg, #8ac403 5%, #78a809 100%);
+    text-shadow: 1px 1px 0px #528009;
+    box-shadow: inset 1px 1px 0px 0px #a4e271;
+}
+.button--green:hover {
+    background: linear-gradient(180deg, #78a809 5%, #8ac403 100%);
+}
+
+.button--red {
+    border: solid 1px #d83526;
+    background: linear-gradient(180deg, #fa685a 5%, #d34639 100%);
+    text-shadow: 1px 1px 0px #98231a;
+    box-shadow: inset 1px 1px 0px 0px #fab3ad;
+}
+
+.button--red:hover {
+    background: linear-gradient(180deg, #d34639 5%, #fa685a 100%);
+}
+
+.button--disabled{
+    color: #777777;
+    cursor: default;
+    border: solid 1px #dcdcdc;
+    background: linear-gradient(180deg, #ededed 5%, #dfdfdf 100%);
+    text-shadow: 1px 1px 0px #ffffff;
+    box-shadow: inset 1px 1px 0px 0px #ffffff;
+}

@@ -1,0 +1,34 @@
+.button-icon {
+    background-color: transparent;
+    border: none;
+    color: #4d4d4d;
+    /* com 12px em horizontal, já ficava com h-scroll em w-320px (mobile) */
+    padding: 9px 11px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button-icon--disabled:hover{
+    color: #4d4d4d;
+    cursor: default;
+}
+
+.button-icon--red:hover{
+    color: red;
+}
+
+.button-icon--dodgerblue:hover{
+    color: dodgerblue;
+}
+
+.button-icon--chocolate:hover{
+    color: chocolate;
+}
+
+.button-icon--green:hover{
+    color: green;
+}
+
+.button-icon--gray:hover{
+    color: #aaa;
+}
