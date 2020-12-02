@@ -19,6 +19,7 @@ const validation = {
 
         //onlyNumbersAndBrackets: value => value.replace(/[^0-9\(\)/\[\]]/g, '').replace(/(\..*)\./g, '$1'),
         onlyNumbersAndBrackets: value => value.replace(/[^0-9()/[\]]/g, '').replace(/(\..*)\./g, '$1'),
+        onlyNumbersDotsAndBrackets: value => value.replace(/[^0-9()/[\].]/g, '').replace(/(\..*)\./g, '$1'),
 
         onlyAlphaNumeric: value => value.replace(regexs.alphaNumeric, '').replace(/(\..*)\./g, '$1'),
 

@@ -145,6 +145,8 @@ export default {
 
 	created() {
 
+
+
 		window.EventVue.$on('intelMainInfo', parcel => {
 
 			const [key, value] = head(Object.entries(parcel));

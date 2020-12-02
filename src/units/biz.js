@@ -61,8 +61,7 @@ const biz = {
     },
 
     stringToStakes: function (value) {
-
-        const blinds = value.match(/([0-9]+)\/([0-9]+)/);
+        const blinds = value.match(/([0-9]+(?:\.[0-9]+)?)\/([0-9]+(?:\.[0-9]+)?)/)
 
         const ante = value.match(/\([0-9]\)/);
 
