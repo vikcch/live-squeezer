@@ -51,7 +51,7 @@ export default {
 				tableName: () =>
 					validation.force.onlyAlphaNumeric(this.text),
 				stakes: () =>
-					validation.force.onlyNumbersAndBrackets(this.text),
+					validation.force.onlyNumbersDotsAndBrackets(this.text),
 			};
 
 			this.text = rules[this.attrs.key].call();

@@ -26,9 +26,8 @@ class Action {
 
         if (isValid) return true;
 
-        const value = Number(this.input);
-
-        return Number.isInteger(value) && value !== 0;
+        const value = +this.input;
+        return !isNaN(value) && value !== 0;
     }
 
     get getIsValid() {
