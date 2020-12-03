@@ -48,7 +48,7 @@
 			</div>
 
 			<div class="train bm-s">
-				<kbd>6</kbd><kbd>5</kbd><kbd>enter</kbd>
+				<kbd>6</kbd><kbd>5</kbd><kbd>Enter</kbd>
 				<span class="lm-s">Bet \ Raise to</span>
 			</div>
 
