@@ -66,11 +66,26 @@ const vikFunctions = {
         return `${rounded} ${units[times]}`;
     },
 
-    sum_rdc: function(acc, cur){
+    sum_rdc: function (acc, cur) {
 
         return acc + cur;
-    }
+    },
 
+    fixValue: function (value) {
+
+        return Math.round(value * 100) / 100;
+    },
+
+    /**
+     * 
+     * @param {number} value 
+     */
+    displayAmount: function (value) {
+
+        value = fixValue(value);
+
+        return Number.isInteger(value) ? value : value.toFixed(2);
+    }
 };
 
 
@@ -78,14 +93,16 @@ export default vikFunctions;
 
 export const {
     neat,
-    scan,    
+    scan,
     $q,
     cramped,
     findLast,
     isMobileOrTablet,
     capitalize,
     bytes,
-    sum_rdc
+    sum_rdc,
+    fixValue,
+    displayAmount
 } = vikFunctions;
 
 

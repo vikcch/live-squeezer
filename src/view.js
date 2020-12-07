@@ -407,6 +407,20 @@ export default class View {
         });
     }
 
+    async splitCentsInquiry() {
+
+        const reponse = await Vue.swal.fire({
+            title: 'Split in Cents?',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No',
+            confirmButtonText: 'Yes, every penny!',
+            confirmButtonColor: '#3085d6'
+        });
+
+        return !!reponse.value;
+    }
+
     showCardsPopup(fieldInfo, histories, relatedInput) {
 
         const deck = new Deck();
@@ -461,14 +475,14 @@ export default class View {
     resetControls(fromNextHand) {
 
         this.hideGameDialogs();
-        
+
         if (fromNextHand) this.mainInfoVue.resetCell('handId');
         else this.mainInfoVue.reset();
-        
+
         this.mainInfoVue.$el.removeAttribute('disabled');
-        
+
         this.playersGridVue.enable();
-        
+
         this.playersGridVue.removeImageCards();
         this.playersGridVue.removeHoleCards();
 
@@ -478,7 +492,7 @@ export default class View {
         // this.dialogSaveVue.$refs['file-upload'].value = null;
         this.dialogSaveVue.abateAppendedFile();
 
-        this.dialogSaveVue.isSaveAsNewEnabled = false;        
+        this.dialogSaveVue.isSaveAsNewEnabled = false;
         this.dialogLocalStorageVue.isSaveEnabled = false;
         this.dialogExportVue.isReplayerEnabled = false;
         this.dialogExportVue.isForumEnabled = false;

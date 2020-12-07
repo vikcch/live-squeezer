@@ -4,6 +4,7 @@ node_modules
 .VSCodeCounter
 Thumbs.db
 TODO
+_sketch
 
 # local env files
 .env.local

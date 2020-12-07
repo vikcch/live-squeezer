@@ -156,7 +156,7 @@ class Model {
     processCollects() {
 
         this.conclusion.setPots(this.histories, this.mainInfo);
-        
+
         this.conclusion.setAutoWinners(this.histories);
 
         this.conclusion.setHasShowDown(this.histories);
@@ -172,6 +172,29 @@ class Model {
     setManualWinners(winners) {
 
         this.conclusion.winners = winners;
+    }
+
+    demandManualSplitInCents(winners) {
+
+        // winners = [ [p2], [p1, p3] ]
+        //                   ^^^^^^^^ split pot  
+
+        const hasSplitPots = winners.some(x => x.length > 1);
+
+        if (!hasSplitPots) return false;
+
+        const decimalBets = x => !Number.isInteger(x.currentBet);
+
+        const hasHistoryDecimals = this.histories.some(decimalBets);
+
+        const hasDecimalStakes = this.mainInfo.stakes.hasDecimal();
+
+        return !hasHistoryDecimals && !hasDecimalStakes;
+    }
+
+    setDecimalSplits(value) {
+
+        this.conclusion.decimalSplitsPots = value;
     }
 
     processSummary() {

@@ -1,5 +1,6 @@
 import vikFunctions from "./vikFunctions.js";
 import { cap } from "./fxnl.js";
+import { head } from "./absx.js";
 
 const biz = {
 
@@ -61,19 +62,33 @@ const biz = {
     },
 
     stringToStakes: function (value) {
-        const blinds = value.match(/([0-9]+(?:\.[0-9]+)?)\/([0-9]+(?:\.[0-9]+)?)/)
 
-        const ante = value.match(/\([0-9]\)/);
+        const blindsStr = value.match(/^[\d./]+/g);
 
-        const straddles = value.match(/\[\d+]/g);
+        if (!blindsStr) return {};
 
-        const removeNonNumbers = str => Number(str.replace(/[^\d]/g, ''));
+        const decimalFail = x => !Number.isInteger(x * 100);
+        const mapped = x => decimalFail(x) ? null : Number(x);
+        const blinds = head(blindsStr).split('/').map(mapped);
+
+        // Regex retorna `null` em >= 3 casas decimais
+        const ante = value.match(/\((?:\d+)?\.?(?:\d{0,2})\)/);
+
+        const straddles = value.match(/\[(?:\d+)?\.?(?:\d{0,2})]/g);
+
+        const removeNonNumbers = str => Number(str.replace(/[^\d.]/g, ''));
 
         const stakes = {
-            smallBlind: blinds ? Number(blinds[1]) : 0,
-            bigBlind: blinds ? Number(blinds[2]) : 0,
+            smallBlind: blinds[0] ?? 0,
+            bigBlind: blinds[1] ?? 0,
             ante: ante ? removeNonNumbers(ante[0]) : 0,
             straddles: straddles ? [...straddles].map(n => removeNonNumbers(n)) : [],
+            hasDecimal() {
+
+                const temp = [this.smallBlind, this.bigBlind, this.ante];
+
+                return temp.some(x => !Number.isInteger(x));
+            }
         }
 
         return stakes;

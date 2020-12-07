@@ -19,7 +19,7 @@ const validation = {
 
         //onlyNumbersAndBrackets: value => value.replace(/[^0-9\(\)/\[\]]/g, '').replace(/(\..*)\./g, '$1'),
         onlyNumbersAndBrackets: value => value.replace(/[^0-9()/[\]]/g, '').replace(/(\..*)\./g, '$1'),
-        onlyNumbersDotsAndBrackets: value => value.replace(/[^0-9()/[\].]/g, '').replace(/(\..*)\./g, '$1'),
+        onlyNumbersDotsAndBrackets: value => value.replace(/[^0-9()/[\].]/g, ''),
 
         onlyAlphaNumeric: value => value.replace(regexs.alphaNumeric, '').replace(/(\..*)\./g, '$1'),
 
@@ -115,9 +115,34 @@ const validation = {
 
             isStakes: function (value) {
 
-                const stakes = biz.stringToStakes(value);
-                return stakes.smallBlind > 0 && stakes.bigBlind > 0;
+                const straddlesFail = ({ straddles }) => {
 
+                    const rdc = bracket => (acc, cur) => acc + (cur === bracket | 0);
+
+                    const bracketsOpen = [...value].reduce(rdc('['), 0);
+                    const bracketsClose = [...value].reduce(rdc(']'), 0);
+
+                    const bracketsMatch = bracketsOpen === bracketsClose;
+
+                    const properValues = straddles.every(x => x);
+
+                    return !properValues || !bracketsMatch;
+                };
+
+                const anteBoundaries = ['(', ')'];
+                const straddlesBoundaries = ['[', ']'];
+
+                const includesChar = x => value.includes(x);
+
+                const hasAnte = anteBoundaries.some(includesChar);
+                const hasStraddles = straddlesBoundaries.some(includesChar);
+
+                const stakes = biz.stringToStakes(value);
+
+                if (hasAnte && stakes.ante === 0) return false;
+                if (hasStraddles && straddlesFail(stakes)) return false;
+
+                return stakes.smallBlind > 0 && stakes.bigBlind > 0;
             },
 
             isTableMax: function (value) {

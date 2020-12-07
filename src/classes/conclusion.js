@@ -16,6 +16,7 @@ export default class Conclusion {
         this.winners = [];
         this.hasShowDown = false;
         this.showdownPlayersOrdered = [];
+        this.decimalSplitsPots = true;
     }
 
     isOnShowdown = (histories) => ({ stillPlaying, seat }) => {
@@ -138,10 +139,10 @@ export default class Conclusion {
         const stillPlaying = Player.getStillPlayingOnLastIndex(histories);
         const areAllins = Player.getAreAllinsOnLastIndex(histories);
 
-        if (stillPlaying.length <= 1 && !areAllins){
+        if (stillPlaying.length <= 1 && !areAllins) {
 
             this.winners = [[this.uncalledPlayer]];
-        }            
+        }
     }
 
     setHasShowDown(histories) {
@@ -206,13 +207,14 @@ export default class Conclusion {
 
         this.winners.forEach((potWinner, index) => {
 
+            const factor = this.decimalSplitsPots ? 100 : 1;
             const pot = this.pots[index];
-            let modAvailable = pot % potWinner.length;
+            let modAvailable = pot * factor % potWinner.length;
 
             potWinner.forEach(w => {
 
-                let splitPot = Math.floor(pot / potWinner.length);
-                splitPot += (modAvailable-- > 0 ? 1 : 0);
+                let splitPot = Math.floor(pot * factor / potWinner.length) / factor;
+                splitPot += (modAvailable-- > 0 ? 1 / factor : 0);
 
                 const isSeat = p => p.seat === w.seat;
                 const player = lastHistory.players.find(isSeat);

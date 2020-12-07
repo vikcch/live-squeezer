@@ -2,6 +2,7 @@ import Player from './player.js';
 import validations from '../units/validations.js';
 import biz from '../units/biz.js';
 import { head } from '../units/absx.js'
+import { fixValue } from '../units/vikFunctions.js';
 
 export default class MainInfo {
 
@@ -198,6 +199,18 @@ export default class MainInfo {
             this.setInvalidPlayer = seats;
         }
 
+        const manyStraddles = () => {
+
+            if (!this.stakes) return;
+
+            const lenStraddles = this.stakes.straddles.length;
+            const nonBlindsPlayers = values.playersInfo.length - 2;
+
+            return lenStraddles > nonBlindsPlayers;
+        };
+
+        if (manyStraddles()) this.stakes = null;
+
         const isValid = Object.entries(this).every(prop => prop[1] !== null) && !this.invalidPlayer;
 
         return isValid && allDistinctSeat && heroIsPlayer;
@@ -274,6 +287,7 @@ export default class MainInfo {
             this.players[i].post = true;
             this.players[i].moneyOnStreet = post;
             this.players[i].currentStack -= post;
+            this.players[i].currentStack = fixValue(this.players[i].currentStack);
         });
 
     }

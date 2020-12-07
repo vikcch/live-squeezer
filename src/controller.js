@@ -106,6 +106,12 @@ export default class Controller {
 
             const winners = await this.view.winnersInquiry(this.model);
             this.model.setManualWinners(winners);
+
+            if (this.model.demandManualSplitInCents(winners)) {
+
+                const splitInCents = await this.view.splitCentsInquiry();
+                this.model.setDecimalSplits(splitInCents);
+            }
         }
 
         this.view.printCollects(this.model.conclusion, this.model.mainInfo);

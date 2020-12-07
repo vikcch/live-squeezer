@@ -17,7 +17,7 @@
 import { lineBreaker } from '../../units/absx.js';
 import biz from '../../units/biz.js';
 import state from '../../units/state';
-import vikFunctions, { sum_rdc } from '../../units/vikFunctions';
+import vikFunctions, { displayAmount, sum_rdc } from '../../units/vikFunctions';
 
 export default {
 
@@ -104,7 +104,8 @@ export default {
 			if (ante) {
 				mainInfo.players.forEach(p => {
 					const el = this.makeHandHistoryElement(postsEl);
-					const text = `${p.name}: posts the ante ${ante}`;
+					const amount = displayAmount(ante);
+					const text = `${p.name}: posts the ante ${amount}`;
 					el.textContent = lineBreaker(text);
 				});
 			}
@@ -115,7 +116,8 @@ export default {
 				const postLabel = i > 1 ? postsLabel[2] : postsLabel[i];
 
 				const el = this.makeHandHistoryElement(postsEl);
-				const text = `${mainInfo.players[i].name}: ${postLabel} ${post}`;
+				const amount = displayAmount(post);
+				const text = `${mainInfo.players[i].name}: ${postLabel} ${amount}`;
 				el.textContent = lineBreaker(text);
 
 			});
@@ -201,7 +203,8 @@ export default {
 				const el = this.makeHandHistoryElement(collectsEl);
 
 				const { uncalledBet, uncalledPlayer: { name } } = conclusion;
-				const text = `Uncalled bet (${uncalledBet}) returned to ${name}`;
+				const amount = displayAmount(uncalledBet);
+				const text = `Uncalled bet (${amount}) returned to ${name}`;
 				el.textContent = lineBreaker(text);
 			}
 
@@ -245,18 +248,21 @@ export default {
 
 			conclusion.winners.forEach((potWinner, index) => {
 
+				const factor = conclusion.decimalSplitsPots ? 100 : 1;
 				const pot = conclusion.pots[index];
-				let modAvailable = pot % potWinner.length;
+				let modAvailable = pot * factor % potWinner.length;
 
 				potWinner.forEach(w => {
 
-					let splitPot = Math.floor(pot / potWinner.length);
-					splitPot += (modAvailable-- > 0 ? 1 : 0);
+					let splitPot = Math.floor(pot * factor / potWinner.length) / factor;
+					splitPot += (modAvailable-- > 0 ? 1 / factor : 0);
 
 					const el = this.makeHandHistoryElement(collectsEl);
 
+					const amount = displayAmount(splitPot);
+
 					const potType = biz.potType(index, conclusion.winners.length);
-					const text = `${w.name} collected ${splitPot} from ${potType}`;
+					const text = `${w.name} collected ${amount} from ${potType}`;
 					el.textContent = lineBreaker(text);
 				});
 			});
@@ -276,13 +282,14 @@ export default {
 
 				const potType = biz.potType(index, conclusion.winners.length);
 				const potTypeCapitalized = vikFunctions.capitalize(potType);
+				const amount = displayAmount(cur);
 
-				return acc.concat(` ${potTypeCapitalized} ${cur}.`);
+				return acc.concat(` ${potTypeCapitalized} ${amount}.`);
 
 			}, '');
 
 			const hasSidePot = conclusion.pots.length > 1;
-			const totalPot = conclusion.pots.reduce(sum_rdc);
+			const totalPot = displayAmount(conclusion.pots.reduce(sum_rdc));
 			const text = `Total pot ${totalPot}${hasSidePot ? extra : ''}`;
 
 			const totalPotEl = this.makeHandHistoryElement(summaryEl);

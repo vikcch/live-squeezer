@@ -1,3 +1,5 @@
+import { displayAmount, fixValue } from '../units/vikFunctions';
+
 class Action {
 
     constructor(input, history) {
@@ -61,20 +63,26 @@ class Action {
 
         let call = history.currentBet - player.moneyOnStreet;
         player.currentStack -= call;
+        player.currentStack = fixValue(player.currentStack);
 
         if (player.currentStack <= 0) {
 
             player.moneyOnStreet += player.currentStack + call;
-            call = `${player.currentStack + call} and is all-in`
+            player.moneyOnStreet = fixValue(player.moneyOnStreet);
+
+            call = player.currentStack + call;
             player.currentStack = 0;
             player.isAllIn = true;
             player.stillPlaying = false;
         }
         else player.moneyOnStreet = history.currentBet;
 
-        history.log = `${player.name}: calls ${call}`;
+        const amount = displayAmount(call);
+        const allin = player.isAllIn ? ' and is all-in' : '';
 
-        if (call === 0) history.log = `${player.name}: checks`;
+        history.log = `${player.name}: calls ${amount}${allin}`;
+
+        if (fixValue(call) === 0) history.log = `${player.name}: checks`;
     }
 
     checks() {
@@ -106,23 +114,29 @@ class Action {
             return;
         }
 
-        let betRaiseValue = Number(input);
+        let betRaiseValue = fixValue(Number(input));
 
         if (betRaiseValue <= history.currentBet) {
             this.calls();
             return;
         }
 
-        if (betRaiseValue >= player.currentStack + player.moneyOnStreet) {
-            betRaiseValue = player.currentStack + player.moneyOnStreet;
+        const maxMoneyOnStreet = fixValue(player.currentStack + player.moneyOnStreet);
+
+        if (betRaiseValue >= maxMoneyOnStreet) {
+            betRaiseValue = maxMoneyOnStreet;
         }
 
+        const raisesAmount = displayAmount(betRaiseValue - history.currentBet);
+        const betRaiseAmount = displayAmount(betRaiseValue);
+
         history.log = history.currentBet === 0
-            ? `${player.name}: bets ${betRaiseValue}`
-            : `${player.name}: raises ${betRaiseValue - history.currentBet} to ${betRaiseValue}`;
+            ? `${player.name}: bets ${betRaiseAmount}`
+            : `${player.name}: raises ${raisesAmount} to ${betRaiseAmount}`;
 
         history.currentBet = betRaiseValue;
         player.currentStack -= betRaiseValue - player.moneyOnStreet;
+        player.currentStack = fixValue(player.currentStack);
         player.moneyOnStreet = betRaiseValue;
 
         if (player.currentStack === 0) {
