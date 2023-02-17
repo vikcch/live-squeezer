@@ -1,6 +1,6 @@
 <template>
 	<div v-show="isVisible">
-		
+
 		<app-dialog-header :collapsable="false">
 
 			<div v-html="title">{{title}}</div>
@@ -30,6 +30,13 @@
 				>
 					<i class="fa fa-check"></i>
 				</button>
+
+				<i
+					id="file-upload-info"
+					class="fa fa-info-circle text-info lm-m"
+					aria-hidden="true"
+					@click="actionInfoClick"
+				></i>
 			</div>
 
 			<div class="train divorced bm-l">
@@ -152,6 +159,12 @@ export default {
 				this.text = '';
 				this.$refs['player-action'].focus();
 			}, 0);
+		},
+
+		actionInfoClick() {
+
+			const { view } = this.$root.$data;
+			view.showActionInfoPopup();
 		}
 	},
 

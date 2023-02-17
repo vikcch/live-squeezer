@@ -2,7 +2,7 @@ import Player from './player.js';
 import validations from '../units/validations.js';
 import biz from '../units/biz.js';
 import { head } from '../units/absx.js'
-import { fixValue } from '../units/vikFunctions.js';
+import { fixValue, neat } from '../units/vikFunctions.js';
 
 export default class MainInfo {
 
@@ -186,6 +186,7 @@ export default class MainInfo {
         this.setPerspective = values.perspective;
         this.setHeroSeat = values.heroSeat;
 
+        this.forceUniqueNames(values);
         this.setPlayers = values.playersInfo;
 
         const seats = values.playersInfo.map(pi => Number(pi.seat));
@@ -214,6 +215,30 @@ export default class MainInfo {
         const isValid = Object.entries(this).every(prop => prop[1] !== null) && !this.invalidPlayer;
 
         return isValid && allDistinctSeat && heroIsPlayer;
+    }
+
+    forceUniqueNames(values) {
+
+        // NOTE:: Tem em conta mais de dois repetidos
+
+        values.playersInfo.forEach(v => v.name = neat(v.name));
+
+        (function checkNames() {
+
+            const names = values.playersInfo.map(pi => pi.name);
+            const allDistinctNames = new Set(names).size === names.length;
+
+            if (allDistinctNames) return;
+
+            values.playersInfo.forEach(player => {
+
+                const count = values.playersInfo.filter(v => v.name === player.name).length;
+                if (count > 1) player.name = `${player.name}1`;
+            });
+
+            checkNames();
+
+        })();
     }
 
     reset() {

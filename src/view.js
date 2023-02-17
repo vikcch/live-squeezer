@@ -59,6 +59,26 @@ export default class View {
         this.forumFormatVue = this.vm.$children[0].$refs['forum-format'];
     }
 
+    setProxies() {
+
+        Vue.swal.fire = new Proxy(Vue.swal.fire, {
+
+            apply: function (target, thisArg, argumentsList) {
+
+                argumentsList[0].showClass = {
+                    backdrop: 'swal2-noanimation', // disable backdrop animation
+                    popup: '',                     // disable popup animation
+                    icon: ''                       // disable icon animation
+                };
+                argumentsList[0].hideClass = {
+                    popup: '',                     // disable popup fade-out animation
+                };
+
+                return target.apply(thisArg, argumentsList);
+            }
+        });
+    }
+
     get requiredValues() {
 
         const miValues = this.mainInfoVue.values;
@@ -315,6 +335,27 @@ export default class View {
         });
     }
 
+    showActionInfoPopup() {
+
+        const pStyle = `style="line-height: 2"`;
+
+        const kbdStyle = `style="width:24px; height:24px; background-color: #eee;
+            border-radius: 3px; border: 1px solid #b4b4b4; line-height: 1; padding: 2px 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+            color: #333; display: inline-block; font-size: 0.85em; font-weight: 700;"`;
+
+        const amount = `To <i>raise to</i> or <i>bet</i>: Type the amount`;
+        const passive = `To <i>check</i> or <i>call</i>: Type <mark>check</mark> or <mark>call</mark> or <kbd ${kbdStyle}>→</kbd> key`;
+        const fold = `To <i>fold</i>: Type <mark>fold</mark> or <kbd ${kbdStyle}>←</kbd> key`;
+
+        Vue.swal.fire({
+            icon: 'info',
+            title: 'Action input!',
+            showCloseButton: true,
+            html: `<p ${pStyle}>${amount}</p><p ${pStyle}>${passive}</p><p ${pStyle}>${fold}</p>`
+        });
+    }
+
     //#endregion
 
     //#region ERROS Popups
@@ -355,9 +396,11 @@ export default class View {
 
         const topLine = `<div ${divStyle}>Type the cards correctly, ex: the 10 of clubs is ${oneCardTagged}</div>`;
 
+        const middleLine = `<div ${divStyle}>Do not repeat cards</div>`;
+
         const bottomLine = `FLOP: ${threeCardsTagged} TURN / RIVER: ${oneCardTagged}`;
 
-        const htmlText = topLine + bottomLine;
+        const htmlText = topLine + middleLine + bottomLine;
 
         this.showGenericError(htmlText);
     }
@@ -463,6 +506,11 @@ export default class View {
         this.dialogExportVue.isReplayerEnabled = true;
         this.dialogExportVue.isForumEnabled = true;
         this.forumFormatVue.isEnabled = true;
+    }
+
+    unckeckRandomInfo() {
+
+        this.playersGridVue.randomPlayerInfo = false;
     }
 
     resetPlayers() {

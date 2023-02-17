@@ -25,7 +25,7 @@ export default {
 
 		clear() {
 
-			this.$el.children.forEach(c => {
+			[...this.$el.children].forEach(c => {
 
 				state.removeChildElements(c);
 			});
@@ -85,7 +85,7 @@ export default {
 			mainInfo.players.forEach(p => {
 
 				const el = this.makeHandHistoryElement(playersInfoEl);
-				const text = `Seat ${p.seat}: ${p.name} (${p.stack} in chips) `;
+				const text = `Seat ${p.seat}: ${p.name} (${displayAmount(p.stack)} in chips) `;
 				el.textContent = lineBreaker(text);
 			});
 		},

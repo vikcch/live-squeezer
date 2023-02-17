@@ -18,6 +18,7 @@ export default class Controller {
 
         this.view.setVue(model, this);
         this.view.bindComponents();
+        this.view.setProxies();
     }
 
     handleTableMax = () => (value) => {
@@ -166,6 +167,8 @@ export default class Controller {
     }
 
     handleNewHand = () => {
+
+        this.view.unckeckRandomInfo();
 
         this.view.resetPlayers();
 

@@ -3,12 +3,12 @@
 * {
 	margin: 0;
 	padding: 0;
-    box-sizing: border-box;
-    /* user-select: none; */
+	box-sizing: border-box;
+	/* user-select: none; */
 }
 
-input, select {
-	font-family: "Lucida Console", Monaco, monospace;	
+input:not([type="checkbox"]), select {
+	font-family: "Lucida Console", Monaco, monospace;
 	font-size: 12px;
 	width: 100%;
 	min-width: 0;
@@ -16,10 +16,10 @@ input, select {
 }
 
 mark {
-    padding: 0px 4px;
-    color: #6a737c;
-    background-color: #d6d9dc;
-    border-radius: 4px;
+	padding: 0px 4px;
+	color: #6a737c;
+	background-color: #d6d9dc;
+	border-radius: 4px;
 }
 
 .text-info {
@@ -29,12 +29,13 @@ mark {
 .small-text {
 	font-size: 14px;
 }
+
 .very-small-text {
 	font-size: 10px;
 }
 
-.fa-info-circle{
-    cursor: pointer;
+.fa-info-circle {
+	cursor: pointer;
 }
 
 .train {
@@ -51,39 +52,39 @@ mark {
 }
 
 .bullseye {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 .divorced {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .married {
-    display: flex;
-    align-items: center;    
+	display: flex;
+	align-items: center;
 }
 
 .right {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 .tm-s {
-    margin-top: 4px;
+	margin-top: 4px;
 }
 
 .tm-m {
-    margin-top: 8px;
+	margin-top: 8px;
 }
 
 .tm-l {
-    margin-top: 16px;
+	margin-top: 16px;
 }
 
 .rm-s {
@@ -129,9 +130,9 @@ mark {
 }
 
 .no-scroll {
-    position: fixed;  
-    overflow-y: scroll;
-    width: 100%;
+	position: fixed;
+	overflow-y: scroll;
+	width: 100%;
 }
 
 .hh-popup {

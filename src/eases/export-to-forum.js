@@ -1,7 +1,7 @@
 import { head, tail, lineBreaker } from "../units/absx";
 import fxnl, { pipe, or } from "../units/fxnl";
 import biz from "../units/biz";
-import vikFunctions, { sum_rdc } from "../units/vikFunctions";
+import vikFunctions, { displayAmount, fixValue, sum_rdc } from "../units/vikFunctions";
 
 const forumSuits = {
     d: ':diamond:',
@@ -159,7 +159,10 @@ const getStreetPots = function (histories) {
             }, [{ pot: 0, cap: 0 }])
         );
 
-    return streetPots;
+    return streetPots.map(array => {
+
+        return array.map(v => ({ ...v, pot: displayAmount(v.pot) }));
+    });
 
 };
 
@@ -217,7 +220,7 @@ const getMovesLine = function (streetHistory) {
 
         if (!cur.player) return acc;
 
-        const amount = isAggressive(cur.action) ? tail(cur.log.match(/\d+/g)) : '';
+        const amount = isAggressive(cur.action) ? tail(cur.log.match(/\d+(\.\d{2})?/g)) : '';
 
         const isRaises = cur.action === 'raises';
 
@@ -313,7 +316,7 @@ const setCollectsShowdown = function (conclusion, linesAndPlayers, getShowed) {
     conclusion.showdownPlayersOrdered.forEach(p => {
 
         if (linesAndPlayers.find(lp => lp.player === p)) return;
-     
+
         const showedCardsText = getShowed(p, false);
 
         const muckOrShow = showedCardsText ? showedCardsText : 'mucked';

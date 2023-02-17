@@ -33,7 +33,26 @@
 			</form>
 		</div>
 
-		<p>Convert live and tv poker hands to a PokerStars Hand History file format.</p>
+		<p>Efficiently convert live and television poker hands into the PokerStars Hand History log format for record keeping and analysis.</p>
+
+		<div class="github">
+			<!-- Place this tag where you want the button to render. -->
+			<a
+				class="github-button"
+				href="https://github.com/vikcch"
+				data-color-scheme="no-preference: light; light: light; dark: dark;"
+				aria-label="Follow @vikcch on GitHub"
+			>Follow @vikcch</a>
+			<!-- Place this tag where you want the button to render. -->
+			<span>&nbsp;</span>
+			<a
+				class="github-button"
+				href="https://github.com/vikcch/live-squeezer"
+				data-color-scheme="no-preference: light; light: light; dark: dark;"
+				data-icon="octicon-star"
+				aria-label="Star vikcch/live-squeezer on GitHub"
+			>Star</a>
+		</div>
 
 	</header>
 
@@ -55,13 +74,20 @@ export default {
 
 <style scoped>
 header {
+	position: relative;
 	background-color: #333333;
-	padding: 16px 4px;
+	padding: 20px 4px;
 	color: white;
-	margin-bottom: 8px;	
+	margin-bottom: 8px;
 }
 
 .logo {
 	font-size: 28px;
+}
+
+.github {
+	position: absolute;
+	top: 2px;
+	right: 2px;
 }
 </style>

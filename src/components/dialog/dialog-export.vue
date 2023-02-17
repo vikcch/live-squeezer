@@ -110,8 +110,8 @@ export default {
 				const { href } = window.location;
 
 				const isDev = href.includes('localhost') || href.includes('127.0.0.1');
-
-				const prefixDev = 'http://localhost/vik/s2-replayer/winningpokerhud/bin';
+				
+				const prefixDev = 'http://localhost/dev/replayer-riropo/wwwroot';
 				const prefixProd = 'https://replayer.winningpokerhud.com';
 
 				const prefix = isDev ? prefixDev : prefixProd;

@@ -21,12 +21,12 @@ export default class Player {
 
         this.isAllIn = false;       // unstable, pode voltar a 'false' em 'setUncalledBet'
         this.wasAllin = false;      // setado a 'true' só em 'setUncalledBet' se 
-                                    // 'this.isAllIn' voltar a 'false'
+        // 'this.isAllIn' voltar a 'false'
         this.moneyOnStreet = 0;
 
         this.holeCards = '__ __';   // só as instacias em mainInfo têm as holeCards
-                                    // inseridas, outras instacias pode ter por 
-                                    // deepCopy, apenas confiar nas de mainInfo
+        // inseridas, outras instacias pode ter por 
+        // deepCopy, apenas confiar nas de mainInfo
     }
 
     /**
@@ -97,8 +97,15 @@ export default class Player {
             .reverse()
             .find(h => h.currentBet);
 
-        return history.players
-            .find(p => p.moneyOnStreet === history.currentBet);
+        const biggers = history.players
+            .filter(p => p.moneyOnStreet === history.currentBet);
+
+        // NOTE:: Quando têm a mesma stack e vão all-in nenhum é "bigger"
+        if (biggers.length > 1) return null;
+        else return biggers.pop();
+
+        // return history.players
+        //     .find(p => p.moneyOnStreet === history.currentBet);
 
     }
 

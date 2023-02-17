@@ -67,8 +67,8 @@ const biz = {
 
         if (!blindsStr) return {};
 
-        const decimalFail = x => !Number.isInteger(x * 100);
-        const mapped = x => decimalFail(x) ? null : Number(x);
+        const decimalFail = v => !Number.isInteger(vikFunctions.fixValue(v * 100));
+        const mapped = v => decimalFail(v) ? null : Number(v);
         const blinds = head(blindsStr).split('/').map(mapped);
 
         // Regex retorna `null` em >= 3 casas decimais
@@ -126,8 +126,43 @@ const biz = {
     playersLimitTableMax(value) {
 
         return Number(value.replace('-max', ''));
-    }
+    },
 
+    /**
+     * 
+     * @param {number[]} seatsTaken 
+     * @param {number} tableMax 
+     */
+    nextAvailableSeat(seatsTaken, tableMax) {
+
+        const higherSeat = Math.max(...seatsTaken);
+
+        if (higherSeat + 1 <= tableMax) return higherSeat + 1;
+
+        for (let index = 1; index <= tableMax; index++) {
+            if (!seatsTaken.includes(index)) return index;
+        }
+    },
+
+    /**
+     * 
+     * @param {string[]} takenNames 
+     */
+    pickAvailableName(takenNames) {
+
+        const names = ['maria', 'diana', 'micaela', 'adriana', 'ruth',
+            'teresa', 'sara', 'madonna', 'britney', 'adele'];
+
+        const pick = () => {
+
+            const name = names[Math.floor(Math.random() * names.length)];
+
+            if (takenNames.includes(name)) return pick();
+            else return name;
+        };
+
+        return pick();
+    }
 };
 
 export default biz;

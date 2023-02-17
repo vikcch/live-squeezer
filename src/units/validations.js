@@ -13,6 +13,7 @@ const validation = {
     force: {
 
         onlyNumbers: value => value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'),
+        onlyNumbersAndDot: value => value.replace(/[^0-9.]/g, ''),
 
         //        onlyNumbersOrSeparator: value => value.replace(/[^.0-9]/g, '').replace(/(.*)/g, '$1'),
         onlyNumbersOrSeparator: value => value.replace(/[^0-9.,-\s]/g, ''),
@@ -58,7 +59,12 @@ const validation = {
             isStack: function (value) {
 
                 const n = Number(value);
-                return Number.isInteger(n) && Number(n) > 0;
+
+                // NOTE:: `?` é zero ou uma vez aka opcional
+                // return /^\d+(\.\d{0,2})?$/.test(value) && Number(n) > 0;
+
+                const fixed100Times = vikFunctions.fixValue(n * 100);
+                return Number.isInteger(fixed100Times) && Number(n) > 0;
             },
 
             isValid: function (seat, name, stack, seatLimit) {
@@ -71,7 +77,6 @@ const validation = {
                 if (!this.isSeat(seat, seatLimit)) return 'Seat';
                 if (!this.isName(name)) return 'Name';
                 if (!this.isStack(stack)) return 'Stack';
-
             },
 
             isHoleCards: function (value) {
@@ -142,7 +147,9 @@ const validation = {
                 if (hasAnte && stakes.ante === 0) return false;
                 if (hasStraddles && straddlesFail(stakes)) return false;
 
-                return stakes.smallBlind > 0 && stakes.bigBlind > 0;
+                const { smallBlind, bigBlind } = stakes;
+
+                return smallBlind >= 0 && bigBlind > 0 && bigBlind >= smallBlind;
             },
 
             isTableMax: function (value) {

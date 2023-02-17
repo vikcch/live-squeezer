@@ -41,6 +41,9 @@ export default class Conclusion {
             ? stillPlaying[0]
             : Player.getBiggerAllinOnLastIndex(histories);
 
+        // NOTE:: player é `null` quando há multiplos all-in com a mesma stack
+        if (!player || stillPlaying.length > 1) return;
+
         player.isAllIn = false;
         player.wasAllin = true;
 

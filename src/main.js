@@ -30,3 +30,5 @@ console.log(`%c
 
 %cLive Squeezer is open source! https://github.com/vikcch/live-squeezer`,
     'color:Chocolate; background-color:MistyRose', 'font-weight:bold');
+
+console.log(`v${process.env.VUE_APP_VERSION}`);

@@ -1,4 +1,5 @@
 import validations from '../units/validations.js';
+import History from '../classes/history.js';
 
 class Street {
 
@@ -80,21 +81,22 @@ class Street {
     }
 
 
-    trySetStreetCards(){
+    trySetStreetCards() {
 
-        if (validations.business.geral.isStreetCards(this.input, this.history.street)){
+        const isStreetCards = validations.business.geral.isStreetCards(this.input, this.history.street);
+        const cardsTaken = History.isInputCardsTaken(this.input, this.histories);
 
-            const history = this.history;
+        if (!isStreetCards || cardsTaken) return false;
 
-            const streetName = Street.STREETS[history.street];
-            const cardsFormated = this.getFormatedStreetCards();
-    
-            history.streetCards = this.input;
-            history.log = `*** ${streetName} *** ${cardsFormated}`;
+        const history = this.history;
 
-            return true;
-        }
-        return false;
+        const streetName = Street.STREETS[history.street];
+        const cardsFormated = this.getFormatedStreetCards();
+
+        history.streetCards = this.input;
+        history.log = `*** ${streetName} *** ${cardsFormated}`;
+
+        return true;
     }
 
 

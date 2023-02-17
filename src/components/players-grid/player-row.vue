@@ -28,6 +28,7 @@
 					:disabled="!intel.isEditable"
 					name="seat"
 					@input="forced"
+					@focus="$event.target.select()"
 					maxlength="2"
 					inputmode="numeric"
 					ref="seat"
@@ -50,6 +51,7 @@
 					:disabled="!intel.isEditable"
 					name="name"
 					@input="forced"
+					@focus="$event.target.select()"
 					ref="name"
 				/>
 			</div>
@@ -65,6 +67,7 @@
 					:disabled="!intel.isEditable"
 					name="stack"
 					@input="forced"
+					@focus="$event.target.select()"
 					inputmode="numeric"
 					ref="stack"
 					class="text-right min-w-64"
@@ -108,6 +111,8 @@ import validation from '../../units/validations.js';
 import cardsInput from '../../eases/cards-input.js';
 import biz from '../../units/biz.js';
 import vikFunctions from '../../units/vikFunctions';
+import History from '@/classes/history';
+import state from '../../units/state.js';
 
 export default {
 	props: ["intel"],
@@ -138,7 +143,7 @@ export default {
 			const rules = {
 
 				seat: () => validation.force.onlyNumbers(field.value),
-				stack: () => validation.force.onlyNumbers(field.value),
+				stack: () => validation.force.onlyNumbersAndDot(field.value),
 				name: () => validation.force.onlyAlphaNumeric(field.value),
 			};
 
@@ -161,11 +166,40 @@ export default {
 			popup(this.$refs['hole-cards'], seat, limit);
 		},
 
+		invalidHoleCards() {
+
+			const { view, model } = this.$root.$data;
+
+			const { seat, holeCards } = this.intel.input;
+
+			// NOTE:: Não tem "histories" antes de "actionStarted" 
+			// (só depois de pelo menos a primeira action for gravada)
+
+			const fakeHistories = model.histories?.map(v => ({
+				players: v.players.filter(v => v.seat !== seat),
+				streetCards: v.streetCards,
+			})) ?? [{
+				players: view.playersGridVue.inputs.filter(v => v.seat !== seat),
+				streetCards: null
+			}];
+
+			return History.isInputCardsTaken(holeCards, fakeHistories);
+		},
+
 		onHoldCardsInput() {
 
 			const { view, model } = this.$root.$data;
 
 			const { seat, holeCards } = this.intel.input;
+
+			if (!holeCards.includes('_') && this.invalidHoleCards()) {
+
+				this.intel.input.holeCards = '__ __';
+				// NOTE:: com o v-model (acima) não remove as cartas
+				this.$refs['hole-cards'].value = '__ __';
+
+				return view.showGenericError('', 'Do not repeat cards');
+			}
 
 			if (model.actionStarted) {
 
