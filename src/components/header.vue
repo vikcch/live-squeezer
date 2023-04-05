@@ -33,17 +33,33 @@
 			</form>
 		</div>
 
-		<p>Efficiently convert live and television poker hands into the PokerStars Hand History log format for record keeping and analysis.</p>
+		<div :hidden="!headerText">
 
-		<p class="self-employed"><span class="note">NOTE:</span> Need someone to transcribe poker hands? Contact us at <a
-				class="light-link"
-				href="mailto:winningpokerhud@gmail.com"
-			>winningpokerhud@gmail.com</a>
-			<button
-				@click="copyEmail_Click"
-				:class="{copied}"
-			>Copy Email</button>
-		</p>
+			<p>Efficiently convert live and television poker hands into the PokerStars Hand History log format for record keeping and analysis.</p>
+
+			<div class="divorced">
+
+				<p class="self-employed"><span class="note">NOTE:</span> Need someone to transcribe poker hands? Contact us at <a
+						class="light-link"
+						href="mailto:winningpokerhud@gmail.com"
+					>winningpokerhud@gmail.com</a>
+					<button
+						class="button-copy"
+						@click="copyEmail_Click"
+						:class="{copied}"
+					>Copy Email</button>
+				</p>
+
+				<button
+					:class="['button-hidden']"
+					title="Hide Text"
+					@click="headerText = false"
+				>
+					<i class="fa fa-times"></i>
+				</button>
+
+			</div>
+		</div>
 
 		<div class="github">
 			<!-- Place this tag where you want the button to render. -->
@@ -74,10 +90,12 @@ export default {
 
 	data() {
 		return {
-			copied: false
+			copied: false,
+			headerText: true
 		}
 	},
 	methods: {
+
 		async copyEmail_Click() {
 			try {
 				// NOTE:: Precisa de uma origem segura, HTTPS ou localhost
@@ -129,11 +147,10 @@ header {
 	color: lightgray;
 }
 
-button {
+.button-copy {
 	padding: 4px 8px;
 	margin-left: 8px;
 	margin-top: 2px;
-	/* margin-bottom: -8px; */
 	cursor: pointer;
 	border: 0;
 	border-radius: 4px;
@@ -142,5 +159,26 @@ button {
 .copied {
 	background-color: green;
 	color: white;
+}
+
+.button-hidden {
+	background: #2c2b2b;
+	color: lightgray;
+	border: 1px solid lightgray;
+	padding: 4px 8px;
+	margin-left: 2px;
+	border-radius: 4px;
+}
+
+@media only screen and (max-width: 770px) {
+	.self-employed {
+		font-size: 14px;
+	}
+	.button-copy {
+		display: none;
+	}
+	.button-hidden {
+		margin-right: -3px;
+	}
 }
 </style>
