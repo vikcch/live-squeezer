@@ -35,6 +35,16 @@
 
 		<p>Efficiently convert live and television poker hands into the PokerStars Hand History log format for record keeping and analysis.</p>
 
+		<p class="self-employed"><span class="note">NOTE:</span> Need someone to transcribe poker hands? Contact us at <a
+				class="light-link"
+				href="mailto:winningpokerhud@gmail.com"
+			>winningpokerhud@gmail.com</a>
+			<button
+				@click="copyEmail_Click"
+				:class="{copied}"
+			>Copy Email</button>
+		</p>
+
 		<div class="github">
 			<!-- Place this tag where you want the button to render. -->
 			<a
@@ -62,6 +72,22 @@
 import paypal147x47 from '../assets/paypal-147x47.js';
 export default {
 
+	data() {
+		return {
+			copied: false
+		}
+	},
+	methods: {
+		async copyEmail_Click() {
+			try {
+				// NOTE:: Precisa de uma origem segura, HTTPS ou localhost
+				await navigator.clipboard.writeText('winningpokerhud@gmail.com');
+				this.copied = true;
+				setTimeout(() => { this.copied = false; }, 1500);
+			} catch (error) { console.error(error); }
+		}
+	},
+
 	computed: {
 
 		getPaypalImage() {
@@ -75,8 +101,8 @@ export default {
 <style scoped>
 header {
 	position: relative;
-	background-color: #333333;
-	padding: 20px 4px;
+	background-color: #2c2b2b;
+	padding: 20px 4px 8px 4px;
 	color: white;
 	margin-bottom: 8px;
 }
@@ -89,5 +115,32 @@ header {
 	position: absolute;
 	top: 2px;
 	right: 2px;
+}
+
+.self-employed {
+	margin-top: 12px;
+}
+
+.note {
+	color: orange;
+}
+
+.light-link {
+	color: lightgray;
+}
+
+button {
+	padding: 4px 8px;
+	margin-left: 8px;
+	margin-top: 2px;
+	/* margin-bottom: -8px; */
+	cursor: pointer;
+	border: 0;
+	border-radius: 4px;
+}
+
+.copied {
+	background-color: green;
+	color: white;
 }
 </style>

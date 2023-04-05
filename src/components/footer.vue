@@ -11,7 +11,7 @@
 		<p class="text-center tm-s">Online Replayer - <a
 				href="https://replayer.winningpokerhud.com"
 				target="_blank"
-			>WPH Replayer</a>
+			>RIROPO Replayer</a>
 		</p>
 
 		<p class="text-center tm-s">Spin Equity - <a
