@@ -12,6 +12,7 @@
 					@click="deleteRow()"
 					ref="remove-player"
 					name="remove-player"
+					tabindex="-1"
 				>
 					<i class="fa fa-times"></i>
 				</button>
@@ -33,6 +34,7 @@
 					inputmode="numeric"
 					ref="seat"
 					class="text-right small-input"
+					tabindex="-1"
 				/>
 
 				<div :class="['bullseye', isDealer]"></div>
@@ -53,6 +55,7 @@
 					@input="forced"
 					@focus="$event.target.select()"
 					ref="name"
+					tabindex="-1"
 				/>
 			</div>
 		</div>
@@ -71,6 +74,7 @@
 					inputmode="numeric"
 					ref="stack"
 					class="text-right min-w-64"
+					tabindex="-1"
 				/>
 			</div>
 		</div>
@@ -95,6 +99,7 @@
 					class="button-icon button-icon--green open-cards-popup"
 					title="Pick Cards"
 					@click="onCardsPopupClick"
+					tabindex="-1"
 				>
 					<i class="fa fa-solo fa-th"></i>
 				</button>
