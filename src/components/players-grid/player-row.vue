@@ -132,15 +132,30 @@ export default {
 
 	methods: {
 
-		deleteRow() {
+		async deleteRow() {
 
-			const { inputs } = this.$parent.$data;
+			const result = await this.$swal.fire({
+				title: 'Sitout or Leave table?',
+				showCancelButton: true,
+				cancelButtonColor: '#3085d6',
+				cancelButtonText: 'Sitout',
+				confirmButtonText: 'Leave table',
+				confirmButtonColor: '#d33',
+				reverseButtons: true, // sitout aka "cancel" como butao da esquerda
+			});
+
+			const isLeave = result.isConfirmed && !result.isDismissed && result.value;
+			const isSitout = result.dismiss === 'cancel';
+
+			if (!isLeave && !isSitout) return;
+
+			const { inputs, sitouts } = this.$parent.$data;
+
+			if (isSitout) sitouts.push(inputs[this.intel.index]);
+
 			this.$delete(inputs, this.intel.index);
 
-			const { view } = this.$root.$data;
-			const tableMax = view.mainInfoVue.$data.values.tableMax;
-
-			view.addPlayerButtonState(tableMax);
+			this.$parent.removeImageCards();
 		},
 
 		forced(event) {
@@ -180,13 +195,20 @@ export default {
 			// NOTE:: Não tem "histories" antes de "actionStarted" 
 			// (só depois de pelo menos a primeira action for gravada)
 
-			const fakeHistories = model.histories?.map(v => ({
-				players: v.players.filter(v => v.seat !== seat),
-				streetCards: v.streetCards,
-			})) ?? [{
-				players: view.playersGridVue.inputs.filter(v => v.seat !== seat),
-				streetCards: null
-			}];
+			const fakeHistories = model.histories.map(v => {
+
+				const hasPlayers = !!v.players;
+
+				const players = hasPlayers
+					? v.players.filter(v => v.seat !== seat)
+					: view.playersGridVue.inputs.filter(v => v.seat !== seat);
+
+				const streetCards = hasPlayers
+					? v.streetCards
+					: null;
+
+				return { players, streetCards };
+			});
 
 			return History.isInputCardsTaken(holeCards, fakeHistories);
 		},

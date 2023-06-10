@@ -120,15 +120,6 @@ export default class View {
         }
     }
 
-    addPlayerButtonState(tableMax) {
-
-        const playersCount = this.playersGridVue.$data.inputs.length;
-
-        const limit = biz.playersLimitTableMax(tableMax);
-
-        this.playersGridVue.isAddPlayerEnabled = limit > playersCount;
-    }
-
     removeExtraPlayers(tableMax) {
 
         const limit = biz.playersLimitTableMax(tableMax);

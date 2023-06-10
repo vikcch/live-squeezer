@@ -14,6 +14,18 @@
 				<span class="lm-s">Random Info</span>
 			</label>
 
+			<!-- ::SITOUT:: -->
+
+			<label
+				v-show="sitouts.length"
+				class="pointer underline"
+			>
+				<span
+					class=""
+					@click="sitout()"
+				>Sitout ({{sitouts.length}})</span>
+			</label>
+
 			<!-- ::ADD PLAYER BUTTON:: -->
 
 			<button
@@ -64,6 +76,9 @@ import state from '../../units/state.js';
 import { tail } from '../../units/absx';
 import biz from '../../units/biz';
 import Player from '../../classes/player.js';
+import validation from '../../units/validations';
+
+import { makeTextTag } from '../../units/fxnl.js';
 
 const autoFillerData = [
 	{ seat: '1', name: 'vik', stack: '2000', holeCards: '__ __' },
@@ -78,8 +93,6 @@ const addRow = function () {
 
 	if (!this.randomPlayerInfo) this.inputs.push(Player.model());
 	else this.inputs.push(Player.model(...this.generateRandomPlayerInfo(tableMax)));
-
-	view.addPlayerButtonState(tableMax);
 
 	setTimeout(() => tail(this.$children).$refs['seat'].focus(), 0);
 };
@@ -126,6 +139,12 @@ const orderCardsDisplay = function () {
 };
 
 
+const sitouttersHandler = function () {
+
+	this.value = validation.force.onlyNumbers(this.value);
+};
+
+
 export default {
 	components: {
 		'app-player-row': PlayerRow
@@ -137,7 +156,8 @@ export default {
 			isAddPlayerEnabled: true,
 			isEditable: true,
 			dealerSeat: 1,
-			randomPlayerInfo: true
+			randomPlayerInfo: true,
+			sitouts: []
 		};
 	},
 
@@ -149,6 +169,63 @@ export default {
 		disable,
 		enable,
 		orderCardsDisplay,
+
+		async sitout() {
+
+			const { view } = this.$root.$data;
+			const tableMax = view.mainInfoVue.$data.values.tableMax;
+
+			const limit = biz.playersLimitTableMax(tableMax);
+
+			if (this.inputs.length >= limit) return this.$swal.fire({ title: 'Table is full' });
+
+			const askForSeating = async (sitouts) => {
+
+				const markTag = makeTextTag('mark');
+
+				const sitouttersSeat = sitouts.map(v => ` ${markTag(v.seat)}`);
+
+				const htmlText = `Players on Sitout: ${sitouttersSeat}`;
+
+				const result = await this.$swal.fire({
+					html: htmlText,
+					input: 'text',
+					onBeforeOpen: (saEl) => {
+						const input = saEl.querySelector('.swal2-input');
+						input.setAttribute('inputmode', 'numeric');
+						input.addEventListener('input', sitouttersHandler);
+					},
+					onClose: (saEl) => {
+						const input = saEl.querySelector('.swal2-input');
+						input.removeEventListener('input', sitouttersHandler);
+					}
+				});
+
+				const foundSitoutter = sitouts.find(v => v.seat === result?.value);
+
+				if (result.value && !foundSitoutter) return await askForSeating();
+
+				return foundSitoutter;
+			};
+
+			const { sitouts } = this.$data;
+
+			const sitoutter = sitouts.length > 1
+				? await askForSeating(sitouts)
+				: sitouts[0];
+
+			if (sitoutter) {
+
+				const { seat, name, stack } = sitoutter;
+				this.inputs.push(Player.model(seat, name, stack));
+				this.$data.sitouts = sitouts.filter(v => v !== sitoutter);
+
+				const uniquesSeats = new Set(this.inputs.map(v => v.seat)).size;
+				if (uniquesSeats !== this.inputs.length) {
+					this.$swal.fire({ title: 'Duplicate Seats!' });
+				}
+			}
+		},
 
 		getAllHoleCardsEl() {
 
@@ -240,7 +317,18 @@ export default {
 			const tableMax = view.mainInfoVue.$data.values.tableMax;
 
 			if (value) this.tryFillPlayersInfo(tableMax);
+		},
+
+		inputs(value) {
+
+			const { view } = this.$root.$data;
+			const tableMax = view.mainInfoVue.$data.values.tableMax;
+
+			const limit = biz.playersLimitTableMax(tableMax);
+
+			this.isAddPlayerEnabled = value.length < limit;
 		}
+
 	},
 
 	created() {
@@ -257,6 +345,9 @@ export default {
 <style>
 .pointer {
 	cursor: pointer;
+}
+.underline {
+	text-decoration: underline;
 }
 
 div.minimalistBlack {

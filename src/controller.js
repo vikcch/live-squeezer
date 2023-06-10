@@ -23,7 +23,6 @@ export default class Controller {
 
     handleTableMax = () => (value) => {
 
-        this.view.addPlayerButtonState(value);
         this.view.removeExtraPlayers(value);
 
         this.view.updateHeroSeatOptions(value);
