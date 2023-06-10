@@ -214,16 +214,15 @@ export default {
 				? await askForSeating(sitouts)
 				: sitouts[0];
 
-			if (sitoutter) {
+			if (!sitoutter) return;
 
-				const { seat, name, stack } = sitoutter;
-				this.inputs.push(Player.model(seat, name, stack));
-				this.$data.sitouts = sitouts.filter(v => v !== sitoutter);
+			const { seat, name, stack } = sitoutter;
+			this.inputs.push(Player.model(seat, name, stack));
+			this.$data.sitouts = sitouts.filter(v => v !== sitoutter);
 
-				const uniquesSeats = new Set(this.inputs.map(v => v.seat)).size;
-				if (uniquesSeats !== this.inputs.length) {
-					this.$swal.fire({ title: 'Duplicate Seats!' });
-				}
+			const uniquesSeats = new Set(this.inputs.map(v => v.seat)).size;
+			if (uniquesSeats !== this.inputs.length) {
+				this.$swal.fire({ title: 'Duplicate Seats!' });
 			}
 		},
 
@@ -249,10 +248,14 @@ export default {
 			const tableMax = biz.playersLimitTableMax(tableMaxExtended);
 			const namesTaken = this.inputs.map(v => v.name);
 
+			// NOTE:: `-Infinity` em array vazio
+			const maxStack = Math.max(...this.inputs.map(v => v.stack));
+			const stack = maxStack > 0 ? maxStack : this.hundredBlinds;
+
 			return [
 				biz.nextAvailableSeat(seatsTaken, tableMax).toString(),
 				biz.pickAvailableName(namesTaken),
-				Math.max(...this.inputs.map(v => v.stack)) || this.hundredBlinds,
+				stack,
 				'__ __'
 			];
 		},
@@ -311,6 +314,7 @@ export default {
 
 	watch: {
 
+		// CHECKBOX
 		randomPlayerInfo(value) {
 
 			const { view } = this.$root.$data;

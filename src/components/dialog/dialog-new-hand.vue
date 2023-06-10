@@ -95,14 +95,34 @@ export default {
 			controller.handleNewHand();
 		},
 
-		onNextHandClick() {
+		async onNextHandClick() {
 
 			const { controller, view } = this.$root.$data;
 			const result = view.tryGetHandHistory();
 
+			const { isSaveEnabled } = view.dialogLocalStorageVue.$data;
+
 			if (result.success) {
+
+				if (isSaveEnabled && !await this.askNextHandConfirmation()) return;
+
 				controller.handleNextHand();
 			}
+		},
+
+		async askNextHandConfirmation() {
+
+			const result = await this.$swal.fire({
+
+				title: 'Are you sure?',
+				text: 'The hand was not saved on Local Storage!',
+				showCancelButton: true,
+				cancelButtonText: 'Cancel',
+				confirmButtonText: 'Yes',
+				reverseButtons: true, // "cancel" como butao da esquerda
+			});
+
+			return result.isConfirmed && result.value;
 		}
 	},
 

@@ -135,7 +135,7 @@ const biz = {
      */
     nextAvailableSeat(seatsTaken, tableMax) {
 
-        const higherSeat = Math.max(...seatsTaken);
+        const higherSeat = Math.max(...seatsTaken, 0);
 
         if (higherSeat + 1 <= tableMax) return higherSeat + 1;
 
