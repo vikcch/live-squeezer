@@ -16,6 +16,21 @@
 			<span class="css-button-text">Start Action</span>
 		</button>
 
+		<div
+			class="restart"
+			role="button"
+			tabindex="0"
+			@click="restart_Click"
+		>
+			<span class="rm-m">Restart</span>
+			<i
+				id="next-hand-info"
+				class="fa fa-info-circle text-info"
+				aria-hidden="true"
+				@click="showInfo_Click"
+			></i>
+		</div>
+
 	</div>
 
 </template>
@@ -37,15 +52,27 @@ export default {
 			const { controller } = this.$root.$data;
 			controller.handleStartAction(event);
 		},
-		
+
 		disable() {
 
 			this.isEnabled = false;
-		}, 
+		},
 
-		enable(){
+		enable() {
 
 			this.isEnabled = true;
+		},
+
+		restart_Click(event) {
+
+			const { controller } = this.$root.$data;
+			controller.handleRestartAction(event);
+		},
+
+		showInfo_Click(event) {
+
+			const { view } = this.$root.$data;
+			view.showRestartActionInfoPopup(event);
 		}
 	},
 
@@ -63,5 +90,14 @@ export default {
 .wrapper {
 	display: flex;
 	justify-content: center;
+	position: relative;
+}
+
+.restart {
+	position: absolute;
+	right: 0;
+	top: 4px;
+	text-decoration: underline;
+	cursor: pointer;
 }
 </style>

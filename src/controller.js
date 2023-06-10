@@ -94,6 +94,12 @@ export default class Controller {
         this.view.displayDialogAction(this.model);
     }
 
+    handleRestartAction = () => {
+
+        this.view.resetControls(true);
+
+        this.model.reset();
+    }
 
     /**
      * Chamado em 'handleStreetSubmit()' ou 'handlePlayerActionSubmit()'

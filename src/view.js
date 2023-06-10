@@ -347,6 +347,16 @@ export default class View {
         });
     }
 
+    showRestartActionInfoPopup() {
+
+        Vue.swal.fire({
+            icon: 'info',
+            title: 'Restart Action!',
+            showCloseButton: true,
+            html: `The <i>Start Action</i> event is nullified, allowing the fields to be edited!`
+        });
+    }
+
     //#endregion
 
     //#region ERROS Popups
