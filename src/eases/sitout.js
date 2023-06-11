@@ -33,7 +33,7 @@ const askForSeating = async (sitouts) => {
 
     const foundSitoutter = sitouts.find(v => v.seat === result?.value);
 
-    if (result.value && !foundSitoutter) return await askForSeating();
+    if (result.value && !foundSitoutter) return await askForSeating(sitouts);
 
     return foundSitoutter;
 };
