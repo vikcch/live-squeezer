@@ -521,19 +521,27 @@ export default class View {
         this.playersGridVue.inputs = Array.from(Array(2), row);
     }
 
-    resetControls(fromNextHand) {
+    /**
+     * 
+     * @param { object } param0 
+     * @param { boolean } [param0.fromNextHand] 
+     * @param { boolean } [param0.fromRestartHand] Nullifying `Start Action`
+     */
+    resetControls({ fromNextHand, fromRestartHand } = {}) {
 
         this.hideGameDialogs();
 
-        if (fromNextHand) this.mainInfoVue.resetCell('handId');
-        else this.mainInfoVue.reset();
+        if (!fromNextHand && !fromRestartHand) this.mainInfoVue.reset();
+        else this.mainInfoVue.resetCell('handId');
 
         this.mainInfoVue.$el.removeAttribute('disabled');
 
         this.playersGridVue.enable();
 
-        this.playersGridVue.removeImageCards();
-        this.playersGridVue.removeHoleCards();
+        if (!fromRestartHand) {
+            this.playersGridVue.removeImageCards();
+            this.playersGridVue.removeHoleCards();
+        }
 
         this.startActionVue.enable();
 

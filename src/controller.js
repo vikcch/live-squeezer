@@ -96,7 +96,7 @@ export default class Controller {
 
     handleRestartAction = () => {
 
-        this.view.resetControls(true);
+        this.view.resetControls({ fromRestartHand: true });
 
         this.model.reset();
     }
@@ -184,11 +184,9 @@ export default class Controller {
 
     handleNextHand = () => {
 
-        this.model.mainInfo.players.forEach(p => p.holeCards = '__ __');
-
         this.view.nextHand(this.model.lastHistory, this.model.mainInfo.nextButton);
 
-        this.view.resetControls(true);
+        this.view.resetControls({ fromNextHand: true });
 
         this.model.reset();
     }

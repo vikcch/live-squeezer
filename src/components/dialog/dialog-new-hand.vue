@@ -3,16 +3,6 @@
 		<app-dialog-header>New Hand History</app-dialog-header>
 		<app-dialog-body v-show="!isCollapsed">
 
-			<!-- TODO:: Implementar ? -->
-			<!-- <label class="train">
-
-				<input
-					type="checkbox"
-					checked
-				>
-				<span class="lm-m">Ask confirmation if not saved</span>
-			</label> -->
-
 			<div class="right bm-s">
 
 				<i
