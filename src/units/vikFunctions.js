@@ -85,6 +85,20 @@ const vikFunctions = {
         value = fixValue(value);
 
         return Number.isInteger(value) ? value : value.toFixed(2);
+    },
+
+    /**
+     * 
+     * @param {string[]} array 
+     * @param {any} value 
+     */
+    makeComplexObject: function (array, value = {}) {
+        return array.reduceRight((acc, cur) => {
+
+            if (acc === value) return { [cur]: acc };
+            else return { [cur]: { ...acc } };
+
+        }, value);
     }
 };
 
@@ -102,7 +116,8 @@ export const {
     bytes,
     sum_rdc,
     fixValue,
-    displayAmount
+    displayAmount,
+    makeComplexObject
 } = vikFunctions;
 
 

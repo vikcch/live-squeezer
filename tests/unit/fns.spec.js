@@ -24,4 +24,37 @@ describe('vikFunctions.js', () => {
 
     });
 
+    describe('# makeComplexObject', () => {
+
+        it('1.', () => {
+
+            const actual = fns.makeComplexObject(['a', 'b', 'c']);
+
+            const expected = { a: { b: { c: {} } } };
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('2.', () => {
+
+            const actual = fns.makeComplexObject(['a', 'b', 'c'], '9-max');
+
+            const expected = { a: { b: { c: '9-max' } } };
+
+            expect(actual).toStrictEqual(expected);
+
+        });
+
+        it('3.', () => {
+
+            const actual = fns.makeComplexObject(['$root', '$data', 'view'], 'myView');
+
+            const expected = { $root: { $data: { view: 'myView' } } };
+
+            expect(actual).toStrictEqual(expected);
+
+        });
+
+    });
+
 });
