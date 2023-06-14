@@ -31,7 +31,7 @@ const askForSeating = async (sitouts) => {
         }
     });
 
-    const foundSitoutter = sitouts.find(v => v.seat === result?.value);
+    const foundSitoutter = sitouts.find(v => Number(v.seat) === Number(result.value));
 
     if (result.value && !foundSitoutter) return await askForSeating(sitouts);
 
@@ -53,7 +53,7 @@ const checkDuplicateSeats = function () {
     const uniquesSeats = new Set(this.inputs.map(v => v.seat)).size;
 
     if (uniquesSeats !== this.inputs.length) {
-        
+
         this.$swal.fire({ title: 'Duplicate Seats!' });
     }
 };

@@ -69,7 +69,7 @@ describe('sitout.js', () => {
 
     it('3. Mais de um player em sitout, prompta pelo seat', async () => {
 
-        const swalMock = jest.spyOn(Swal, 'fire').mockResolvedValue({ value: 6 });
+        const swalMock = jest.spyOn(Swal, 'fire').mockResolvedValue({ value: '6' });
 
         const $root = fns.makeComplexObject([
             '$data', 'view', 'mainInfoVue', '$data', 'values', 'tableMax'
@@ -111,7 +111,7 @@ describe('sitout.js', () => {
 
         const swalMock = jest.spyOn(Swal, 'fire')
             .mockResolvedValueOnce({ value: 5 })
-            .mockResolvedValueOnce({ value: 6 });
+            .mockResolvedValueOnce({ value: '6' });
 
         const $root = fns.makeComplexObject([
             '$data', 'view', 'mainInfoVue', '$data', 'values', 'tableMax'
@@ -119,7 +119,7 @@ describe('sitout.js', () => {
 
         const sitouts = [
             { seat: 4, name: 'rita', stack: 1000, holeCards: '__ __' },
-            { seat: 6, name: 'joana', stack: 1200, holeCards: '__ __' }
+            { seat: '6', name: 'joana', stack: 1200, holeCards: '__ __' }
         ];
 
         const component = {
@@ -152,8 +152,8 @@ describe('sitout.js', () => {
     it('5. Seat duplicado - senta player e avisa user', async () => {
 
         const swalMock = jest.spyOn(Swal, 'fire')
-            .mockResolvedValueOnce({ value: 5 })
-            .mockResolvedValueOnce({ value: 6 });
+            .mockResolvedValueOnce({ value: '5' })
+            .mockResolvedValueOnce({ value: '6' });
 
         const swalMock_1 = jest.spyOn(Swal, 'fire').mockResolvedValue({});
 
@@ -162,14 +162,14 @@ describe('sitout.js', () => {
         ], '9-max');
 
         const sitouts = [
-            { seat: 4, name: 'rita', stack: 1000, holeCards: '__ __' },
-            { seat: 6, name: 'joana', stack: 1200, holeCards: '__ __' }
+            { seat: '4', name: 'rita', stack: 1000, holeCards: '__ __' },
+            { seat: '6', name: 'joana', stack: 1200, holeCards: '__ __' }
         ];
 
         const component = {
             $root,
             $data: { sitouts },
-            inputs: [{ seat: 6, name: 'maria', stack: 1100, holeCards: '__ __' }],
+            inputs: [{ seat: '6', name: 'maria', stack: 1100, holeCards: '__ __' }],
             $swal: Swal
         };
 

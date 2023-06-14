@@ -149,9 +149,25 @@ export default {
 
 			if (!isLeave && !isSitout) return;
 
+			// NOTE:: o `seat` em "input[x]" pode ser string ou number:
+			// - String quando inserido/primeira hand e Number em "next hand"
+			// O mesmo para `stack`, só o `seat` faz comparações (sitout).
 			const { inputs, sitouts } = this.$parent.$data;
 
-			if (isSitout) sitouts.push(inputs[this.intel.index]);
+			if (isSitout) {
+
+				const player = inputs[this.intel.index];
+
+				if (sitouts.some(v => Number(v.seat) === Number(player.seat))) {
+
+					return this.$swal.fire({
+						title: `Seat ${player.seat} is already sitout`,
+						text: 'Please remove the sitout player first!'
+					});
+				}
+
+				sitouts.push(player);
+			}
 
 			this.$delete(inputs, this.intel.index);
 
