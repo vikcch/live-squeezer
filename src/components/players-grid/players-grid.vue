@@ -51,7 +51,7 @@
 					<div class="divTableHead">Seat</div>
 					<div class="divTableHead">Name</div>
 					<div class="divTableHead">Stack</div>
-					<div class="divTableHead">Cards</div>
+					<div class="divTableHead focus-short-cut">Cards</div>
 				</div>
 			</div>
 
@@ -117,13 +117,11 @@ const highlight = function (invalidPlayer) {
 const disable = function () {
 
 	this.isEditable = false;
-	this.isAddPlayerEnabled = false;
 };
 
 const enable = function () {
 
 	this.isEditable = true;
-	this.isAddPlayerEnabled = true;
 }
 
 const orderCardsDisplay = function () {
@@ -146,7 +144,6 @@ export default {
 	data() {
 		return {
 			inputs: autoFillerData,
-			isAddPlayerEnabled: true,
 			isEditable: true,
 			dealerSeat: 1,
 			randomPlayerInfo: true,
@@ -162,6 +159,15 @@ export default {
 		disable,
 		enable,
 		orderCardsDisplay,
+
+		focusFirstPlayerInput() {
+
+			if (this.$children.length === 0) return;
+
+			const el = this.$children[0].$refs['hole-cards'];
+
+			el.focus();
+		},
 
 		sitout() {
 
@@ -251,6 +257,18 @@ export default {
 
 			// NOTE:: '1000' para quando não há stacks ou big in `NaN`
 			return big * 100 || 1000;
+		},
+
+		isAddPlayerEnabled() {
+			const { view } = this.$root.$data;
+			const tableMax = view.mainInfoVue?.$data?.values?.tableMax;
+
+			// NOTE:: `undefined` quando inicia a app
+			if (!tableMax) return true;
+
+			const limit = biz.playersLimitTableMax(tableMax);
+
+			return this.inputs.length < limit && this.isEditable;
 		}
 	},
 
@@ -264,17 +282,6 @@ export default {
 
 			if (value) this.tryFillPlayersInfo(tableMax);
 		},
-
-		inputs(value) {
-
-			const { view } = this.$root.$data;
-			const tableMax = view.mainInfoVue.$data.values.tableMax;
-
-			const limit = biz.playersLimitTableMax(tableMax);
-
-			this.isAddPlayerEnabled = value.length < limit;
-		}
-
 	},
 
 	created() {
@@ -294,6 +301,14 @@ export default {
 }
 .underline {
 	text-decoration: underline;
+}
+.focus-short-cut::after {
+	content: "F8";
+	font-size: 10px;
+	color: #cccccc;
+	margin-left: 4px;
+	vertical-align: 4px;
+	font-weight: normal;
 }
 
 div.minimalistBlack {

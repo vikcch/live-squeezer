@@ -291,6 +291,11 @@ export default {
 			const { seat } = this.intel.input;
 
 			return dealerSeat == seat ? 'dealer' : '';
+		},
+
+		showFocusShortcut() {
+
+			return this.intel.index === 0;
 		}
 	},
 

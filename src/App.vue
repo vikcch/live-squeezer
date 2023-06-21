@@ -114,6 +114,25 @@ export default {
 
 	data() {
 		return {};
+	},
+	created() {
+
+		window.addEventListener('keyup', (event) => {
+
+			if (event.key === 'F8') {
+
+				this.$refs['players-grid'].focusFirstPlayerInput();
+			}
+
+			if (event.key === 'F9') {
+
+				if (!this.$refs['start-action'].$data.isEnabled) return;
+
+				const { controller } = this.$root.$data;
+				controller.handleStartAction(event);
+			}
+
+		});
 	}
 };
 </script>

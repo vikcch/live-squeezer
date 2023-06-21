@@ -3,7 +3,7 @@
 
 		<app-dialog-header :collapsable="false">
 
-			<div v-html="title">{{title}}</div>
+			<div v-html="title"></div>
 
 		</app-dialog-header>
 

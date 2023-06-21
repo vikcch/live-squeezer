@@ -2,10 +2,14 @@
 
 	<div class="wrapper">
 
+		<!-- NOTE:: `@mouseup` e `@keyup` porque `displayDialogAction()` está no mesmo -->
+		<!-- "thread" e disparava o erro "Invalid Action" pelo teclado com `@click` -->
+		<!-- porque dialog-action já estava visivel... evita um `setTimeout()` -->
+
 		<button
 			ref="start-action"
-			@click="startAction"
-			@mousedown.prevent=""
+			@mouseup="startAction"
+			@keyup="startAction_keyup"
 			:class="['css-button', styleState]"
 			:disabled="!isEnabled"
 		>
@@ -13,7 +17,7 @@
 					class="fa fa-flag-o"
 					aria-hidden="true"
 				></i></span>
-			<span class="css-button-text">Start Action</span>
+			<span class="css-button-text start-action-text">Start Action</span>
 		</button>
 
 		<div
@@ -48,6 +52,14 @@ export default {
 		startAction(event) {
 
 			event.preventDefault();
+
+			const { controller } = this.$root.$data;
+			controller.handleStartAction(event);
+		},
+
+		startAction_keyup(event) {
+
+			if (event.key !== "Enter") return;
 
 			const { controller } = this.$root.$data;
 			controller.handleStartAction(event);
@@ -91,6 +103,13 @@ export default {
 	display: flex;
 	justify-content: center;
 	position: relative;
+}
+
+.start-action-text::after {
+	content: "F9";
+	font-size: 10px;
+	margin-left: 8px;
+	vertical-align: 4px;
 }
 
 .restart {
