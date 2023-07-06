@@ -35,6 +35,7 @@
 					ref="seat"
 					class="text-right small-input"
 					tabindex="-1"
+					aria-label="seat"
 				/>
 
 				<div :class="['bullseye', isDealer]"></div>
@@ -56,6 +57,7 @@
 					@focus="$event.target.select()"
 					ref="name"
 					tabindex="-1"
+					aria-label="name"
 				/>
 			</div>
 		</div>
@@ -75,6 +77,7 @@
 					ref="stack"
 					class="text-right min-w-64"
 					tabindex="-1"
+					aria-label="stack"
 				/>
 			</div>
 		</div>
@@ -91,6 +94,7 @@
 						maxlength="5"
 						name="hole-cards"
 						@input="onHoldCardsInput"
+						aria-label="hole-cards"
 					/>
 
 				</div>

@@ -1,7 +1,7 @@
 <template>
 	<div class="cell">
 
-		<div class="train bm-s">
+		<label class="train bm-s">
 			<span>{{props.slotAttrs.label}}</span>
 
 			<i
@@ -10,12 +10,13 @@
 				@click="showInfo"
 				aria-hidden="true"
 			></i>
-		</div>
 
-		<component
-			:is="props.slotAttrs.el"
-			:attrs="props.slotAttrs"
-		></component>
+			<component
+				:is="props.slotAttrs.el"
+				:attrs="props.slotAttrs"
+			></component>
+
+		</label>
 
 	</div>
 </template>
@@ -52,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+label {
+	display: block;
+}
 
 .input--main-info {
 	height: 28px;

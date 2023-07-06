@@ -10,6 +10,7 @@
 				class="button-icon button-icon--gray no-select"
 				title=""
 				@click="onCollapseClick"
+				aria-label="collapse"
 			>
 				<i :class="['fa', collapsedStyleState]"></i>
 			</button>

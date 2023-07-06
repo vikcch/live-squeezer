@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 
 import Header from './components/header.vue';
 import MainInfo from './components/main-info/main-info.vue';
@@ -93,10 +92,14 @@ import Switcher from './components/switcher.vue';
 import ForumFormat from './components/forum-format.vue';
 import Footer from './components/footer.vue';
 
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
-
-window.EventVue = new Vue;
+// NOTE:: Lazy loading... contiuar a dar warning por excesso de tamanho
+// const MainInfo = () => import('./components/main-info/main-info.vue');
+// const PlayersGrid = () => import('./components/players-grid/players-grid.vue');
+// const HandHistory = () => import('./components/hand-history/hand-history.vue');
+// const StartAction = () => import('./components/start-action.vue');
+// const Dialog = () => import('./components/dialog/dialog.vue');
+// const Switcher = () => import('./components/switcher.vue');
+// const ForumFormat = () => import('./components/forum-format.vue');
 
 export default {
 	name: 'app',

@@ -75,7 +75,7 @@ const handleFocusout = function (event) {
 
     const input = event.currentTarget;
 
-    const color = input.value === '__ __' ? '#ccc' : 'black';
+    const color = input.value === '__ __' ? '#646464' : 'black';
 
     input.style.color = color;
 };
