@@ -146,7 +146,7 @@ export default class Controller {
             }
 
             if (this.model.isHandOver()) this.wrapUpHand();
-            else this.view.displayDialogStreet(this.model.getNextStreet());
+            else this.view.displayDialogStreet(this.model.getNextStreet(), this.model);
         }
         else this.view.displayDialogAction(this.model);
     }
@@ -166,7 +166,7 @@ export default class Controller {
         if (this.model.isHandOver()) this.wrapUpHand();
         else {
 
-            if (this.model.isHandAllIn()) this.view.displayDialogStreet(this.model.getNextStreet());
+            if (this.model.isHandAllIn()) this.view.displayDialogStreet(this.model.getNextStreet(), this.model);
             else this.view.displayDialogAction(this.model);
         }
     }
@@ -197,7 +197,7 @@ export default class Controller {
 
         const result = this.model.undo();
 
-        if (result.isStreet) this.view.displayDialogStreet(result.nextStreet);
+        if (result.isStreet) this.view.displayDialogStreet(result.nextStreet, this.model);
         else this.view.displayDialogAction(this.model);
 
         this.view.printActivity(this.model.histories);

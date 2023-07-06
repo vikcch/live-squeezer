@@ -1,6 +1,15 @@
 <template>
 	<div v-show="isVisible">
-		<app-dialog-header :collapsable="false">{{title}}</app-dialog-header>
+
+		<app-dialog-header :collapsable="false">
+
+			<div
+				class="divorced w-100"
+				v-html="title"
+			></div>
+
+		</app-dialog-header>
+
 		<app-dialog-body>
 
 			<div class="train bm-l">

@@ -174,7 +174,7 @@ export default class View {
         this.dialogActionVue.wrapUp();
     }
 
-    displayDialogStreet(street) {
+    displayDialogStreet(street, model) {
 
         this.dialogActionVue.isVisible = false;
 
@@ -184,7 +184,22 @@ export default class View {
 
         const text = isFlop ? '__ __ __' : '__';
 
-        this.dialogStreetVue.title = street;
+        const lastPlayers = model.histories.at(-1).players;
+
+        const pot = lastPlayers
+            .map(v => v.stack - v.currentStack)
+            .reduce((acc, cur) => acc + cur);
+
+        const playersCountEl = makeTextTag('em')(`${lastPlayers.length} Players`);
+        const playersAllIn = lastPlayers.filter(v => v.isAllIn);
+        const playersAllInEl = makeTextTag('em')(` (All-in: ${playersAllIn.length})`);
+        const playersEl = `${playersCountEl}${playersAllIn.length ? playersAllInEl : ''}`;
+        const extraInfoEl = makeTextTag('div')(`Pot: ${pot} - ${playersEl}`);
+        const streetEl = makeTextTag('div')(street);
+
+        const title = `${streetEl} ${extraInfoEl}`;
+
+        this.dialogStreetVue.title = title;
         this.dialogStreetVue.isVisible = true;
         this.dialogStreetVue.text = text;
         this.dialogStreetVue.maxlength = maxlength;

@@ -153,3 +153,7 @@ mark {
 .swal2-popup {
 	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 }
+
+.w-100 {
+	width: 100%;
+}

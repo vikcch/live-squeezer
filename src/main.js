@@ -4,12 +4,15 @@ import View from './view.js';
 
 import Vue from 'vue';
 
+Vue.config.devtools = true;
+
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 
 import VModal from 'vue-js-modal';
 Vue.use(VModal);
+
 
 new Controller(new Model, new View);
 
