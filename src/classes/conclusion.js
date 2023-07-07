@@ -44,8 +44,11 @@ export default class Conclusion {
         // NOTE:: player é `null` quando há multiplos all-in com a mesma stack
         if (!player || stillPlaying.length > 1) return;
 
-        player.isAllIn = false;
-        player.wasAllin = true;
+        if (player.isAllIn) {
+
+            player.isAllIn = false;
+            player.wasAllIn = true;
+        }
 
         const lastHistory = histories[histories.length - 1];
         const { currentBet, street } = lastHistory;

@@ -169,7 +169,7 @@ const getStreetPots = function (histories) {
 const getPlayersCountsText = function (streetHistory) {
 
     const playersPlaying = streetHistory.players
-        .filter(p => p.stillPlaying || p.isAllIn || p.wasAllin);
+        .filter(p => p.stillPlaying || p.isAllIn || p.wasAllIn);
 
     const playersAllIn = streetHistory.players.filter(p => p.isAllIn);
 

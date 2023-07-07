@@ -20,8 +20,8 @@ export default class Player {
         this.stillPlaying = true;   // AKA ainda pode actuar (ex: em AllIn é 'false')
 
         this.isAllIn = false;       // unstable, pode voltar a 'false' em 'setUncalledBet'
-        this.wasAllin = false;      // setado a 'true' só em 'setUncalledBet' se 
-        // 'this.isAllIn' voltar a 'false'
+        this.wasAllIn = false;      // setado a 'true' só em 'setUncalledBet' se 
+                                    // 'isAllIn' for `true` que acaba por ficar `false`
         this.moneyOnStreet = 0;
 
         this.holeCards = '__ __';   // só as instacias em mainInfo têm as holeCards

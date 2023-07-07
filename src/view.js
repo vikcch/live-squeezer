@@ -190,10 +190,13 @@ export default class View {
             .map(v => v.stack - v.currentStack)
             .reduce((acc, cur) => acc + cur);
 
-        const playersCountEl = makeTextTag('em')(`${lastPlayers.length} Players`);
-        const playersAllIn = lastPlayers.filter(v => v.isAllIn);
-        const playersAllInEl = makeTextTag('em')(` (All-in: ${playersAllIn.length})`);
-        const playersEl = `${playersCountEl}${playersAllIn.length ? playersAllInEl : ''}`;
+        const stillPlaying = lastPlayers.filter(v => v.stillPlaying).length;
+        const playersAllIn = lastPlayers.filter(v => v.isAllIn || v.wasAllIn).length;
+        const playersCount = stillPlaying + playersAllIn;
+
+        const playersCountEl = makeTextTag('em')(`${playersCount} Players`);
+        const playersAllInEl = makeTextTag('em')(` (All-in: ${playersAllIn})`);
+        const playersEl = `${playersCountEl}${playersAllIn ? playersAllInEl : ''}`;
         const extraInfoEl = makeTextTag('div')(`Pot: ${pot} - ${playersEl}`);
         const streetEl = makeTextTag('div')(street);
 
