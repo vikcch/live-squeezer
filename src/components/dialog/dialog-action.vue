@@ -101,7 +101,9 @@ export default {
 
 		onKeyUp(event) {
 
-			const { key } = event;
+			// https://www.toptal.com/developers/keycode
+
+			const { code } = event;
 
 			const work = {
 
@@ -112,12 +114,14 @@ export default {
 				ArrowRight: () => submit('calls'),
 
 				Enter: () => submit(this.text),
+
+				Equal: () => this.text = this.text.replace('=', '000')
 			};
 
 			const { controller } = this.$root.$data;
 			const submit = controller.handlePlayerActionSubmit(event);
 
-			key in work && work[key].call();
+			code in work && work[code].call();
 		},
 
 		onFoldClick(event) {

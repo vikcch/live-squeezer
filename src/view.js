@@ -356,12 +356,13 @@ export default class View {
         const amount = `To <i>raise to</i> or <i>bet</i>: Type the amount`;
         const passive = `To <i>check</i> or <i>call</i>: Type <mark>check</mark> or <mark>call</mark> or <kbd ${kbdStyle}>→</kbd> key`;
         const fold = `To <i>fold</i>: Type <mark>fold</mark> or <kbd ${kbdStyle}>←</kbd> key`;
+        const thousands = `Press <mark>=</mark> to make thousands, will add <i>000</i>`;
 
         Vue.swal.fire({
             icon: 'info',
             title: 'Action input!',
             showCloseButton: true,
-            html: `<p ${pStyle}>${amount}</p><p ${pStyle}>${passive}</p><p ${pStyle}>${fold}</p>`
+            html: `<p ${pStyle}>${amount}</p><p ${pStyle}>${passive}</p><p ${pStyle}>${fold}</p><p ${pStyle}>${thousands}</p>`
         });
     }
 
