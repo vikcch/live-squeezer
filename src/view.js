@@ -551,7 +551,7 @@ export default class View {
         this.hideGameDialogs();
 
         if (!fromNextHand && !fromRestartHand) this.mainInfoVue.reset();
-        else this.mainInfoVue.resetCell('handId');
+        if (fromNextHand) this.mainInfoVue.resetCell('handId');
 
         this.mainInfoVue.$el.removeAttribute('disabled');
 
