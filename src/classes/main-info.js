@@ -16,6 +16,7 @@ export default class MainInfo {
         this.tableMax = null;
         this.perspective = null;
         this.heroSeat = null;
+        this.handTime = null;
 
         this.players = null;
         this.invalidPlayer = false;
@@ -90,7 +91,6 @@ export default class MainInfo {
 
             this.perspective = value;
         }
-
     }
 
     /**
@@ -101,6 +101,17 @@ export default class MainInfo {
         if (validations.business.mainInfo.isHeroSeat(value)) {
 
             this.heroSeat = Number(value);
+        }
+    }
+
+    /**
+     * @param {any} value
+     */
+    set setHandTime(value) {
+
+        if (validations.business.mainInfo.isHandTime(value)) {
+
+            this.handTime = value.padStart(8, '0');
         }
     }
 
@@ -185,7 +196,9 @@ export default class MainInfo {
         this.setTableMax = values.tableMax;
         this.setPerspective = values.perspective;
         this.setHeroSeat = values.heroSeat;
+        this.setHandTime = values.handTime;
 
+        this.trySetNewHandId();
         this.forceUniqueNames(values);
         this.setPlayers = values.playersInfo;
 
@@ -199,7 +212,6 @@ export default class MainInfo {
 
             this.setInvalidPlayer = seats;
         }
-
         const manyStraddles = () => {
 
             if (!this.stakes) return;
@@ -213,6 +225,7 @@ export default class MainInfo {
         if (manyStraddles()) this.stakes = null;
 
         const isValid = Object.entries(this).every(prop => prop[1] !== null) && !this.invalidPlayer;
+
 
         return isValid && allDistinctSeat && heroIsPlayer;
     }
@@ -251,6 +264,7 @@ export default class MainInfo {
         this.tableMax = null;
         this.perspective = null;
         this.heroSeat = null;
+        this.handTime = null;
 
         this.players = null;
         this.invalidPlayer = false;
@@ -345,6 +359,17 @@ export default class MainInfo {
             }
         }
 
+    }
+
+    trySetNewHandId() {
+
+        // NOTE:: Inclui "time" no `handId` caso seja defenido (ultimos 6 chars)
+
+        const abrvTime = this.handTime?.replace(/:/g, '');
+
+        if (!Number(abrvTime)) return;
+
+        this.handId = Number(`${this.handId.toString().slice(0, -6)}${abrvTime}`);
     }
 
 }

@@ -62,6 +62,10 @@ const requiredPreStartedAction = async function (mainInfoValues, view) {
             label: 'Hero seat',
             message: () => 'Type a valid player seat!',
         },
+        handTime: {
+            label: 'Time',
+            message: () => 'Format: <em>00:00:00</em> or <em>0:00:00</em> ',
+        },
         invalidPlayer: {
             label: mainInfoValues.invalidPlayer.field,
 

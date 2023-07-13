@@ -551,7 +551,11 @@ export default class View {
         this.hideGameDialogs();
 
         if (!fromNextHand && !fromRestartHand) this.mainInfoVue.reset();
-        if (fromNextHand) this.mainInfoVue.resetCell('handId');
+
+        if (fromNextHand) {
+            this.mainInfoVue.resetCell('handId');
+            this.mainInfoVue.resetCell('handTime');
+        }
 
         this.mainInfoVue.$el.removeAttribute('disabled');
 
@@ -620,6 +624,20 @@ export default class View {
     tryEnableLocalStorageSaveButton() {
 
         this.dialogLocalStorageVue.tryEnableSaveButton();
+    }
+
+    tryHighlightHandTime() {
+
+        this.mainInfoVue.highlight('handTime');
+    }
+
+    tryUpdateHandId(mainInfo) {
+
+        const [{ text }] = this.mainInfoVue.getElementByKey('handId').$children;
+
+        if (text === mainInfo.handId) return;
+
+        this.mainInfoVue.updateInput({ key: 'handId', value: mainInfo.handId });
     }
 
 }

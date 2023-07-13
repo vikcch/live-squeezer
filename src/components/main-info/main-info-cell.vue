@@ -11,9 +11,17 @@
 				aria-hidden="true"
 			></i>
 
+			<input
+				v-if="props.slotAttrs.optional"
+				class="absolute-right"
+				type="checkbox"
+				v-model="enabled"
+				@change="optional_Change"
+			>
+
 			<component
 				:is="props.slotAttrs.el"
-				:attrs="props.slotAttrs"
+				:attrs="{...props.slotAttrs, enabled}"
 			></component>
 
 		</label>
@@ -24,6 +32,7 @@
 <script>
 import MiInput from './main-info-input.vue';
 import MiSelect from './main-info-select.vue';
+import SettingsStore from '@/store/simple/settings';
 
 export default {
 	props: ['props'],
@@ -33,28 +42,84 @@ export default {
 		'app-mi-select': MiSelect,
 	},
 
+	data() {
+
+		return {
+			enabled: false,
+			SettingsStoreData: SettingsStore.data,
+		}
+	},
+
+	computed: {
+
+		optionalTime: {
+			// NOTE:: Precisa de uma prop (parent) no "data()" para ficar "reactive"
+			get() {
+				return SettingsStore.getters.optionalTime;
+			},
+
+			set(value) {
+				SettingsStore.setters.optionalTime = value;
+			}
+		},
+	},
+
 	methods: {
 
 		showInfo() {
 
 			const { view } = this.$root.$data;
-			const { key } = this.props.slotAttrs;
 
-			const work = {
-
+			this.choice({
 				stakes: () => view.showStakesInfoPopup(),
 				perspective: () => view.showPerspectiveInfoPopup()
-			};
+			});
+		},
+
+		optional_Change() {
+
+			const text = this.enabled ? '' : this.props.slotAttrs.text;
+
+			// NOTE:: Nem todos os inputs tém "EventVue.$on"
+			window.EventVue.$emit(`${this.props.slotAttrs.key}MainInfoText`, text);
+		},
+
+		choice(props) {
+
+			const { key } = this.props.slotAttrs;
+
+			const work = { ...props };
 
 			key in work && work[key].call();
 		}
+	},
+
+	watch: {
+
+		enabled(value) {
+
+			this.choice({ handTime: () => this.optionalTime = value });
+		}
+	},
+
+	mounted() {
+
+		this.choice({
+			handTime: () => {
+				this.enabled = this.optionalTime;
+				this.optional_Change();
+			}
+		});
+
 	}
+
 }
 </script>
 
 <style scoped>
 label {
 	display: block;
+	position: relative;
 }
 
 .input--main-info {
@@ -63,5 +128,10 @@ label {
 	text-align: center;
 	margin-bottom: 10px;
 	width: 100%;
+}
+.absolute-right {
+	position: absolute;
+	right: 0px;
+	top: 2px;
 }
 </style>

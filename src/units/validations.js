@@ -14,6 +14,7 @@ const validation = {
 
         onlyNumbers: value => value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'),
         onlyNumbersAndDot: value => value.replace(/[^0-9.]/g, ''),
+        onlyNumbersAndColon: value => value.replace(/[^0-9:]/g, ''),
 
         //        onlyNumbersOrSeparator: value => value.replace(/[^.0-9]/g, '').replace(/(.*)/g, '$1'),
         onlyNumbersOrSeparator: value => value.replace(/[^0-9.,-\s]/g, ''),
@@ -167,8 +168,12 @@ const validation = {
 
                 const n = Number(value);
                 return Number.isInteger(n) && absx.isWithinOneToTen(n);
-            }
+            },
 
+            isHandTime: function (value) {
+
+                return /^\d(\d)?:\d\d:\d\d$/.test(value);
+            }
         },
 
         geral: {

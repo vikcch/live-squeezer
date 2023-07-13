@@ -67,6 +67,8 @@ export default class Controller {
             return;
         }
 
+        this.view.tryUpdateHandId(mainInfo);
+
         this.view.disableUI();
 
         this.model.orderPlayers();
@@ -189,6 +191,8 @@ export default class Controller {
         this.view.resetControls({ fromNextHand: true });
 
         this.model.reset();
+
+        this.view.tryHighlightHandTime();
     }
 
     undo() {

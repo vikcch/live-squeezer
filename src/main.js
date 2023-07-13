@@ -1,6 +1,7 @@
 import Controller from './controller.js';
 import Model from './model.js';
 import View from './view.js';
+import SettingsStore from './store/simple/settings';
 
 import Vue from 'vue';
 
@@ -19,6 +20,9 @@ import VModal from 'vue-js-modal';
 Vue.use(VModal);
 
 window.EventVue = new Vue;
+
+SettingsStore.methods.tryCreateSettings();
+SettingsStore.methods.loadSettings();
 
 new Controller(new Model, new View);
 

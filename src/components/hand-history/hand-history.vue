@@ -62,7 +62,7 @@ export default {
 			const handId = `PokerStars Hand #${mainInfo.handId}:`;
 			const blinds = `(${mainInfo.stakes.smallBlind}/${mainInfo.stakes.bigBlind})`;
 			const game = `Hold'em No Limit ${blinds}`;
-			const date = mainInfo.handDate.replace(/-/g, '/') + ' 00:00:00 WET';
+			const date = mainInfo.handDate.replace(/-/g, '/') + ` ${mainInfo.handTime} WET`;
 
 			const elTop = this.makeHandHistoryElement(mainInfoEl);
 			const elTopText = `${handId}  ${game} - ${date}`;

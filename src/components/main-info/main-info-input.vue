@@ -4,6 +4,7 @@
 		v-model="text"
 		v-bind="attributes"
 		@input="onInputHandler"
+		:disabled="!enabled"
 	>
 </template>
 
@@ -30,6 +31,15 @@ export default {
 				[`inputmode`]: this.attrs.inputmode,
 			};
 		},
+
+		enabled() {
+
+			// NOTE:: Apenas `handTime`(key) é opcional
+			if (!this.attrs.optional) return true;
+
+			return this.attrs.enabled;
+		}
+
 	},
 
 	methods: {
@@ -52,6 +62,7 @@ export default {
 					validation.force.onlyAlphaNumeric(this.text),
 				stakes: () =>
 					validation.force.onlyNumbersDotsAndBrackets(this.text),
+				handTime: () => validation.force.onlyNumbersAndColon(this.text),
 			};
 
 			this.text = rules[this.attrs.key].call();
@@ -83,6 +94,8 @@ export default {
 
 				handDate: () => this.setHandDate(),
 
+				handTime: () => this.text = this.enabled ? '' : this.attrs.text,
+
 				default: () => this.text = this.attrs.text
 			};
 
@@ -91,8 +104,9 @@ export default {
 			(work[key] || work['default']).call();
 
 			this.dispatch();
-		}
+		},
 	},
+
 
 	created() {
 
@@ -102,6 +116,16 @@ export default {
 
 			this.$el.focus();
 		});
+
+		if (['handId', 'handTime'].includes(this.attrs.key)) {
+
+			window.EventVue.$on(`${this.attrs.key}MainInfoText`, (value) => {
+
+				this.text = value;
+
+				this.dispatch();
+			});
+		}
 	},
 
 	mounted() {

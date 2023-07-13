@@ -84,6 +84,12 @@ const attrs_ = [
 			{ value: '10-max', text: '10-max' },
 		]
 	},
+
+	{
+		key: 'handTime', label: 'Time:', text: '00:00:00',
+		el: 'app-mi-input', maxlength: '8', optional: true
+	}
+
 ];
 
 export default {
@@ -112,6 +118,12 @@ export default {
 		updateDealer(value) {
 
 			window.EventVue.$emit(`updateDealer`, value);
+		},
+
+		updateInput({ key, value }) {
+
+			// NOTE:: Nem todos os inputs tém "EventVue.$on"
+			window.EventVue.$emit(`${key}MainInfoText`, value);
 		},
 
 		getElementByKey(key) {
@@ -144,8 +156,6 @@ export default {
 	},
 
 	created() {
-
-
 
 		window.EventVue.$on('intelMainInfo', parcel => {
 
