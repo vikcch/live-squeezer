@@ -1,6 +1,6 @@
 {
   "name": "live-squeezer",
-  "version": "0.11.7-beta",
+  "version": "0.12.0-beta",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --hot",
