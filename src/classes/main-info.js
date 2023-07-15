@@ -316,19 +316,49 @@ export default class MainInfo {
         const { ante, smallBlind, bigBlind, straddles } = this.stakes;
         const posts = [smallBlind, bigBlind, ...straddles];
 
+        // STOPSHIP:: PLAYER PODE NãO TER O VALOR DA ANTE NA STACK
+        // if (ante) {
+        //     this.players.forEach(p => {
+        //         p.currentStack -= ante;
+        //     });
+        // }
         if (ante) {
-            this.players.forEach(p => {
-                p.currentStack -= ante;
+            this.players.forEach(player => {
+
+                const amount = player.currentStack < ante ? player.currentStack : ante;
+                player.currentStack -= amount;
+                player.currentStack = fixValue(player.currentStack);
             });
         }
 
+        // posts.forEach((post, i) => {
+        //     this.players[i].post = true;
+        //     this.players[i].moneyOnStreet = post;
+        //     this.players[i].currentStack -= post;
+        //     this.players[i].currentStack = fixValue(this.players[i].currentStack);
+        // });
+
         posts.forEach((post, i) => {
-            this.players[i].post = true;
-            this.players[i].moneyOnStreet = post;
-            this.players[i].currentStack -= post;
-            this.players[i].currentStack = fixValue(this.players[i].currentStack);
+
+            const player = this.players[i];
+            player.post = true;
+
+            // STOPSHIP:: METER ALLIN ? VER ONDE METE isAllIn
+
+            const amount = player.currentStack < post ? player.currentStack : post;
+
+            player.moneyOnStreet = amount;
+            player.currentStack -= amount;
+            player.currentStack = fixValue(player.currentStack);
         });
 
+        this.players.forEach(player => {
+
+            if (player.currentStack > 0) return;
+
+            player.isAllIn = true;
+            player.stillPlaying = false;
+        });
     }
 
 

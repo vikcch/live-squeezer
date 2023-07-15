@@ -20,9 +20,18 @@ class History {
 
         const firstHistory = histories[0];
 
+        // NOTE:: Pode não ter o valor da blind
+        // const bigBlindPosted = 
+        // STOPSHIP::
+        console.log(mainInfo.players);
+        const bigBlindPlayer = mainInfo.players.find(v => v.position === 'BB');
+        console.log(bigBlindPlayer);
+
         firstHistory.currentBet = mainInfo.stakes.straddles.length
             ? mainInfo.stakes.straddles[mainInfo.stakes.straddles.length - 1]
             : mainInfo.stakes.bigBlind;
+            // STOPSHIP::
+            // : bigBlindPlayer.moneyOnStreet;
 
         firstHistory.players = Player.deepCopy(mainInfo.players);
         firstHistory.street = 0;

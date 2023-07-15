@@ -133,12 +133,16 @@ class Model {
         const streetClosed = stillPlaying.every(p => p.acted) || stillPlaying.length === 1;
 
         const areAllIns = Player.getAllInsOnLastIndex(this.histories).length !== 0;
+        const allInsCount = Player.getAllInsOnLastIndex(this.histories).length;
 
         const lastIndex = this.histories.length - 1;
 
         return (streetClosed && this.histories[lastIndex].street === 3) ||
             (stillPlaying.length <= 1 && !areAllIns) ||
-            stillPlaying.length === 0 && this.histories[lastIndex].street === 3;
+            (stillPlaying.length === 0 && this.histories[lastIndex].street === 3) |
+            // NOTE:: Big blind allin Walker|
+            // STOPSHIP::
+            (stillPlaying.length === 0 && allInsCount === 1);
     }
 
     isHandAllIn() {

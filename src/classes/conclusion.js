@@ -84,6 +84,13 @@ export default class Conclusion {
 
     getPots(lasts) {
 
+        // STOPSHIP:: Não está a criar side pots em ante all-in, 
+        // porque as ante não contam para `moneyOnStreet` ?
+        // Se o lasts for preflop (primeiro?) adicionar a ante?
+        // Fazer como o projecto de bounties para calcular pots ?
+
+        // NOTE:: as "ante" são adicionadas posteriormente
+
         const pots = lasts.reduce((acc, cur) => {
 
             let streetMoneyPlayers = [];
@@ -144,10 +151,22 @@ export default class Conclusion {
 
         const stillPlaying = Player.getStillPlayingOnLastIndex(histories);
         const areAllins = Player.getAreAllinsOnLastIndex(histories);
+        const allinsCount = Player.getAllInsOnLastIndex(histories).length;
 
         if (stillPlaying.length <= 1 && !areAllins) {
 
             this.winners = [[this.uncalledPlayer]];
+        }
+
+        // STOPSHIP;
+        if (stillPlaying.length === 0 && allinsCount === 1 && this.uncalledPlayer === null) {
+
+            const bigBlingAllInWalker = Player.getBigBlingOnLastIndex(histories);
+
+            bigBlingAllInWalker.isAllIn = false;
+            bigBlingAllInWalker.wasAllIn = true;
+
+            this.winners = [[bigBlingAllInWalker]];
         }
     }
 
@@ -182,8 +201,13 @@ export default class Conclusion {
         const showdownPlayers = lastHistory.players
             .filter(isOnShowdown);
 
-        while (head(showdownPlayers).seat !== agro.seat) {
+        // NOTE:: Evita ciclo infinito quando não há agros..
+        // Ex: call do BU e blind está all-in
+        // STOPSHIP
+        let count = 0;
+        while (head(showdownPlayers).seat !== agro.seat && count < 10) {
             showdownPlayers.unshift(showdownPlayers.pop());
+            count++;
         }
 
         this.showdownPlayersOrdered = showdownPlayers;

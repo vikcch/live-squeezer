@@ -21,7 +21,7 @@ export default class Player {
 
         this.isAllIn = false;       // unstable, pode voltar a 'false' em 'setUncalledBet'
         this.wasAllIn = false;      // setado a 'true' só em 'setUncalledBet' se 
-                                    // 'isAllIn' for `true` que acaba por ficar `false`
+        // 'isAllIn' for `true` que acaba por ficar `false`
         this.moneyOnStreet = 0;
 
         this.holeCards = '__ __';   // só as instacias em mainInfo têm as holeCards
@@ -88,6 +88,15 @@ export default class Player {
         const players = histories[lastIndex].players;
 
         return players.some(p => p.isAllIn);
+    }
+
+    // STOPSHIP
+    static getBigBlingOnLastIndex(histories) {
+
+        const lastIndex = histories.length - 1;
+        const players = histories[lastIndex].players;
+
+        return players.find(p => p.position === 'BB');
     }
 
     static getBiggerAllinOnLastIndex(histories) {

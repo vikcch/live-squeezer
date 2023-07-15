@@ -110,6 +110,7 @@ export default {
 				});
 			}
 
+			// STOPSHIP:: PLAYER PODE NãO TER VALOR DO POST
 			const posts = [smallBlind, bigBlind, ...straddles];
 
 			posts.forEach((post, i) => {
