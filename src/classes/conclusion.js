@@ -182,8 +182,12 @@ export default class Conclusion {
         const showdownPlayers = lastHistory.players
             .filter(isOnShowdown);
 
-        while (head(showdownPlayers).seat !== agro.seat) {
+        // NOTE:: Evita ciclo infinito quando não há agros..
+        // Ex: call do BU e BB está all-in (numero exacto de fichas)
+        let count = 0;
+        while (head(showdownPlayers).seat !== agro.seat && count < 10) {
             showdownPlayers.unshift(showdownPlayers.pop());
+            count++;
         }
 
         this.showdownPlayersOrdered = showdownPlayers;

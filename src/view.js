@@ -425,9 +425,9 @@ export default class View {
         this.showGenericError(htmlText);
     }
 
-    showGenericError(htmlText, title) {
+    async showGenericError(htmlText, title) {
 
-        Vue.swal.fire({
+        await Vue.swal.fire({
             icon: 'error',
             title: title || 'Oops... Something went wrong!',
             html: htmlText
@@ -638,6 +638,14 @@ export default class View {
         if (text === mainInfo.handId) return;
 
         this.mainInfoVue.updateInput({ key: 'handId', value: mainInfo.handId });
+    }
+
+    async postsError(restartAction) {
+
+        const title = 'Can\'t handle all-ins on posts!';
+        await this.showGenericError('', title);
+
+        restartAction();
     }
 
 }

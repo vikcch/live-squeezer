@@ -329,6 +329,7 @@ export default class MainInfo {
             this.players[i].currentStack = fixValue(this.players[i].currentStack);
         });
 
+        return !this.players.some(v => v.currentStack < 0);
     }
 
 

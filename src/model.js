@@ -77,11 +77,11 @@ class Model {
         Player.setTablePositions(this.mainInfo.players);
     }
 
-    makePosts() {
+    tryMakePosts() {
 
         this.mainInfo.rotateForPosts();
 
-        this.mainInfo.makePosts();
+        return this.mainInfo.makePosts();
     }
 
     initHistory() {

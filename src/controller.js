@@ -85,7 +85,11 @@ export default class Controller {
 
         this.view.printPlayersInfo(mainInfo);
 
-        this.model.makePosts();
+        if (!this.model.tryMakePosts()) {
+
+            this.view.postsError(this.handleRestartAction);
+            return;
+        }
 
         this.view.printPosts(mainInfo);
 
