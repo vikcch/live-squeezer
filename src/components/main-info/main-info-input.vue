@@ -5,6 +5,7 @@
 		v-bind="attributes"
 		@input="onInputHandler"
 		:disabled="!enabled"
+		@paste="onPaste"
 	>
 </template>
 
@@ -105,6 +106,16 @@ export default {
 
 			this.dispatch();
 		},
+
+		async onPaste() {
+
+			if (this.attrs.key !== 'handTime') return;
+
+			try {
+				// NOTE:: Precisa de uma origem segura, HTTPS ou localhost
+				await navigator.clipboard.writeText('');
+			} catch (error) { console.error('Need HTTPS \n\n', error); }
+		}
 	},
 
 
