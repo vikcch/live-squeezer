@@ -75,6 +75,11 @@ export default {
 			this.isEnabled = true;
 		},
 
+		state() {
+
+			return this.isEnabled;
+		},
+
 		restart_Click(event) {
 
 			const { controller } = this.$root.$data;

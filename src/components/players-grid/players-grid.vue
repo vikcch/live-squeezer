@@ -15,15 +15,12 @@
 			</label>
 
 			<!-- ::SITOUT:: -->
-
+			<!-- STOPSHIP -->
 			<label
 				v-show="sitouts.length"
 				class="pointer underline"
 			>
-				<span
-					class=""
-					@click="sitout()"
-				>Sitout ({{sitouts.length}})</span>
+				<span @click="sitout()">Sitout ({{sitouts.length}})</span>
 			</label>
 
 			<!-- ::ADD PLAYER BUTTON:: -->
@@ -171,7 +168,13 @@ export default {
 
 		sitout() {
 
-			sitoutEase.call(this);
+			const { view } = this.$root.$data;
+
+			const startActionEnabled = view.startActionVue.state();
+
+			if (startActionEnabled) sitoutEase.call(this);
+
+			else view.showGenericError('', 'The action already started!');
 		},
 
 		getAllHoleCardsEl() {
