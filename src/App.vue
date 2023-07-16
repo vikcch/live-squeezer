@@ -120,7 +120,22 @@ export default {
 	},
 	created() {
 
-		window.addEventListener('keyup', (event) => {
+		window.addEventListener('keyup', async (event) => {
+
+			if (event.key === 'F2') {
+
+				// NOTE:: `.Vue` chama `$children[0]`
+				const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
+
+				if (!localStorageDialog.isSaveEnabled) return;
+
+				const success = await localStorageDialog.save();
+
+				if (!success) return;
+
+				// NOTE:: Podia ser "sync"... é só para dar um tempinho
+				setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
+			}
 
 			if (event.key === 'F8') {
 

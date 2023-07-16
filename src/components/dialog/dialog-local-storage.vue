@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 
-		onSaveClick() {
+		async onSaveClick() {
 
 			const { view } = this.$root.$data;
 			const result = view.tryGetHandHistory();
@@ -89,9 +89,11 @@ export default {
 					view.showSmallTopRightSuccessfully();
 					this.isSaveEnabled = false;
 
-				} else view.showGenericError();
+				} else await view.showGenericError();
 
 				window.EventVue.$emit('updateLocalStorageProgressBar', null);
+
+				return resultInsert.success;
 			}
 		},
 
@@ -111,6 +113,11 @@ export default {
 
 				this.isSaveEnabled = item === undefined;
 			}
+		},
+
+		async save() {
+
+			return await this.onSaveClick();
 		}
 
 	},

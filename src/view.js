@@ -294,12 +294,20 @@ export default class View {
 
     showNextHandInfoPopup() {
 
+        const pStyle = `style="line-height: 2"`;
+
+        const kbdStyle = `style="width:36px; height:24px; background-color: #eee;
+            border-radius: 3px; border: 1px solid #b4b4b4; line-height: 1; padding: 4px 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+            color: #333; display: inline-block; font-size: 0.85em; font-weight: 700;"`;
+
         Vue.swal.fire({
             icon: 'info',
             title: 'Next Hand info!',
             showCloseButton: true,
             html: `The button will advance to the next player and the 
-            player stacks will adjust accordingly to the action of this hand!`
+            player stacks will adjust accordingly to the action of this hand!
+            <p ${pStyle}>The <kbd ${kbdStyle}>F2</kbd> key saves the hand on Local Storage!</p>`
         });
     }
 

@@ -38,7 +38,7 @@
 							class="fa fa-arrow-circle-right"
 							aria-hidden="true"
 						></i></span>
-					<span class="css-button-text">Next Hand</span>
+					<span class="css-button-text next-hand-text">Next Hand</span>
 				</button>
 
 			</div>
@@ -113,6 +113,11 @@ export default {
 			});
 
 			return result.isConfirmed && result.value;
+		},
+
+		async nextHand() {
+
+			await this.onNextHandClick();
 		}
 	},
 
@@ -129,5 +134,12 @@ export default {
 <style scoped>
 input {
 	width: auto;
+}
+
+.next-hand-text::after {
+	content: "F2";
+	font-size: 10px;
+	margin-left: 8px;
+	vertical-align: 4px;
 }
 </style>
