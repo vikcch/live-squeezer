@@ -121,30 +121,6 @@ const validation = {
 
             isStakes: function (value) {
 
-                // const { smallBlind } = geral.stakesParts(value);
-                // const { bigBlind } = geral.stakesParts(value);
-                // const { bbAnte } = geral.stakesParts(value);
-                // // const { ante } = geral.stakesParts(value);
-                // const ante = 'asdf';
-                // const { straddles } = geral.stakesParts(value);
-
-                // const { isSmallBlind, isBigBlind, isbbAnte, isAnte, isStraddles } = geral.isStakePart;
-
-                // const tests = [
-                //     { prop: 'sb', test: isSmallBlind(smallBlind) },
-                //     { prop: 'bb', test: isBigBlind(bigBlind) },
-                //     // STOPSHIP:: VER O QUE TRAZ QUANDO Não HÁ
-                //     { prop: 'bb-ante', test: bbAnte === null || isbbAnte(bbAnte) },
-                //     { prop: 'ante', test: ante === null || isAnte(ante) },
-                //     { prop: 'straddles', test: straddles === null || isStraddles(straddles) },
-                // ];
-
-                // debugger;
-
-                // return tests.every(v => v.test) && bigBlind > smallBlind
-
-                // return true;
-
                 const straddlesFail = ({ straddles }) => {
 
                     const rdc = bracket => (acc, cur) => acc + (cur === bracket | 0);
@@ -233,41 +209,6 @@ const validation = {
                     (streetIndex === 1 && value.length === 6) ||
                     (streetIndex !== 1 && value.length === 2));
 
-            },
-
-            stakesParts: (value) => {
-
-                const [smallBlind] = /(\d+)?(\.\d{1,2})?(?=\/)/.exec(value) ?? [null];
-                const [bigBlind] = /(?<=\/)(\d+)?(\.\d{1,2})?/.exec(value) ?? [null];
-                const [bbAnte] = /\(#?(\d+)?(\.\d{1,2})\)?/.exec(value) ?? [null];
-                const [ante] = /\((\d+)?(\.\d{1,2})?\)/.exec(value) ?? [null];
-                const [straddles] = /\((\d+)?(\.\d{1,2})?\)/.exec(value) ?? [null];
-
-                // NOTE:: `bbAnte`, `ante` e `straddles` retornan simbolos "()#[]" 
-                // NOTE:: Em multiple straddles: "[10][20]"
-
-                return { smallBlind, bigBlind, bbAnte, ante, straddles };
-            },
-
-            isBlindValue: value => /(\d+)?(\.\d{1,2})?/.test(value),
-
-            isStakePart: {
-                isSmallBlind: value => geral.isBlindValue(value),
-                isBigBlind: value => geral.isBlindValue(value),
-                isbbAnte: dirty => {
-                    const value = dirty?.replace(/\(\)#/g, '');
-                    return geral.isBlindValue(value);
-                },
-                isAnte: dirty => {
-                    const value = dirty?.replace(/\(\)/g, '');
-                    return geral.isBlindValue(value);
-                },
-                isStraddles: dirty => {
-                    const str = dirty?.replace(/\[\]/g, '#')?.replace(/##/g, '#');
-                    const arr = str?.split('#') ?? [];
-                    // NOTE:: `[].every()` return true (empty array)
-                    return arr.every(v => geral.isBlindValue(v)) && !!arr.length;
-                },
             }
         },
 
