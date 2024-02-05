@@ -316,8 +316,6 @@ export default class MainInfo {
         const { ante, smallBlind, bigBlind, bbAnte, straddles } = this.stakes;
         const posts = [smallBlind, bigBlind, ...straddles];
 
-        console.log({ bbAnte });
-
         if (ante) {
             this.players.forEach(p => {
                 p.currentStack = fixValue(p.currentStack - ante);
