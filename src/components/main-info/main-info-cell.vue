@@ -7,7 +7,7 @@
 			<i
 				v-if="props.slotAttrs.info"
 				class="fa fa-info-circle text-info lm-s"
-				@click="showInfo"
+				@click.prevent="showInfo"
 				aria-hidden="true"
 			></i>
 
