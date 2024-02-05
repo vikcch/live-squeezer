@@ -124,6 +124,8 @@ export default class Conclusion {
     addAntesToMainPot(pots, mainInfo) {
 
         pots[0] += mainInfo.stakes.ante * mainInfo.players.length;
+
+        pots[0] += mainInfo.stakes.bbAnte;
     }
 
     setPots(histories, mainInfo) {

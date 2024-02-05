@@ -60,8 +60,9 @@ export default {
 			mainInfoEl.innerHTML = '';
 
 			const handId = `PokerStars Hand #${mainInfo.handId}:`;
-			const blinds = `(${mainInfo.stakes.smallBlind}/${mainInfo.stakes.bigBlind})`;
-			const game = `Hold'em No Limit ${blinds}`;
+			const smallBlind = displayAmount(mainInfo.stakes.smallBlind);
+			const bigBlind = displayAmount(mainInfo.stakes.bigBlind);
+			const game = `Hold'em No Limit (${smallBlind}/${bigBlind})`;
 			const date = mainInfo.handDate.replace(/-/g, '/') + ` ${mainInfo.handTime} WET`;
 
 			const elTop = this.makeHandHistoryElement(mainInfoEl);
@@ -99,7 +100,7 @@ export default {
 
 			const postsLabel = ['posts small blind', 'posts big blind', 'posts a straddle'];
 
-			const { ante, smallBlind, bigBlind, straddles } = mainInfo.stakes;
+			const { ante, bbAnte, smallBlind, bigBlind, straddles } = mainInfo.stakes;
 
 			if (ante) {
 				mainInfo.players.forEach(p => {
@@ -108,6 +109,14 @@ export default {
 					const text = `${p.name}: posts the ante ${amount}`;
 					el.textContent = lineBreaker(text);
 				});
+			}
+
+			if (bbAnte) {
+				const bbName = mainInfo.players[1].name;
+				const el = this.makeHandHistoryElement(postsEl);
+				const amount = displayAmount(bbAnte);
+				const text = `${bbName}: posts the ante ${amount}`;
+				el.textContent = lineBreaker(text);
 			}
 
 			const posts = [smallBlind, bigBlind, ...straddles];

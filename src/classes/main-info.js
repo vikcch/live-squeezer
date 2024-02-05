@@ -313,16 +313,26 @@ export default class MainInfo {
 
     makePosts() {
 
-        const { ante, smallBlind, bigBlind, straddles } = this.stakes;
+        const { ante, smallBlind, bigBlind, bbAnte, straddles } = this.stakes;
         const posts = [smallBlind, bigBlind, ...straddles];
+
+        console.log({ bbAnte });
 
         if (ante) {
             this.players.forEach(p => {
-                p.currentStack -= ante;
+                p.currentStack = fixValue(p.currentStack - ante);
             });
         }
 
         posts.forEach((post, i) => {
+
+            const isBigBlind = i === 1;
+
+            if (isBigBlind && bbAnte) {
+                // NOTE:: Faz fixValue posteriormente
+                this.players[i].currentStack -= bbAnte;
+            }
+
             this.players[i].post = true;
             this.players[i].moneyOnStreet = post;
             this.players[i].currentStack -= post;

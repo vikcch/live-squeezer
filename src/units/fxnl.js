@@ -52,6 +52,8 @@ export const isSameProperty = (property, x) => y => x[property] === y[property];
 
 export const delegate = (handler, ...args) => (e) => handler(e, ...args);
 
+export const nullOr = fn => value => value === null || fn(value);
+
 export default {
     pipe,
     cap,

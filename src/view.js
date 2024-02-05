@@ -259,10 +259,13 @@ export default class View {
         const divStyle = 'style="margin-top:10px"';
         const middleDiv = `<div ${divStyle}>E.g. ${stakesTagged}</div>`;
 
+        const bbAnteTagged = makeTextTag('span', 'mark')('{20}');
+        const bbAnteDiv = `<div ${divStyle}>For big blind ante use: ${bbAnteTagged} </div>`;
+
         const mandatory = 'Mandatory: small blind / big blind';
         const bottomDiv = `<div ${divStyle}>${mandatory}</div>`;
 
-        const text = topDiv + middleDiv + bottomDiv;
+        const text = topDiv + middleDiv + bbAnteDiv + bottomDiv;
 
         Vue.swal.fire({
             icon: 'info',

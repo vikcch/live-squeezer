@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --hot",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit --watch",
     "lint": "vue-cli-service lint",
     "test:only": "vue-cli-service test:unit fns.spec.js",
     "test-last": "env TEST=JEST node ./test-last/index.js"
@@ -44,7 +44,8 @@
       "no-console": "off",
       "no-unused-vars": "off",
       "no-debugger": "off",
-      "no-useless-escape": "off"
+      "no-useless-escape": "off",
+      "no-unreachable": "off"
     },
     "overrides": [
       {

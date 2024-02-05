@@ -72,6 +72,9 @@ const biz = {
         const blinds = head(blindsStr).split('/').map(mapped);
 
         // Regex retorna `null` em >= 3 casas decimais
+        const bbAnte = value.match(/\{(?:\d+)?\.?(?:\d{0,2})\}/);
+
+        // Regex retorna `null` em >= 3 casas decimais
         const ante = value.match(/\((?:\d+)?\.?(?:\d{0,2})\)/);
 
         const straddles = value.match(/\[(?:\d+)?\.?(?:\d{0,2})]/g);
@@ -81,6 +84,7 @@ const biz = {
         const stakes = {
             smallBlind: blinds[0] ?? 0,
             bigBlind: blinds[1] ?? 0,
+            bbAnte: bbAnte ? removeNonNumbers(bbAnte[0]) : 0,
             ante: ante ? removeNonNumbers(ante[0]) : 0,
             straddles: straddles ? [...straddles].map(n => removeNonNumbers(n)) : [],
             hasDecimal() {
