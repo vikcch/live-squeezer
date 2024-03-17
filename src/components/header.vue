@@ -4,7 +4,7 @@
 
 		<div class="divorced">
 
-			<p class="logo">Live Squeezer</p>
+			<h1 class="logo">Live Squeezer - Poker Hand Generator</h1>
 
 			<form
 				action="https://www.paypal.com/cgi-bin/webscr"
@@ -125,7 +125,8 @@ header {
 	margin-bottom: 8px;
 }
 
-.logo {
+h1 {
+	font-weight: normal;
 	font-size: 28px;
 }
 
