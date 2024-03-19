@@ -188,7 +188,8 @@ export default class View {
 
         const pot = lastPlayers
             .map(v => v.stack - v.currentStack)
-            .reduce((acc, cur) => acc + cur);
+            .reduce((acc, cur) => acc + cur)
+            .toLocaleString('en-US');
 
         const stillPlaying = lastPlayers.filter(v => v.stillPlaying).length;
         const playersAllIn = lastPlayers.filter(v => v.isAllIn || v.wasAllIn).length;

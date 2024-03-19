@@ -6,6 +6,7 @@
 		@input="onInputHandler"
 		:disabled="!enabled"
 		@paste="onPaste"
+		@drop="onDrop"
 	>
 </template>
 
@@ -87,6 +88,33 @@ export default {
 			}
 		},
 
+		tryFormatTime() {
+
+			if (/^\d\:\d{2}$/.test(this.text)) this.text = `0:0${this.text}`;
+
+			if (/^\d{2}\:\d{2}$/.test(this.text)) this.text = `0:${this.text}`;
+		},
+
+		async onPaste() {
+
+			if (this.attrs.key !== 'handTime') return;
+
+			try {
+				// NOTE:: Precisa de uma origem segura, HTTPS ou localhost
+				await navigator.clipboard.writeText('');
+			} catch (error) { console.error('Need HTTPS \n\n', error); }
+
+			// NOTE:: Não precisava de "setTimeout", ficar por consistência
+			setTimeout(this.tryFormatTime, 0);
+		},
+
+		onDrop() {
+
+			if (this.attrs.key !== 'handTime') return;
+
+			setTimeout(this.tryFormatTime, 0);
+		},
+
 		reset() {
 
 			const work = {
@@ -107,15 +135,6 @@ export default {
 			this.dispatch();
 		},
 
-		async onPaste() {
-
-			if (this.attrs.key !== 'handTime') return;
-
-			try {
-				// NOTE:: Precisa de uma origem segura, HTTPS ou localhost
-				await navigator.clipboard.writeText('');
-			} catch (error) { console.error('Need HTTPS \n\n', error); }
-		}
 	},
 
 
