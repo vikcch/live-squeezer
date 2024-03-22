@@ -4,7 +4,13 @@
 
 		<div class="divorced">
 
-			<h1 class="logo">Live Squeezer - Poker Hand Generator</h1>
+			<div class="train">
+				<img
+					src="@/assets/images/logo.png"
+					alt="Live Squeezer Poker Logo - Hand History Generator"
+				>
+				<h1 class="logo lm-m">Live Squeezer - Poker Hand Generator</h1>
+			</div>
 
 			<form
 				action="https://www.paypal.com/cgi-bin/webscr"
