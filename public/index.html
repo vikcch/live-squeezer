@@ -67,10 +67,39 @@
 		</div>
 
 	</template>
+	<style>
+		.h1-wrapper {
+			/* NOTE:: Em paridade com ".page-container" */
+			position: relative;
+			max-width: 960px;
+			margin: auto;
+		}
+
+		h1 {
+			font-family: "Open Sans", Arial, Helvetica, sans-serif;
+			color: white;
+			position: absolute;
+			z-index: 99;
+			font-weight: normal;
+			top: 12px;
+			left: 44px;
+
+		}
+
+		@media only screen and (max-width: 770px) {
+			h1>span {
+				display: none;
+			}
+		}
+	</style>
 
 </head>
 
 <body>
+
+	<div class="h1-wrapper">
+		<h1>Live Squeezer <span> - Poker Hand Generator</span></h1>
+	</div>
 
 	<div id="app"></div>
 

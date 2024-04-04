@@ -2,14 +2,14 @@
 
 	<header>
 
-		<div class="divorced">
+		<div class="divorced bm-s">
 
-			<div class="train">
+			<div>
 				<img
 					src="@/assets/images/logo.png"
 					alt="Live Squeezer Poker Logo - Hand History Generator"
 				>
-				<h1 class="logo lm-m">Live Squeezer - Poker Hand Generator</h1>
+
 			</div>
 
 			<form
