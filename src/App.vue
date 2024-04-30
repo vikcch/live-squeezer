@@ -120,6 +120,11 @@ export default {
 	},
 	created() {
 
+		window.onbeforeunload = () => {
+
+			if (process.env.NODE_ENV !== 'development') return '';
+		};
+
 		window.addEventListener('keyup', async (event) => {
 
 			if (event.key === 'F2') {
