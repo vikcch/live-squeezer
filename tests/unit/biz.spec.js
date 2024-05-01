@@ -86,4 +86,19 @@ describe('biz.js', function () {
 
     });
 
+    describe('# toggleStaddles', () => {
+
+        it('1. all true', () => {
+
+            expect(biz.toggleStaddles('5/10')).toStrictEqual('5/10[20]');
+            expect(biz.toggleStaddles('5/10[20]')).toStrictEqual('5/10[20][40]');
+            expect(biz.toggleStaddles('5/10[20][40]')).toStrictEqual('5/10[20][40][80]');
+            expect(biz.toggleStaddles('5/10[20][40][80]')).toStrictEqual('5/10');
+            expect(biz.toggleStaddles('5/10(1)')).toStrictEqual('5/10(1)[20]');
+            expect(biz.toggleStaddles('5/10{10}')).toStrictEqual('5/10{10}[20]');
+            expect(biz.toggleStaddles('5/10{10}[20][40][80]')).toStrictEqual('5/10{10}');
+        });
+
+    });
+
 });

@@ -48,6 +48,9 @@ export default {
 
 		onInputHandler(event) {
 
+			// ONGOING::
+			console.log('PASSA AQUI');
+
 			const isInputDate = event.currentTarget.type === 'date';
 
 			!isInputDate && this.forced();
@@ -56,6 +59,9 @@ export default {
 		},
 
 		forced() {
+
+			// ONGOING::
+			console.log('PASSA AQUI - FORCED');
 
 			const rules = {
 
@@ -138,6 +144,21 @@ export default {
 		},
 
 	},
+
+	// watch: {
+
+	// 	text(value, old) {
+
+	// 		console.log(value, old);
+
+	// 		this.$forceUpdate();
+
+	// 		this.text = value;
+
+	// 		this.dispatch();
+	// 	}
+
+	// },
 
 
 	created() {

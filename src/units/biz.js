@@ -166,7 +166,27 @@ const biz = {
         };
 
         return pick();
-    }
+    },
+
+
 };
 
-export default biz;
+// NOTE:: Usa biz
+/**
+ * @param { string } value
+ */
+const toggleStaddles = (value) => {
+
+    const stakes = biz.stringToStakes(value);
+
+    const indexOfStraddles = value.indexOf('[');
+
+    const lenStraddles = stakes.straddles.length;
+
+    if (lenStraddles >= 3) return value.slice(0, indexOfStraddles);
+
+    // 0 -> 2; 1 -> 4; 2 -> 8 - Alternativa: (2 ** lenStraddles * 2)
+    return `${value}[${stakes.bigBlind * (2 ** (lenStraddles + 1))}]`;
+};
+
+export default { ...biz, toggleStaddles };

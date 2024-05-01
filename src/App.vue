@@ -91,6 +91,7 @@ import Dialog from './components/dialog/dialog.vue';
 import Switcher from './components/switcher.vue';
 import ForumFormat from './components/forum-format.vue';
 import Footer from './components/footer.vue';
+import biz from './units/biz';
 
 // NOTE:: Lazy loading... contiuar a dar warning por excesso de tamanho
 // const MainInfo = () => import('./components/main-info/main-info.vue');
@@ -122,10 +123,13 @@ export default {
 
 		window.onbeforeunload = () => {
 
+			// NOTE:: Dialogo de confirmação caso haja alteraçãoes na pagina
 			if (process.env.NODE_ENV !== 'development') return '';
 		};
 
 		window.addEventListener('keyup', async (event) => {
+
+			// OPTIMIZE:: Mover para eases
 
 			if (event.key === 'F2') {
 
@@ -140,6 +144,20 @@ export default {
 
 				// NOTE:: Podia ser "sync"... é só para dar um tempinho
 				setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
+			}
+
+
+			if (event.key === 'F4') {
+
+				if (!this.$refs['start-action'].$data.isEnabled) return;
+
+				const stakesEl = this.$refs['main-info'].getElementByKey('stakes');
+				const [input] = stakesEl.$children;
+
+				const stakes = biz.toggleStaddles(input.$data.text);
+
+				input.$data.text = stakes;
+				input.dispatch();
 			}
 
 			if (event.key === 'F8') {
