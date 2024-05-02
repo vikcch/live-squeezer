@@ -129,7 +129,7 @@ export default {
 
 		window.addEventListener('keyup', async (event) => {
 
-			// OPTIMIZE:: Mover para eases
+			// OPTIMIZE:: Mover para eases, tem comentario em main-info-cell.. alterar
 
 			if (event.key === 'F2') {
 
@@ -146,7 +146,6 @@ export default {
 				setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
 			}
 
-
 			if (event.key === 'F4') {
 
 				if (!this.$refs['start-action'].$data.isEnabled) return;
@@ -158,6 +157,10 @@ export default {
 
 				input.$data.text = stakes;
 				input.dispatch();
+
+				const count = [...stakes].filter(v => v === '[').length;
+				const text = count ? `STR: ${count}x` : '';
+				stakesEl.$refs['status'].textContent = text;
 			}
 
 			if (event.key === 'F8') {

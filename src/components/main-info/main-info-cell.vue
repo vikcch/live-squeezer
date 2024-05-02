@@ -19,6 +19,13 @@
 				@change="optional_Change"
 			>
 
+			<!-- NOTE:: Valor apenas para straddles e atribuido em App.vue -->
+			<span
+				ref="status"
+				v-if="props.slotAttrs.status"
+				class="status"
+			></span>
+
 			<component
 				:is="props.slotAttrs.el"
 				:attrs="{...props.slotAttrs, enabled}"
@@ -133,5 +140,10 @@ label {
 	position: absolute;
 	right: 0px;
 	top: 2px;
+}
+.status {
+	margin-left: 12px;
+	font-size: 12px;
+	color: black;
 }
 </style>
