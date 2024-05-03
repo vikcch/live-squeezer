@@ -23,7 +23,7 @@
 			<span
 				ref="status"
 				v-if="props.slotAttrs.status"
-				class="status"
+				class="status status-short-cut"
 			></span>
 
 			<component
@@ -142,8 +142,16 @@ label {
 	top: 2px;
 }
 .status {
-	margin-left: 12px;
+	margin-left: 4px;
 	font-size: 12px;
 	color: black;
+}
+.status-short-cut::after {
+	content: "F4";
+	font-size: 10px;
+	color: #cccccc;
+	margin-left: 4px;
+	vertical-align: 4px;
+	font-weight: normal;
 }
 </style>
