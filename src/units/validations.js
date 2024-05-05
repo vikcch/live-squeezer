@@ -29,7 +29,9 @@ const validation = {
             .replace(/[^0-9akqjtcdhsc\s]/gi, '')
             .replace(/(\..*)\./g, '$1')
             .replace(/[akqjt]/g, match => match.toUpperCase())
-            .replace(/[DHSC]/g, match => match.toLowerCase())
+            .replace(/[DHSC]/g, match => match.toLowerCase()),
+
+        onlyActionChars: value => value.replace(/[^0-9cf=.]/gi, '')
 
     },
 

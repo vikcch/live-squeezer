@@ -20,6 +20,7 @@
 						ref="player-action"
 						v-model="text"
 						@keyup="onKeyUp"
+						@input="forced"
 					>
 				</label>
 
@@ -69,6 +70,7 @@ import DialogHeader from './dialog-header.vue';
 import DialogBody from './dialog-body.vue';
 import vikFunctions from '../../units/vikFunctions';
 import { head } from '../../units/absx';
+import validation from "../../units/validations.js";
 
 
 export default {
@@ -99,6 +101,17 @@ export default {
 			submit(this.text);
 		},
 
+		forced(event) {
+
+			this.text = validation.force.onlyActionChars(this.text);
+
+			// STOPSHIP:: NãO DEIXAR REPETIR f's e c's
+
+			if (this.text.toLocaleLowerCase() === 'f') this.text = 'folds';
+
+			if (this.text.toLocaleLowerCase() === 'c') this.text = 'calls';
+		},
+
 		onKeyUp(event) {
 
 			// https://www.toptal.com/developers/keycode
@@ -106,6 +119,8 @@ export default {
 			const { code } = event;
 
 			const work = {
+
+				Backspace: () => this.text = this.text.replace(/calls|folds/, ''),
 
 				ArrowUp: () => controller.undo(),
 
