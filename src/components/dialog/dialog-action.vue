@@ -105,11 +105,12 @@ export default {
 
 			this.text = validation.force.onlyActionChars(this.text);
 
-			// STOPSHIP:: NãO DEIXAR REPETIR f's e c's
-
+			// NOTE:: Evita multiplos 'ff' ou 'cc'
 			if (this.text.toLocaleLowerCase() === 'f') this.text = 'folds';
+			if (this.text.toLocaleLowerCase() === 'ff') this.text = 'folds';
 
 			if (this.text.toLocaleLowerCase() === 'c') this.text = 'calls';
+			if (this.text.toLocaleLowerCase() === 'cc') this.text = 'calls';
 		},
 
 		onKeyUp(event) {
