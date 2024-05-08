@@ -240,6 +240,8 @@ export default class View {
     printCollects(conclusion, mainInfo) {
 
         this.handHistoryVue.printCollects(conclusion, mainInfo);
+
+        this.handHistoryVue.tryFixUncalledBet();
     }
 
     printSummary(conclusion, histories) {

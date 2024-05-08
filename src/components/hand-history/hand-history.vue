@@ -316,6 +316,25 @@ export default {
 				boardEl.textContent = lineBreaker(text);
 			}
 		},
+
+
+		tryFixUncalledBet() {
+
+			const collects = Array.from(this.$refs['output-collects'].childNodes);
+			
+			const uncalledBetEl = collects.find(v => /^Uncalled bet \(/.test(v.textContent));
+
+			this.$refs['output-collects'].childNodes.forEach(el => {
+
+				if (el === uncalledBetEl) el.parentNode.removeChild(el);
+			});
+
+			const activities = [...this.$refs['output-activity'].childNodes];
+
+			const lastNonStreet = activities.findLast(v => !(/^\*\*\* /.test(v.textContent)));
+
+			lastNonStreet.parentNode.insertBefore(uncalledBetEl, lastNonStreet.nextSibling);
+		}
 	}
 
 }
