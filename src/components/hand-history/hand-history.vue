@@ -320,9 +320,14 @@ export default {
 
 		tryFixUncalledBet() {
 
+			// NOTE:: Quando vão all-in, "uncalled bet" tem que ficar logo depois de
+			// a ultima acçao/activity e antes das streets
+
 			const collects = Array.from(this.$refs['output-collects'].childNodes);
-			
+
 			const uncalledBetEl = collects.find(v => /^Uncalled bet \(/.test(v.textContent));
+
+			if (!uncalledBetEl) return;
 
 			this.$refs['output-collects'].childNodes.forEach(el => {
 
