@@ -131,6 +131,8 @@ export default {
 
 				Enter: () => submit(this.text),
 
+				NumpadEnter: () => submit(this.text),
+
 				Equal: () => this.text = this.text.replace('=', '000')
 			};
 
