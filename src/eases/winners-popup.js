@@ -28,7 +28,11 @@ const markTag = makeTextTag('mark');
 
 const getHtmlText = function (phase, seatsAvailableTagged, seatsAvailable) {
 
-    const topText = `Please enter the${phase}winner seat: ${seatsAvailableTagged}`;
+    // STOPSHIP:: METER OS seatsAvailableTagged A AZUL PARA DESTACAR DO  EXEMPLO DO SPLIT POT
+
+    const coloredSeats = /* html */ `<span class="colored-seat"> ${seatsAvailableTagged} </span>`;
+
+    const topText = `Please enter the${phase}winner seat: ${coloredSeats}`;
 
     const separators = `${markTag(',')}, ${markTag('.')} or ${markTag('-')}`;
 

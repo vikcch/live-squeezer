@@ -7,7 +7,8 @@
 	/* user-select: none; */
 }
 
-input:not([type="checkbox"]), select {
+input:not([type="checkbox"]),
+select {
 	font-family: "Lucida Console", Monaco, monospace;
 	font-size: 12px;
 	width: 100%;
@@ -20,6 +21,12 @@ mark {
 	color: #6a737c;
 	background-color: #d6d9dc;
 	border-radius: 4px;
+}
+
+.colored-seat>mark {
+	background-color: #468ccf;
+	color: white;
+	line-height: 2;
 }
 
 .text-info {
