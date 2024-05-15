@@ -10,7 +10,7 @@ const winnersHandler = function () {
     this.value = validation.force.onlyNumbersOrSeparator(this.value);
 };
 
-const getSeatsAvailable = (histories, conclusion) => {
+const getPlayersAvailable = (histories, conclusion) => {
 
     const lastHistory = tail(histories);
 
@@ -18,27 +18,32 @@ const getSeatsAvailable = (histories, conclusion) => {
 
     const seatsAvailable = lastHistory.players
         .filter(isOnShowdown)
-        .map(p => p.seat)
-        .sort((a, b) => a - b);
+        .map(p => ({ seat: p.seat, name: p.name }))
+        .sort((a, b) => a.seat - b.seat);
 
     return seatsAvailable;
 };
 
 const markTag = makeTextTag('mark');
 
-const getHtmlText = function (phase, seatsAvailableTagged, seatsAvailable) {
+const getHtmlText = function (phase, seatsAvailableTagged, playersAvailable) {
 
-    // STOPSHIP:: METER OS seatsAvailableTagged A AZUL PARA DESTACAR DO  EXEMPLO DO SPLIT POT
+    const seats = playersAvailable.map(v => v.seat);
 
     const coloredSeats = /* html */ `<span class="colored-seat"> ${seatsAvailableTagged} </span>`;
 
     const topText = `Please enter the${phase}winner seat: ${coloredSeats}`;
 
+    const players = playersAvailable.map(v => `${markTag(v.seat)} ${v.name}`).join(' • ');
+    const playersStyled = /* html */ `<div class="tm-m"> ${players} </div>`;
+
     const separators = `${markTag(',')}, ${markTag('.')} or ${markTag('-')}`;
 
-    const bottomText = `Use ${separators} on split pots. e.g. ${markTag(seatsAvailable.slice(0, 2).join(', '))}`;
+    const bottomText = `Use ${separators} on split pots. e.g. ${markTag(seats.slice(0, 2).join(', '))}`;
 
-    return `${topText}<br>${bottomText}`;
+    const bottomTextStyled = /* html */ `<div class="tm-l small-text"> ${bottomText} </div>`;
+
+    return `${topText}${playersStyled}${bottomTextStyled}`;
 };
 
 const getWinnersFromPrompt = (htmlText) => Vue.swal.fire({
@@ -81,7 +86,9 @@ const core = async (histories, conclusion) => {
 
     const winners = [];
 
-    const seatsAvailable = getSeatsAvailable(histories, conclusion);
+    const playersAvailable = getPlayersAvailable(histories, conclusion);
+
+    const seatsAvailable = playersAvailable.map(v => v.seat);
 
     const seatsAvailableTagged = seatsAvailable
         .map(markTag)
@@ -95,7 +102,7 @@ const core = async (histories, conclusion) => {
 
         do {
 
-            const htmlText = getHtmlText(phase, seatsAvailableTagged, seatsAvailable);
+            const htmlText = getHtmlText(phase, seatsAvailableTagged, playersAvailable);
 
             const input = await getWinnersFromPrompt(htmlText);
 
