@@ -133,7 +133,8 @@ export default {
 
 				NumpadEnter: () => submit(this.text),
 
-				Equal: () => this.text = this.text.replace('=', '000')
+				// « ou =
+				Equal: () => this.text = this.text.replace(/«|=/, '000')
 			};
 
 			const { controller } = this.$root.$data;
