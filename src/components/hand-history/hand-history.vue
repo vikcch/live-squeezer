@@ -255,6 +255,8 @@ export default {
 				}
 			}
 
+			const potsText = [];
+
 			conclusion.winners.forEach((potWinner, index) => {
 
 				const factor = conclusion.decimalSplitsPots ? 100 : 1;
@@ -266,16 +268,21 @@ export default {
 					let splitPot = Math.floor(pot * factor / potWinner.length) / factor;
 					splitPot += (modAvailable-- > 0 ? 1 / factor : 0);
 
-					const el = this.makeHandHistoryElement(collectsEl);
-
 					const amount = displayAmount(splitPot);
 
 					const potType = biz.potType(index, conclusion.winners.length);
 					const text = `${w.name} collected ${amount} from ${potType}`;
-					el.textContent = lineBreaker(text);
+					potsText.unshift(text);
 				});
 			});
 
+			// NOTE:: Funcão acima escrevia main pot primeiro que side pot... 
+			// Adicionado array com unshift para não mexer na logica da function...
+			potsText.forEach(text => {
+
+				const el = this.makeHandHistoryElement(collectsEl);
+				el.textContent = lineBreaker(text);
+			});
 		},
 
 		printSummary(conclusion, histories) {
