@@ -35,7 +35,7 @@ const getHtmlText = function (phase, seatsAvailableTagged, playersAvailable) {
     const topText = `Please enter the${phase}winner seat: ${coloredSeats}`;
 
     const players = playersAvailable.map(v => `${markTag(v.seat)} ${v.name}`).join(' • ');
-    const playersStyled = /* html */ `<div class="tm-m"> ${players} </div>`;
+    const playersStyled = /* html */ `<div class="colored-seat tm-m"> ${players} </div>`;
 
     const separators = `${markTag(',')}, ${markTag('.')} or ${markTag('-')}`;
 

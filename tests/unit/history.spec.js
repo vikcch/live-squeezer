@@ -79,6 +79,8 @@ describe('history.js', () => {
             expect(actual).toStrictEqual(expected);
         });
 
+        // STOPSHIP:: ESTE TESTE FALHA NO JEST.. VER O QUE ESTA ERRADO
+
         it('6.', () => {
 
             const histories = [
