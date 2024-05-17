@@ -224,6 +224,11 @@ const validation = {
             hasHeroHoleCards: function (value) {
 
                 return value.match(/^\*{3}\sHOLE\sCARDS\s\*{3}$/gm) !== null;
+            },
+
+            hasHoleCards: function (value) {
+
+                return value.match(/^\*{3} HOLE CARDS \*{3}$/gm) !== null;
             }
         }
 

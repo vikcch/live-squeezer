@@ -137,30 +137,36 @@ export default {
 
 			// *** HOLE CARDS ***
 			// Dealt to vikcch [6s 2s]
-			// Dealted to vikcch [6s 2s]
+
+			// NOTE:: Só "marca" cards quando tem duas
+			const hasHolecards = player => player.holeCards !== '__ __';
+
+			const players = [hero, ...vilansAlong];
+
+			const someHasHolecards = players.some(hasHolecards);
+
+			if (!someHasHolecards) return;
+
+			this.$refs[`output-hero-hole-cards`].innerHTML = '';
+			this.$refs[`output-vilans-hole-cards`].innerHTML = '';
+
+			if ((perspective === 'hero' && hasHolecards(hero)) || perspective === 'tv') {
+
+				const pEl = this.$refs[`output-hero-hole-cards`];
+				const headingText = this.makeHandHistoryElement(pEl);
+				headingText.textContent = lineBreaker('*** HOLE CARDS ***');
+			}
 
 			const print = (players, kind) => {
 
-				//document.getElementById(`output-${kind}-hole-cards`).innerHTML = '';
-				this.$refs[`output-${kind}-hole-cards`].innerHTML = '';
-
 				players.forEach(p => {
 
-					if (p.holeCards === '__ __') return;
+					if (!hasHolecards(p)) return;
 
-					//const pEl = document.getElementById(`output-${kind}-hole-cards`);
 					const pEl = this.$refs[`output-${kind}-hole-cards`];
 
-					if (kind === 'hero') {
-
-						const headingText = this.makeHandHistoryElement(pEl);
-						headingText.textContent = lineBreaker('*** HOLE CARDS ***');
-					}
-
-					const dealt = ['Dealt', 'Dealted'][kind !== 'hero' | 0];
 					const holeCardsText = this.makeHandHistoryElement(pEl);
-					holeCardsText.textContent = lineBreaker(`${dealt} to ${p.name} [${p.holeCards}]`);
-
+					holeCardsText.textContent = lineBreaker(`Dealt to ${p.name} [${p.holeCards}]`);
 				});
 			}
 

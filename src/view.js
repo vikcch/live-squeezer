@@ -624,9 +624,19 @@ export default class View {
             return { success: false };
         }
 
-        if (!validation.business.handHistory.hasHeroHoleCards(hh)) {
+        const isTvPerspective = this.mainInfoVue.values.perspective === 'tv';
+
+        if (!isTvPerspective && !validation.business.handHistory.hasHeroHoleCards(hh)) {
 
             const htmlText = 'The <strong>hero</strong> must have hole cards';
+            if (option.alert) this.showGenericError(htmlText);
+
+            return { success: false };
+        }
+
+        if (isTvPerspective && !validation.business.handHistory.hasHoleCards(hh)) {
+
+            const htmlText = 'At least one player must have hole cards';
             if (option.alert) this.showGenericError(htmlText);
 
             return { success: false };
