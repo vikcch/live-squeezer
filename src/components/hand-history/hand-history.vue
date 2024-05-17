@@ -343,6 +343,12 @@ export default {
 
 			const activities = [...this.$refs['output-activity'].childNodes];
 
+			// NOTE:: Em "hero perspective", quando se adicionada cartas no fim de já
+			// haver "summary", faz rewrite de "view.printCollects" para mostrar showdown
+			// Evita repetir "Uncalled bet"
+			const done = activities.some(v => /^Uncalled bet \(/.test(v.textContent));
+			if (done) return;
+
 			const lastNonStreet = activities.findLast(v => !(/^\*\*\* /.test(v.textContent)));
 
 			lastNonStreet.parentNode.insertBefore(uncalledBetEl, lastNonStreet.nextSibling);
