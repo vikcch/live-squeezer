@@ -20,6 +20,12 @@
 			>PokerStars Spin &amp; Go Tracker</a>
 		</p>
 
+		<p class="text-center tm-l">Feedback &amp; Bug Reports - <a
+				href="https://winningpokerhud.com/contact-us.php"
+				target="_blank"
+			>Contact Form</a>
+		</p>
+
 		<p class="text-center small-text tm-l">Powered by VikSoft</p>
 
 		<p class="text-center very-small-text tm-s">Visit <a href="https://github.com/vikcch/live-squeezer">GitHub repository</a>

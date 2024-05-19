@@ -59,6 +59,7 @@ const requiredPreStartedAction = async function (mainInfoValues, view) {
             message: () => 'TV or Hero',
         },
         heroSeat: {
+            // STOPSHIP:: IGNORAR DE FOR TV PERSPECTIVE
             label: 'Hero seat',
             message: () => 'Type a valid player seat!',
         },
