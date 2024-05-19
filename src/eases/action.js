@@ -98,12 +98,6 @@ class Action {
 
         const { history, player, input } = this;
 
-        history.players.forEach(p => {
-            if (p.stillPlaying) p.acted = false;
-        });
-
-        player.acted = true;
-
         if (history.currentBet >= player.currentStack + player.moneyOnStreet) {
             this.calls();
             return;
@@ -120,6 +114,12 @@ class Action {
             this.calls();
             return;
         }
+
+        history.players.forEach(p => {
+            if (p.stillPlaying) p.acted = false;
+        });
+
+        player.acted = true;
 
         const maxMoneyOnStreet = fixValue(player.currentStack + player.moneyOnStreet);
 
