@@ -15,7 +15,6 @@
 			</label>
 
 			<!-- ::SITOUT:: -->
-			<!-- STOPSHIP -->
 			<label
 				v-show="sitouts.length"
 				class="pointer underline"

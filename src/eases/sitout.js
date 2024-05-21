@@ -72,6 +72,7 @@ export default async function () {
 
     const { seat, name, stack } = sitoutter;
     this.inputs.push(Player.model(seat, name, stack));
+    this.inputs.sort((a, b) => a.seat - b.seat);
     this.$data.sitouts = sitouts.filter(v => v !== sitoutter);
 
     checkDuplicateSeats.call(this);
