@@ -101,4 +101,130 @@ describe('biz.js', function () {
 
     });
 
+    describe('# tablePositions', () => {
+
+        it('1. heads-up', () => {
+
+            const players = [
+                { seat: 1, isButton: true },
+                { seat: 2 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 1, position: 'BU', },
+                { seat: 2, position: 'BB' },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('2. three way', () => {
+
+            const players = [
+                { seat: 1, isButton: true },
+                { seat: 2 },
+                { seat: 3 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 3, position: 'BB' },
+                { seat: 2, position: 'SB' },
+                { seat: 1, position: 'BU', },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('3. another three way', () => {
+
+            const players = [
+                { seat: 1, },
+                { seat: 2, isButton: true },
+                { seat: 3 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 1, position: 'BB', },
+                { seat: 3, position: 'SB' },
+                { seat: 2, position: 'BU' },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('4. four ways', () => {
+
+            const players = [
+                { seat: 1, },
+                { seat: 2, isButton: true },
+                { seat: 3 },
+                { seat: 4 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 4, position: 'BB', },
+                { seat: 3, position: 'SB' },
+                { seat: 2, position: 'BU' },
+                { seat: 1, position: 'UTG' },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('5. five ways', () => {
+
+            const players = [
+                { seat: 1, },
+                { seat: 2, isButton: true },
+                { seat: 3 },
+                { seat: 4 },
+                { seat: 5 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 4, position: 'BB', },
+                { seat: 3, position: 'SB' },
+                { seat: 2, position: 'BU' },
+                { seat: 1, position: 'CO' },
+                { seat: 5, position: 'UTG' },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        it('5. another five ways', () => {
+
+            const players = [
+                { seat: 1 },
+                { seat: 2 },
+                { seat: 3 },
+                { seat: 4, isButton: true },
+                { seat: 7 },
+            ];
+
+            const actual = biz.tablePositions(players);
+
+            const expected = [
+                { seat: 1, position: 'BB', },
+                { seat: 7, position: 'SB' },
+                { seat: 4, position: 'BU' },
+                { seat: 3, position: 'CO' },
+                { seat: 2, position: 'UTG' },
+            ];
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+    });
+
 });

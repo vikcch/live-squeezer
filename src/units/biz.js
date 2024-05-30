@@ -30,6 +30,11 @@ const biz = {
                 Object.assign(p, { position: positions[i] });
             });
 
+            if (playersSeats.length >= 4) {
+                const lastIndex = playersSeats.length - 1;
+                playersSeats[lastIndex].position = 'UTG';
+            }
+
             return playersSeats;
         };
 
