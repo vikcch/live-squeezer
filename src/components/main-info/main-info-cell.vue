@@ -19,7 +19,7 @@
 				@change="optional_Change"
 			>
 
-			<!-- NOTE:: Valor apenas para straddles e atribuido em App.vue -->
+			<!-- NOTE:: Valor apenas para straddles e atribuido em App.vue > ease/shortcuts -->
 			<span
 				ref="status"
 				v-if="props.slotAttrs.status"

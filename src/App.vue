@@ -91,6 +91,7 @@ import Dialog from './components/dialog/dialog.vue';
 import Switcher from './components/switcher.vue';
 import ForumFormat from './components/forum-format.vue';
 import Footer from './components/footer.vue';
+import easeShortCuts from './eases/shortcuts'
 import biz from './units/biz';
 
 // NOTE:: Lazy loading... contiuar a dar warning por excesso de tamanho
@@ -127,56 +128,59 @@ export default {
 			if (process.env.NODE_ENV !== 'development') return '';
 		};
 
-		window.addEventListener('keyup', async (event) => {
+		// window.addEventListener('keyup', async (event) => {
 
-			// OPTIMIZE:: Mover para eases, tem comentario em main-info-cell.. alterar
+		// 	// OPTIMIZE:: Mover para eases, tem comentario em main-info-cell.. alterar
 
-			if (event.key === 'F2') {
+		// 	if (event.key === 'F2') {
 
-				// NOTE:: `.Vue` chama `$children[0]`
-				const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
+		// 		// NOTE:: `.Vue` chama `$children[0]`
+		// 		const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
 
-				if (!localStorageDialog.isSaveEnabled) return;
+		// 		if (!localStorageDialog.isSaveEnabled) return;
 
-				const success = await localStorageDialog.save();
+		// 		const success = await localStorageDialog.save();
 
-				if (!success) return;
+		// 		if (!success) return;
 
-				// NOTE:: Podia ser "sync"... é só para dar um tempinho
-				setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
-			}
+		// 		// NOTE:: Podia ser "sync"... é só para dar um tempinho
+		// 		setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
+		// 	}
 
-			if (event.key === 'F4') {
+		// 	if (event.key === 'F4') {
 
-				if (!this.$refs['start-action'].$data.isEnabled) return;
+		// 		if (!this.$refs['start-action'].$data.isEnabled) return;
 
-				const stakesEl = this.$refs['main-info'].getElementByKey('stakes');
-				const [input] = stakesEl.$children;
+		// 		const stakesEl = this.$refs['main-info'].getElementByKey('stakes');
+		// 		const [input] = stakesEl.$children;
 
-				const stakes = biz.toggleStaddles(input.$data.text);
+		// 		const stakes = biz.toggleStaddles(input.$data.text);
 
-				input.$data.text = stakes;
-				input.dispatch();
+		// 		input.$data.text = stakes;
+		// 		input.dispatch();
 
-				const count = [...stakes].filter(v => v === '[').length;
-				const text = count ? `STR: ${count}x` : '';
-				stakesEl.$refs['status'].textContent = text;
-			}
+		// 		const count = [...stakes].filter(v => v === '[').length;
+		// 		const text = count ? `STR: ${count}x` : '';
+		// 		stakesEl.$refs['status'].textContent = text;
+		// 	}
 
-			if (event.key === 'F8') {
+		// 	if (event.key === 'F8') {
 
-				this.$refs['players-grid'].focusFirstPlayerInput();
-			}
+		// 		this.$refs['players-grid'].focusFirstPlayerInput();
+		// 	}
 
-			if (event.key === 'F9') {
+		// 	if (event.key === 'F9') {
 
-				if (!this.$refs['start-action'].$data.isEnabled) return;
+		// 		if (!this.$refs['start-action'].$data.isEnabled) return;
 
-				const { controller } = this.$root.$data;
-				controller.handleStartAction(event);
-			}
+		// 		const { controller } = this.$root.$data;
+		// 		controller.handleStartAction(event);
+		// 	}
 
-		});
+		// });
+
+		window.addEventListener('keyup', easeShortCuts.bind(this));
+
 	}
 };
 </script>
