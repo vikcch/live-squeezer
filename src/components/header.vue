@@ -177,6 +177,11 @@ h1 {
 	border-radius: 4px;
 }
 
+.button-hidden:hover {
+	filter: brightness(125%);
+	cursor: pointer;
+}
+
 @media only screen and (max-width: 770px) {
 	.self-employed {
 		font-size: 14px;
