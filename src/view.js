@@ -158,13 +158,21 @@ export default class View {
 
         this.dialogStreetVue.isVisible = false;
 
-        const { seat, name, position } = model.getPlayerToAct();
+        const { seat, name, position, post } = model.getPlayerToAct();
 
         const markItalic = makeTextTag('mark', 'em');
 
         const seatTagged = markItalic(`#${seat}`);
-        const positionTagged = markItalic(position);
+
         const street = Street.STREETS[tail(model.histories).street];
+
+        const isPreFlop = street === 'PRE-FLOP';
+
+        const isStraddle = post && position !== 'BB' && position !== 'SB'
+
+        const positionText = isStraddle && isPreFlop ? `${position} | S` : position;
+
+        const positionTagged = markItalic(positionText);
 
         const title = `Action on ${seatTagged} ${name} ${positionTagged} - ${street}`;
 
