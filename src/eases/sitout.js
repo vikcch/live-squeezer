@@ -9,13 +9,22 @@ const sitouttersHandler = function () {
 
     this.value = validation.force.onlyNumbers(this.value);
 };
+
 const askForSeating = async (sitouts) => {
 
     const markTag = makeTextTag('mark');
 
-    const sitouttersSeat = sitouts.map(v => ` ${markTag(v.seat)}`);
+    const sitoutsTagged = sitouts.map(v => v.seat).map(markTag).join(' ');
 
-    const htmlText = `Players on Sitout: ${sitouttersSeat}`;
+    const coloredSeats = /* html */ `<span class="colored-seat"> ${sitoutsTagged} </span>`;
+
+    const players = sitouts.map(v => `${markTag(v.seat)} ${v.name}`).join(' • ');
+
+    const playersStyled = /* html */ `<div class="colored-seat tm-m"> ${players} </div>`;
+
+    const topText = `Players on Sitout: ${coloredSeats}`;
+
+    const htmlText = `${topText}${playersStyled}`;
 
     const result = await Vue.swal.fire({
         html: htmlText,
