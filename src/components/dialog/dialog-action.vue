@@ -18,6 +18,7 @@
 						type="text"
 						autocomplete="new-password"
 						ref="player-action"
+						maxlength="12"
 						v-model="text"
 						@keyup="onKeyUp"
 						@input="forced"
