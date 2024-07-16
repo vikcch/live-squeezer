@@ -67,7 +67,7 @@
 			</div>
 
 			<div class="train bm-s">
-				<span class="rm-s">E.g.</span><kbd>7d</kbd> <kbd>Kh</kbd> <kbd>ts</kbd>
+				<span class="rm-s">E.g.</span><kbd>7d</kbd> <kbd>Kh</kbd> <kbd>Ts</kbd>
 			</div>
 
 		</app-dialog-body>
