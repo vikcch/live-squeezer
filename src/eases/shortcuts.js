@@ -34,9 +34,33 @@ export default async function (event) {
         stakesEl.$refs['status'].textContent = text;
     }
 
-    if (event.key === 'F8') {
+    if (event.key === 'F8' && !event.ctrlKey) {
+
+        // NOTE:: Pode ter falhas com o inspector aberto na aba `sources`
 
         this.$refs['players-grid'].focusFirstPlayerInput();
+    }
+
+    if (event.key === 'F8' && event.ctrlKey) {
+
+        // TODO:: Validaçoes de seat (está disponivel) e amount (ser number? 2 decimal places)
+
+        const loser = Number(prompt('Enter the losing player seat'));
+        const amount = Number(prompt('Amount per player'));
+
+        const players = this.$refs['players-grid'].$children;
+
+        Array.from(players).forEach(({ intel }) => {
+
+            const seat = Number(intel.input.seat);
+            const oldStack = Number(intel.input.stack);
+
+            const stack = seat === loser
+                ? oldStack - amount * (players.length - 1)
+                : oldStack + amount;
+
+            intel.input.stack = stack;
+        });
     }
 
     if (event.key === 'F9') {
