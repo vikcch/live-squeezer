@@ -158,7 +158,7 @@ export default class View {
 
         this.dialogStreetVue.isVisible = false;
 
-        const { seat, name, position, post } = model.getPlayerToAct();
+        const { seat, name, position, post, holeCards } = model.getPlayerToAct();
 
         const markItalic = makeTextTag('mark', 'em');
 
@@ -174,7 +174,13 @@ export default class View {
 
         const positionTagged = markItalic(positionText);
 
-        const title = `Action on ${seatTagged} ${name} ${positionTagged} - ${street}`;
+        const isPair = holeCards.charAt(0) === holeCards.charAt(3);
+        const cards = `${holeCards.charAt(0)}${holeCards.charAt(3)}`;
+        const suited = holeCards.charAt(1) === holeCards.charAt(4) ? 's' : 'o';
+        const simpleHand = holeCards.charAt(0) === '_' ? '' : `${cards}${isPair ? '' : suited}`;
+        const hcFormated = `<span style="font-family:'Consolas'">${simpleHand}</span>`;
+
+        const title = `Action on ${seatTagged} ${name} ${positionTagged} ${hcFormated} - ${street}`;
 
         this.dialogActionVue.title = title;
         this.dialogActionVue.isVisible = true;

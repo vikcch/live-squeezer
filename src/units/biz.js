@@ -19,6 +19,8 @@ const biz = {
 
         const getPositionsNonHU = function () {
 
+            // TODO:: tirar MP ser +3 e ir tirando os utg's até ao LJ
+
             const positions = ['BB', 'SB', 'BU', 'CO', 'HJ', 'LJ', 'MP', 'UTG+2', 'UTG+1', 'UTG'];
 
             while (playersSeats[playersSeats.length - 3].seat !== buttonSeat) {
