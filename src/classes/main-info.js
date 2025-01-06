@@ -198,7 +198,6 @@ export default class MainInfo {
         this.setHeroSeat = values.heroSeat;
         this.setHandTime = values.handTime;
 
-        this.trySetNewHandId();
         this.forceUniqueNames(values);
         this.setPlayers = values.playersInfo;
 
@@ -368,17 +367,6 @@ export default class MainInfo {
             }
         }
 
-    }
-
-    trySetNewHandId() {
-
-        // NOTE:: Inclui "time" no `handId` caso seja defenido (ultimos 6 chars)
-
-        const abrvTime = this.handTime?.replace(/:/g, '');
-
-        if (!Number(abrvTime)) return;
-
-        this.handId = Number(`${this.handId.toString().slice(0, -6)}${abrvTime}`);
     }
 
 }
