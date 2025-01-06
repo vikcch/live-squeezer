@@ -98,6 +98,8 @@ export default class Controller {
         this.model.initHistory();
 
         this.view.displayDialogAction(this.model);
+
+        this.model.postActionStartedDB();
     }
 
     handleRestartAction = () => {

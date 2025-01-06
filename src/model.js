@@ -261,6 +261,37 @@ class Model {
 
         return false;
     }
+
+    async postActionStartedDB() {
+
+        const { href } = window.location;
+
+        const isDev = href.includes('localhost') || href.includes('127.0.0.1');
+
+        // TODO:: ADICIONAR WWWROOT NA RAIZ DA PAGINA
+        const prefixDev = 'http://localhost/dev/live-squeezer';
+        const prefixProd = 'https://replayer.winningpokerhud.com';
+
+        const prefix = isDev ? prefixDev : prefixProd;
+
+        const endPoint = `${prefix}/php/action-started.php`;
+
+        const { tableName, perspective, stakes: rawStakes } = this.mainInfo;
+
+        const stakes = `${rawStakes.smallBlind}/${rawStakes.bigBlind}`;
+
+        const rawResponse = await fetch(endPoint, {
+            method: 'POST',
+            body: JSON.stringify({ tableName, perspective, stakes })
+        });
+
+        console.log(rawResponse);
+
+        const response = await rawResponse.json();
+
+        console.log({ response });
+
+    }
 }
 
 
