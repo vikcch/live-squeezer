@@ -1,6 +1,6 @@
 <template>
 
-	<div class="divTableRow">
+	<div :class="['divTableRow', { action: hasAction }]">
 
 		<div class="divTableCell">
 
@@ -302,6 +302,13 @@ export default {
 		showFocusShortcut() {
 
 			return this.intel.index === 0;
+		},
+
+		hasAction() {
+
+			const { seat } = this.intel.input;
+
+			return this.intel.actionSeat === seat
 		}
 	},
 
@@ -374,5 +381,9 @@ export default {
 
 .min-w-64 {
 	min-width: 56px;
+}
+
+.action {
+	background-color: #F9E5E5 !important;
 }
 </style>

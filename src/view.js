@@ -153,10 +153,20 @@ export default class View {
         this.updateOptionsOneToX('dealer', tableMax)
     }
 
+    updatePlayersGridActivity({ isStreet }, model) {
+
+        const { seat } = model.getPlayerToAct();
+
+        const actionSeat = isStreet ? null : seat;
+
+        this.playersGridVue.setActionSeat(actionSeat);
+    }
 
     displayDialogAction(model) {
 
         this.dialogStreetVue.isVisible = false;
+
+        this.updatePlayersGridActivity({ isStreet: false }, model);
 
         const { seat, name, position, post, holeCards } = model.getPlayerToAct();
 
@@ -180,7 +190,7 @@ export default class View {
         const simpleHand = holeCards.charAt(0) === '_' ? '' : `${cards}${isPair ? '' : suited}`;
         const hcFormated = `<span style="font-family:'Consolas'">${simpleHand}</span>`;
 
-        const nameStyle = `style="max-width:130px; display: inline-block;"`;
+        const nameStyle = `style="max-width:130px; display: inline-block; vertical-align: bottom;"`;
         const nameFormated = /* html */ `<span class="hide-overflow" ${nameStyle}>${name}</span>`
         const title = `Action on ${seatTagged} ${nameFormated} ${positionTagged} ${hcFormated} - ${street}`;
 
@@ -193,6 +203,8 @@ export default class View {
     displayDialogStreet(street, model) {
 
         this.dialogActionVue.isVisible = false;
+
+        this.updatePlayersGridActivity({ isStreet: true }, model);
 
         const isFlop = street === 'FLOP';
 

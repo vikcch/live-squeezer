@@ -56,7 +56,7 @@
 				<app-player-row
 					:key="index"
 					v-for="(input, index) in inputs"
-					:intel="{ input, index, isEditable, dealerSeat }"
+					:intel="{ input, index, isEditable, dealerSeat, actionSeat }"
 				></app-player-row>
 
 			</div>
@@ -142,6 +142,7 @@ export default {
 			inputs: autoFillerData,
 			isEditable: true,
 			dealerSeat: 1,
+			actionSeat: null,
 			randomPlayerInfo: true,
 			sitouts: []
 		};
@@ -243,6 +244,11 @@ export default {
 				trySetStack(player);
 			});
 		},
+
+		setActionSeat(seat) {
+
+			this.actionSeat = seat;
+		}
 	},
 
 	computed: {
