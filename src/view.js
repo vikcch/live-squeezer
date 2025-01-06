@@ -168,7 +168,7 @@ export default class View {
 
         const isPreFlop = street === 'PRE-FLOP';
 
-        const isStraddle = post && position !== 'BB' && position !== 'SB'
+        const isStraddle = post && position !== 'BB' && position !== 'SB';
 
         const positionText = isStraddle && isPreFlop ? `${position} | S` : position;
 
@@ -180,7 +180,9 @@ export default class View {
         const simpleHand = holeCards.charAt(0) === '_' ? '' : `${cards}${isPair ? '' : suited}`;
         const hcFormated = `<span style="font-family:'Consolas'">${simpleHand}</span>`;
 
-        const title = `Action on ${seatTagged} ${name} ${positionTagged} ${hcFormated} - ${street}`;
+        const nameStyle = `style="max-width:130px; display: inline-block;"`;
+        const nameFormated = /* html */ `<span class="hide-overflow" ${nameStyle}>${name}</span>`
+        const title = `Action on ${seatTagged} ${nameFormated} ${positionTagged} ${hcFormated} - ${street}`;
 
         this.dialogActionVue.title = title;
         this.dialogActionVue.isVisible = true;

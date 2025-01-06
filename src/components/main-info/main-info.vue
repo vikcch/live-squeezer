@@ -33,7 +33,6 @@ const oneToNineOptions = Array.from(Array(9), numberOption);
 
 const attrs_ = [
 	{
-		// STOPSHIP:: SER COMO FUNCTION?? (date.now) ... tem falha a ordenar quando grava... ser TODO
 		key: 'handId', label: 'Hand Id:', text: Date.now(),
 		el: 'app-mi-input', maxlength: '20', inputmode: 'numeric'
 	},
