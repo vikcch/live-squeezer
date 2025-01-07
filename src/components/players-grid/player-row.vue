@@ -308,7 +308,8 @@ export default {
 
 			const { seat } = this.intel.input;
 
-			return this.intel.actionSeat === seat
+			// NOTE:: Adicionar player sem "Random info" causava "ter action" (seat:null)
+			return seat && this.intel.actionSeat === seat;
 		},
 
 		isPlaying() {

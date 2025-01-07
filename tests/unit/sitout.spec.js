@@ -9,6 +9,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);
 
 
+// STOPSHIP:: tests 2,3,4 falham.. ver problema
+
 describe('sitout.js', () => {
 
     it('1. Table full', () => {
@@ -198,6 +200,5 @@ describe('sitout.js', () => {
 
         swalMock_1.mockRestore();
     });
-
 
 });
