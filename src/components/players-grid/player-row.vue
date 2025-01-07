@@ -38,7 +38,7 @@
 					aria-label="seat"
 				/>
 
-				<div :class="['bullseye', isDealer]"></div>
+				<div :class="['position flex-1', isDealer]">{{position}}</div>
 
 			</div>
 
@@ -321,6 +321,13 @@ export default {
 			const actionTime = actionStarted && !model.hasSummary;
 
 			return !this.intel.hasFolded && actionTime;
+		},
+
+		position() {
+
+			if (this.isDealer) return null;
+
+			return this.intel.position.replace('UTG', 'UG');
 		}
 	},
 
@@ -376,6 +383,20 @@ export default {
 	color: #ffffff;
 	display: inline-block;
 	font-weight: bold;
+}
+
+.position {
+	font-family: "Share Tech Mono", serif;
+	font-weight: 400;
+	font-style: normal;
+
+	color: DarkGray;
+	font-size: 11px;
+	text-align: center;
+}
+
+.flex-1 {
+	flex: 1;
 }
 
 .small-input {

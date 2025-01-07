@@ -56,7 +56,11 @@
 				<app-player-row
 					:key="index"
 					v-for="(input, index) in inputs"
-					:intel="{ input, index, isEditable, dealerSeat, actionSeat, hasFolded:hasFolded(input.seat) }"
+					:intel="{ 
+						input, index, isEditable, dealerSeat, actionSeat, 
+						hasFolded: hasFolded(input.seat), 
+						position: getPosition(input.seat) 
+					}"
 				></app-player-row>
 
 			</div>
@@ -259,6 +263,11 @@ export default {
 		hasFolded(seat) {
 
 			return this.folds.includes(seat);
+		},
+
+		getPosition(seat) {
+
+			return this.positions.find(v => v.seat === seat)?.position ?? '';
 		}
 	},
 
@@ -288,7 +297,19 @@ export default {
 			const limit = biz.playersLimitTableMax(tableMax);
 
 			return this.inputs.length < limit && this.isEditable;
-		}
+		},
+
+		positions() {
+
+			// NOTE:: `seat` é string ('1')
+			const isButton = seat => ({ isButton: seat == this.dealerSeat });
+
+			const players = this.inputs.map(({ seat }) => ({ seat, ...isButton(seat) }));
+
+			return biz.tablePositions(players);
+		},
+
+
 	},
 
 	watch: {
@@ -307,7 +328,7 @@ export default {
 
 		window.EventVue.$on('updateDealerDisplay', value => {
 
-			this.dealerSeat = value;
+			this.dealerSeat = Number(value);
 		});
 	},
 };
