@@ -99,7 +99,8 @@ export default class Controller {
 
         this.view.displayDialogAction(this.model);
 
-        this.model.postActionStartedDB();
+        // ONGOING::
+        // this.model.postActionStartedDB();
     }
 
     handleRestartAction = () => {
@@ -216,6 +217,8 @@ export default class Controller {
     completed() {
 
         this.model.hasSummary = true;
+
+        this.view.resetPlayersGridActivity();
 
         this.view.hideGameDialogs();
 

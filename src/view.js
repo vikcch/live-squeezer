@@ -160,6 +160,20 @@ export default class View {
         const actionSeat = isStreet ? null : seat;
 
         this.playersGridVue.setActionSeat(actionSeat);
+
+        const history = model.histories.at(-1);
+
+        const folds = history.players
+            .filter(v => !v.stillPlaying && !(v.isAllIn || v.wasAllIn))
+            .map(v => v.seat);
+
+        this.playersGridVue.setFolds(folds);
+    }
+
+    resetPlayersGridActivity() {
+
+        this.playersGridVue.setFolds([]);
+        this.playersGridVue.setActionSeat(null);
     }
 
     displayDialogAction(model) {

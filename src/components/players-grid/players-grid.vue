@@ -56,7 +56,7 @@
 				<app-player-row
 					:key="index"
 					v-for="(input, index) in inputs"
-					:intel="{ input, index, isEditable, dealerSeat, actionSeat }"
+					:intel="{ input, index, isEditable, dealerSeat, actionSeat, hasFolded:hasFolded(input.seat) }"
 				></app-player-row>
 
 			</div>
@@ -144,7 +144,8 @@ export default {
 			dealerSeat: 1,
 			actionSeat: null,
 			randomPlayerInfo: true,
-			sitouts: []
+			sitouts: [],
+			folds: [],
 		};
 	},
 
@@ -248,6 +249,16 @@ export default {
 		setActionSeat(seat) {
 
 			this.actionSeat = seat;
+		},
+
+		setFolds(seats) {
+
+			this.folds = seats;
+		},
+
+		hasFolded(seat) {
+
+			return this.folds.includes(seat);
 		}
 	},
 
@@ -360,13 +371,13 @@ div.minimalistBlack {
 	display: table-row-group;
 }
 
-.divTableRow:nth-child(even) {
+/* .divTableRow:nth-child(even) {
 	background-color: #fafafb;
 }
 
 .divTableRow:hover {
 	background-color: #f2f2f2;
-}
+} */
 </style>
 
 

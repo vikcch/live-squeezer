@@ -1,6 +1,6 @@
 <template>
 
-	<div :class="['divTableRow', { action: hasAction }]">
+	<div :class="['divTableRow', { action: hasAction, playing: isPlaying }]">
 
 		<div class="divTableCell">
 
@@ -309,6 +309,17 @@ export default {
 			const { seat } = this.intel.input;
 
 			return this.intel.actionSeat === seat
+		},
+
+		isPlaying() {
+
+			const { model } = this.$root.$data;
+
+			const actionStarted = !this.intel.isEditable;
+
+			const actionTime = actionStarted && !model.hasSummary;
+
+			return !this.intel.hasFolded && actionTime;
 		}
 	},
 
@@ -383,7 +394,22 @@ export default {
 	min-width: 56px;
 }
 
-.action {
-	background-color: #F9E5E5 !important;
+.divTableRow.playing {
+	background-color: #e0e9e0;
+}
+
+/* .divTableRow.folded {
+	background-color: #f2f2f2;
+}
+ */
+.divTableRow.action {
+	/* background-color: #f9e5e5 !important; */
+	/* background: linear-gradient(
+		0deg,
+		rgba(249, 229, 229, 1) 0%,
+		rgba(244, 204, 204, 1) 50%,
+		rgba(249, 229, 229, 1) 100%
+	); */
+	box-shadow: inset 0 0 4px red;
 }
 </style>
