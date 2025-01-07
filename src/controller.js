@@ -99,11 +99,13 @@ export default class Controller {
 
         this.view.displayDialogAction(this.model);
 
-        // ONGOING::
-        // this.model.postActionStartedDB();
+        // NOTE:: async sem await.. responsta pode ser ignorada
+        this.model.postActionStartedDB();
     }
 
     handleRestartAction = () => {
+
+        this.view.resetPlayersGridActivity();
 
         this.view.resetControls({ fromRestartHand: true });
 

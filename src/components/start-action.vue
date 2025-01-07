@@ -17,7 +17,7 @@
 					class="fa fa-flag-o"
 					aria-hidden="true"
 				></i></span>
-			<span class="css-button-text start-action-text">Start Action</span>
+			<span :class="['css-button-text start-action-text', fetchedStyle]">Start Action</span>
 		</button>
 
 		<div
@@ -44,7 +44,10 @@ export default {
 
 	data() {
 
-		return { isEnabled: true };
+		return {
+			isEnabled: true,
+			fetched: undefined
+		};
 	},
 
 	methods: {
@@ -98,7 +101,29 @@ export default {
 		styleState() {
 
 			return `button--${this.isEnabled ? 'blue' : 'disabled'}`;
+		},
+
+		fetchedStyle() {
+
+			const workMap = {
+				'true': 'green',
+				'false': 'red',
+				'null': 'black',
+				'undefined': ''
+			};
+
+			return workMap[this.fetched];
 		}
+	},
+
+	created() {
+
+		window.EventVue.$on('updateFetched', value => {
+
+			this.fetched = value;
+
+			setTimeout(() => { this.fetched = undefined }, 2500);
+		});
 	}
 }
 </script>
@@ -115,6 +140,16 @@ export default {
 	font-size: 10px;
 	margin-left: 8px;
 	vertical-align: 4px;
+}
+
+.start-action-text.green::after {
+	color: green;
+}
+.start-action-text.red::after {
+	color: lightcoral;
+}
+.start-action-text.black::after {
+	color: black;
 }
 
 .restart {

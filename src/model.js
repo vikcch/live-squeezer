@@ -268,29 +268,34 @@ class Model {
 
         const isDev = href.includes('localhost') || href.includes('127.0.0.1');
 
-        // TODO:: ADICIONAR WWWROOT NA RAIZ DA PAGINA
         const prefixDev = 'http://localhost/dev/live-squeezer';
-        const prefixProd = 'https://replayer.winningpokerhud.com';
+        const prefixProd = 'https://livesqueezer.winningpokerhud.com';
 
         const prefix = isDev ? prefixDev : prefixProd;
 
         const endPoint = `${prefix}/php/action-started.php`;
 
-        const { tableName, perspective, stakes: rawStakes } = this.mainInfo;
+        const { tableName, perspective, stakes: stakesLevel } = this.mainInfo;
 
-        const stakes = `${rawStakes.smallBlind}/${rawStakes.bigBlind}`;
+        const stakes = `${stakesLevel.smallBlind}/${stakesLevel.bigBlind}`;
 
-        const rawResponse = await fetch(endPoint, {
-            method: 'POST',
-            body: JSON.stringify({ tableName, perspective, stakes })
-        });
+        try {
 
-        console.log(rawResponse);
+            const rawResponse = await fetch(endPoint, {
+                method: 'POST',
+                body: JSON.stringify({ tableName, perspective, stakes })
+            });
 
-        const response = await rawResponse.json();
+            const response = await rawResponse.json();
 
-        console.log({ response });
+            window.EventVue.$emit('updateFetched', response.success);
 
+        } catch (error) {
+
+            console.error(error);
+
+            window.EventVue.$emit('updateFetched', null);
+        }
     }
 }
 
