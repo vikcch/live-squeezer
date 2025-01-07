@@ -56,7 +56,7 @@ const attrs_ = [
 	},
 
 	{
-		key: 'stakes', label: 'Stakes:', text: '2/5', info: true,
+		key: 'stakes', label: 'Stakes:', text: '5/10', info: true,
 		placeholder: '10/20(2)[40][60]', el: 'app-mi-input', status: true
 	},
 

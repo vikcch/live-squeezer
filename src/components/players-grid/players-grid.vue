@@ -77,8 +77,8 @@ import sitoutEase from '../../eases/sitout';
 
 
 const autoFillerData = [
-	{ seat: '1', name: 'vik', stack: '2000', holeCards: '__ __' },
-	{ seat: '2', name: 'rita', stack: '1500', holeCards: '__ __' },
+	{ seat: '1', name: 'vik', stack: '1000', holeCards: '__ __' },
+	{ seat: '2', name: 'rita', stack: '750', holeCards: '__ __' },
 	{ seat: '3', name: 'joana', stack: '1000', holeCards: '__ __' },
 ];
 
