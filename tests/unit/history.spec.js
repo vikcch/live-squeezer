@@ -79,13 +79,11 @@ describe('history.js', () => {
             expect(actual).toStrictEqual(expected);
         });
 
-        // STOPSHIP:: ESTE TESTE FALHA NO JEST.. VER O QUE ESTA ERRADO
-
         it('6.', () => {
 
             const histories = [
                 {
-                    players: [{ holeCards: '7s 7h' }, { holeCards: 'ac Kd' }],
+                    players: [{ holeCards: '7s 7h' }, { holeCards: 'Ac Kd' }],
                     streetCards: null
                 }
             ];
@@ -97,6 +95,5 @@ describe('history.js', () => {
         });
 
     });
-
 
 });

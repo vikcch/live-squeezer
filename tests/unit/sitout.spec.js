@@ -9,8 +9,6 @@ import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);
 
 
-// STOPSHIP:: tests 2,3,4 falham.. ver problema
-
 describe('sitout.js', () => {
 
     it('1. Table full', () => {
@@ -62,7 +60,8 @@ describe('sitout.js', () => {
 
         expect(actual).toStrictEqual(expected);
 
-        const [actual_] = component.inputs.slice(-1);
+        // NOTE:: Ordenar "new Array(5) +1", quem tem prop (seat) fica em primeiro
+        const actual_ = component.inputs.at(0);
         const expected_ = inserted;
 
         expect(actual_).toStrictEqual(expected_);
@@ -100,7 +99,8 @@ describe('sitout.js', () => {
 
         expect(actual).toStrictEqual(expected);
 
-        const [actual_] = component.inputs.slice(-1);
+        // NOTE:: Ordenar "new Array(5) +1", quem tem prop (seat) fica em primeiro
+        const actual_ = component.inputs.at(0);
         const expected_ = inserted;
 
         expect(actual_).toStrictEqual(expected_);
@@ -142,7 +142,8 @@ describe('sitout.js', () => {
 
         expect(actual).toStrictEqual(expected);
 
-        const [actual_] = component.inputs.slice(-1);
+        // NOTE:: Ordenar "new Array(5) +1", quem tem prop (seat) fica em primeiro
+        const actual_ = component.inputs.at(0);
         const expected_ = inserted;
 
         expect(actual_).toStrictEqual(expected_);
@@ -186,7 +187,7 @@ describe('sitout.js', () => {
 
         expect(actual).toStrictEqual(expected);
 
-        const [actual_] = component.inputs.slice(-1);
+        const actual_ = component.inputs.find(v => v.name === 'joana');
         const expected_ = inserted;
 
         expect(actual_).toStrictEqual(expected_);
