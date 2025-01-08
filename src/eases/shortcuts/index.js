@@ -1,4 +1,5 @@
-import biz from '../units/biz';
+import biz from '../../units/biz';
+import f8Ctrl from './f8-ctrl';
 
 export default async function (event) {
 
@@ -43,24 +44,7 @@ export default async function (event) {
 
     if (event.key === 'F8' && event.ctrlKey) {
 
-        // TODO:: Validaçoes de seat (está disponivel) e amount (ser number? 2 decimal places)
-
-        const loser = Number(prompt('Enter the losing player seat'));
-        const amount = Number(prompt('Amount per player'));
-
-        const players = this.$refs['players-grid'].$children;
-
-        Array.from(players).forEach(({ intel }) => {
-
-            const seat = Number(intel.input.seat);
-            const oldStack = Number(intel.input.stack);
-
-            const stack = seat === loser
-                ? oldStack - amount * (players.length - 1)
-                : oldStack + amount;
-
-            intel.input.stack = stack;
-        });
+        f8Ctrl.call(this);
     }
 
     if (event.key === 'F9') {

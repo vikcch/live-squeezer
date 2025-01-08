@@ -91,7 +91,7 @@ import Dialog from './components/dialog/dialog.vue';
 import Switcher from './components/switcher.vue';
 import ForumFormat from './components/forum-format.vue';
 import Footer from './components/footer.vue';
-import easeShortCuts from './eases/shortcuts'
+import easeShortCuts from './eases/shortcuts/index.js';
 
 // NOTE:: Lazy loading... contiuar a dar warning por excesso de tamanho
 // const MainInfo = () => import('./components/main-info/main-info.vue');
