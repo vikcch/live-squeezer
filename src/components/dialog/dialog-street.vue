@@ -31,7 +31,7 @@
 							type="text"
 							autocomplete="new-password"
 							ref="street-cards"
-							:maxlength="maxlenght"
+							:maxlength="maxlength"
 							v-model="text"
 							@keyup="onKeyUp"
 						>
@@ -66,8 +66,19 @@
 				</div>
 			</div>
 
-			<div class="train bm-s">
+			<!-- 			<div class="train bm-s">
 				<span class="rm-s">E.g.</span><kbd>7d</kbd> <kbd>Kh</kbd> <kbd>Ts</kbd>
+			</div>
+ -->
+			<div class="train bm-s">
+				<span class="rm-s">E.g.</span>
+				<span
+					:key="index"
+					v-for="(card, index) in exampleCards"
+				>
+					<kbd>{{card[0]}}</kbd><kbd class="rm-s">{{card[1]}}</kbd>
+					<kbd v-show="showEnterKey(index)">Enter</kbd>
+				</span>
 			</div>
 
 		</app-dialog-body>
@@ -97,7 +108,7 @@ export default {
 			title: '',
 			isVisible: false,
 			text: '__ __ __',
-			maxlenght: 8
+			maxlength: 8
 		};
 	},
 
@@ -170,10 +181,23 @@ export default {
 
 				this.onCardsPopupClick(event);
 			}
+		},
+
+		showEnterKey(index) {
+
+			return index + 1 === this.exampleCards.length;
 		}
 	},
 
+	computed: {
 
+		exampleCards() {
+
+			if (this.maxlength === 8) return ['Th', '5d', 'Ks'];
+
+			else return ['Ac'];
+		}
+	},
 
 	updated() { },
 

@@ -409,16 +409,22 @@ export default class View {
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
             color: #333; display: inline-block; font-size: 0.85em; font-weight: 700;"`;
 
-        const amount = `To <i>raise to</i> or <i>bet</i>: Type the amount`;
+        const amount = `To <i>raise to</i> or <i>bet</i>: Enter the amount`;
         const passive = `To <i>check</i> or <i>call</i>: Type <mark>c</mark> or <kbd ${kbdStyle}>→</kbd> key`;
         const fold = `To <i>fold</i>: Type <mark>f</mark> or <kbd ${kbdStyle}>←</kbd> key`;
         const thousands = `Press <mark>=</mark> to make thousands, will add <i>000</i>`;
+        const allIn = `Enter an amount above the stack for <i>All In</i>`;
 
         Vue.swal.fire({
             icon: 'info',
             title: 'Action input!',
             showCloseButton: true,
-            html: `<p ${pStyle}>${amount}</p><p ${pStyle}>${passive}</p><p ${pStyle}>${fold}</p><p ${pStyle}>${thousands}</p>`
+            html: `
+                <p ${pStyle}>${amount}</p>
+                <p ${pStyle}>${passive}</p>
+                <p ${pStyle}>${fold}</p>
+                <p ${pStyle}>${thousands}</p>
+                <p ${pStyle}>${allIn}</p>`
         });
     }
 
