@@ -20,6 +20,7 @@
 			<span :class="['css-button-text start-action-text', fetchedStyle]">Start Action</span>
 		</button>
 
+		<!-- STOPSHIP:: MUDAR ESTILOS EM EDITABLE -->
 		<div
 			class="restart"
 			role="button"

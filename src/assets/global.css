@@ -131,6 +131,10 @@ mark {
 	margin-left: 16px;
 }
 
+.space-x-m>*+* {
+	margin-left: 8px;
+}
+
 .hide-overflow {
 	white-space: nowrap;
 	overflow: hidden;

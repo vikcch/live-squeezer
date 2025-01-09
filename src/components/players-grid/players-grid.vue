@@ -5,13 +5,31 @@
 
 			<!-- ::CHECKBOX RANDOM NAMES:: -->
 
-			<label class="train pointer">
+			<label
+				class="train pointer"
+				v-show="false"
+			>
 				<input
 					class="pointer"
 					type="checkbox"
 					v-model="randomPlayerInfo"
 				>
 				<span class="lm-s">Random Info</span>
+			</label>
+
+			<!-- ::SET NAMES AS:: -->
+			<label class="">
+				<span class="rm-m">Set Names as:</span>
+				<i
+					id="next-hand-info"
+					class="fa fa-info-circle text-info"
+					aria-hidden="true"
+					@click="showInfo_Click"
+				></i>
+				<div :class="['names-options space-x-m', nameOptionsStyle ]">
+					<span @click="setNamesAs_Click('positions')">Positions</span>
+					<span @click="setNamesAs_Click('seats')">Seats</span>
+				</div>
 			</label>
 
 			<!-- ::SITOUT:: -->
@@ -91,8 +109,7 @@ const addRow = function () {
 	const { view } = this.$root.$data;
 	const tableMax = view.mainInfoVue.$data.values.tableMax;
 
-	if (!this.randomPlayerInfo) this.inputs.push(Player.model());
-	else this.inputs.push(Player.model(...this.generateRandomPlayerInfo(tableMax)));
+	this.inputs.push(Player.model(...this.generateRandomPlayerInfo(tableMax)));
 
 	setTimeout(() => tail(this.$children).$refs['seat'].focus(), 0);
 };
@@ -147,7 +164,7 @@ export default {
 			isEditable: true,
 			dealerSeat: 1,
 			actionSeat: null,
-			randomPlayerInfo: true,
+			randomPlayerInfo: false,
 			sitouts: [],
 			folds: [],
 		};
@@ -161,6 +178,37 @@ export default {
 		disable,
 		enable,
 		orderCardsDisplay,
+
+		// Set Names as Positions or Seats
+		showInfo_Click(event) {
+
+			const { view } = this.$root.$data;
+
+			view.showSetNamesAsInfoPopup(event);
+		},
+
+		setNamesAs_Click(option) {
+
+			const { model } = this.$root.$data;
+
+			if (model.actionStarted) return;
+
+			const isSeat = option === 'seats';
+
+			const getValue = seat => isSeat ? `Seat_${seat}` : this.getPosition(seat);
+
+			const positions = biz.getPositions().map(v => v.replace('+', 'UTG_'));
+			const seats = [...new Array(10)].map((v, i) => `Seat_${i + 1}`);
+
+			const replacebleNames = [...biz.getDefaultNames(), ...positions, ...seats];
+
+			this.inputs.forEach(v => {
+
+				if (!replacebleNames.includes(v.name)) return;
+
+				v.name = getValue(v.seat).replace('+', 'UTG_');
+			});
+		},
 
 		focusFirstPlayerInput() {
 
@@ -268,7 +316,8 @@ export default {
 		getPosition(seat) {
 
 			return this.positions.find(v => v.seat === seat)?.position ?? '';
-		}
+		},
+
 	},
 
 	computed: {
@@ -309,6 +358,12 @@ export default {
 			return biz.tablePositions(players);
 		},
 
+		nameOptionsStyle() {
+
+			const { model } = this.$root.$data;
+
+			return !model.actionStarted ? 'pointer underline' : 'light-color';
+		}
 
 	},
 
@@ -342,6 +397,15 @@ export default {
 .underline {
 	text-decoration: underline;
 }
+
+.names-options {
+	font-size: 12px;
+	margin-top: -2px;
+}
+.names-options.light-color {
+	color: Gainsboro;
+}
+
 .focus-short-cut::after {
 	content: "F8";
 	font-size: 10px;

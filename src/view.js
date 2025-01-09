@@ -438,6 +438,16 @@ export default class View {
         });
     }
 
+    showSetNamesAsInfoPopup() {
+
+        Vue.swal.fire({
+            icon: 'info',
+            title: `Set Players' Name!`,
+            showCloseButton: true,
+            html: `Only the default Names will be replaced by <i>Positions</i> or <i>Seats</i>.`
+        });
+    }
+
     //#endregion
 
     //#region ERROS Popups
@@ -592,6 +602,7 @@ export default class View {
 
     unckeckRandomInfo() {
 
+        // STOPSHIP:: REMOVER CALLER E RELACIONADOS (CHECKBOX)
         this.playersGridVue.randomPlayerInfo = false;
     }
 

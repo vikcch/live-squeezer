@@ -4,6 +4,13 @@ import { head } from "./absx.js";
 
 const biz = {
 
+    getPositions: () => ['BB', 'SB', 'BU', 'CO', 'HJ', 'LJ', '+3', '+2', '+1', 'UTG'],
+
+    getDefaultNames: () => [
+        'vik', 'rita', 'joana', 'maria', 'diana', 'micaela',
+        'adriana', 'ruth', 'teresa', 'sara', 'madonna', 'britney', 'adele'
+    ],
+
     tablePositions: function (players) {
 
         const getPositionsHU = function () {
@@ -19,7 +26,7 @@ const biz = {
 
         const getPositionsNonHU = function () {
 
-            const positions = ['BB', 'SB', 'BU', 'CO', 'HJ', 'LJ', '+3', '+2', '+1', 'UTG'];
+            const positions = biz.getPositions();
 
             if (playersSeats.length > 7) {
 
@@ -165,8 +172,7 @@ const biz = {
      */
     pickAvailableName(takenNames) {
 
-        const names = ['maria', 'diana', 'micaela', 'adriana', 'ruth',
-            'teresa', 'sara', 'madonna', 'britney', 'adele'];
+        const names = biz.getDefaultNames();
 
         const pick = () => {
 
