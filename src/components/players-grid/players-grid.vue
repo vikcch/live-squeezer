@@ -3,20 +3,6 @@
 
 		<div class="divorced bm-m">
 
-			<!-- ::CHECKBOX RANDOM NAMES:: -->
-
-			<!-- 			<label
-				class="train pointer"
-				v-show="false"
-			>
-				<input
-					class="pointer"
-					type="checkbox"
-					v-model="randomPlayerInfo"
-				>
-				<span class="lm-s">Random Info</span>
-			</label> -->
-
 			<!-- ::SET NAMES AS:: -->
 			<label class="">
 				<span class="rm-s">Set Names as:</span>
@@ -164,7 +150,6 @@ export default {
 			isEditable: true,
 			dealerSeat: 1,
 			actionSeat: null,
-			// randomPlayerInfo: false,
 			sitouts: [],
 			folds: [],
 		};
@@ -272,8 +257,7 @@ export default {
 			];
 		},
 
-		// STOPSHIP:: JÁ NÁO É TRY
-		tryFillPlayersInfo(tableMaxExtended) {
+		fillPlayersInfo(tableMaxExtended) {
 
 			const trySetSeat = player => {
 
@@ -377,19 +361,6 @@ export default {
 		}
 
 	},
-
-	// ONGOING
-	// watch: {
-
-	// 	// CHECKBOX
-	// 	randomPlayerInfo(value) {
-
-	// 		const { view } = this.$root.$data;
-	// 		const tableMax = view.mainInfoVue.$data.values.tableMax;
-
-	// 		if (value) this.tryFillPlayersInfo(tableMax);
-	// 	},
-	// },
 
 	created() {
 

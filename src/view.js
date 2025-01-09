@@ -600,12 +600,6 @@ export default class View {
         this.forumFormatVue.isEnabled = true;
     }
 
-    // unckeckRandomInfo() {
-
-    //     // STOPSHIP:: REMOVER CALLER E RELACIONADOS 
-    //     this.playersGridVue.randomPlayerInfo = false;
-    // }
-
     resetPlayers() {
 
         const row = () => Player.model();
@@ -614,7 +608,7 @@ export default class View {
 
         const tableMax = this.mainInfoVue.$data.values.tableMax;
 
-        this.playersGridVue.tryFillPlayersInfo(tableMax);
+        this.playersGridVue.fillPlayersInfo(tableMax);
     }
 
     /**
