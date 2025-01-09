@@ -20,9 +20,8 @@
 			<span :class="['css-button-text start-action-text', fetchedStyle]">Start Action</span>
 		</button>
 
-		<!-- STOPSHIP:: MUDAR ESTILOS EM EDITABLE -->
 		<div
-			class="restart"
+			:class="['restart', restartSytle]"
 			role="button"
 			tabindex="0"
 			@click="restart_Click"
@@ -114,6 +113,11 @@ export default {
 			};
 
 			return workMap[this.fetched];
+		},
+
+		restartSytle() {
+
+			return `restart-${this.isEnabled ? 'disabled' : 'enabled'}`;
 		}
 	},
 
@@ -157,7 +161,12 @@ export default {
 	position: absolute;
 	right: 0;
 	top: 4px;
+}
+.restart.restart-enabled {
 	text-decoration: underline;
 	cursor: pointer;
+}
+.restart.restart-disabled {
+	color: gainsboro;
 }
 </style>
