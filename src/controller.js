@@ -184,7 +184,7 @@ export default class Controller {
 
     handleNewHand = () => {
 
-        this.view.unckeckRandomInfo();
+        // this.view.unckeckRandomInfo();
 
         this.view.resetPlayers();
 

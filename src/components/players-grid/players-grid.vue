@@ -5,7 +5,7 @@
 
 			<!-- ::CHECKBOX RANDOM NAMES:: -->
 
-			<label
+			<!-- 			<label
 				class="train pointer"
 				v-show="false"
 			>
@@ -15,11 +15,11 @@
 					v-model="randomPlayerInfo"
 				>
 				<span class="lm-s">Random Info</span>
-			</label>
+			</label> -->
 
 			<!-- ::SET NAMES AS:: -->
 			<label class="">
-				<span class="rm-m">Set Names as:</span>
+				<span class="rm-s">Set Names as:</span>
 				<i
 					id="next-hand-info"
 					class="fa fa-info-circle text-info"
@@ -164,7 +164,7 @@ export default {
 			isEditable: true,
 			dealerSeat: 1,
 			actionSeat: null,
-			randomPlayerInfo: false,
+			// randomPlayerInfo: false,
 			sitouts: [],
 			folds: [],
 		};
@@ -193,7 +193,15 @@ export default {
 
 			if (model.actionStarted) return;
 
+			const hasDealer = this.inputs.some(v => v.seat == this.dealerSeat);
+
 			const isSeat = option === 'seats';
+
+			if (!isSeat && !hasDealer) return this.$swal.fire({
+
+				title: `The button has not been set.`,
+				text: 'Please set an available button/dealer seat from the combobox!'
+			});
 
 			const getValue = seat => isSeat ? `Seat_${seat}` : this.getPosition(seat);
 
@@ -264,6 +272,7 @@ export default {
 			];
 		},
 
+		// STOPSHIP:: JÁ NÁO É TRY
 		tryFillPlayersInfo(tableMaxExtended) {
 
 			const trySetSeat = player => {
@@ -355,6 +364,8 @@ export default {
 
 			const players = this.inputs.map(({ seat }) => ({ seat, ...isButton(seat) }));
 
+			if (!players.some(v => v.isButton)) return [];
+
 			return biz.tablePositions(players);
 		},
 
@@ -367,17 +378,18 @@ export default {
 
 	},
 
-	watch: {
+	// ONGOING
+	// watch: {
 
-		// CHECKBOX
-		randomPlayerInfo(value) {
+	// 	// CHECKBOX
+	// 	randomPlayerInfo(value) {
 
-			const { view } = this.$root.$data;
-			const tableMax = view.mainInfoVue.$data.values.tableMax;
+	// 		const { view } = this.$root.$data;
+	// 		const tableMax = view.mainInfoVue.$data.values.tableMax;
 
-			if (value) this.tryFillPlayersInfo(tableMax);
-		},
-	},
+	// 		if (value) this.tryFillPlayersInfo(tableMax);
+	// 	},
+	// },
 
 	created() {
 

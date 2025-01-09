@@ -600,17 +600,21 @@ export default class View {
         this.forumFormatVue.isEnabled = true;
     }
 
-    unckeckRandomInfo() {
+    // unckeckRandomInfo() {
 
-        // STOPSHIP:: REMOVER CALLER E RELACIONADOS (CHECKBOX)
-        this.playersGridVue.randomPlayerInfo = false;
-    }
+    //     // STOPSHIP:: REMOVER CALLER E RELACIONADOS 
+    //     this.playersGridVue.randomPlayerInfo = false;
+    // }
 
     resetPlayers() {
 
         const row = () => Player.model();
 
         this.playersGridVue.inputs = Array.from(Array(2), row);
+
+        const tableMax = this.mainInfoVue.$data.values.tableMax;
+
+        this.playersGridVue.tryFillPlayersInfo(tableMax);
     }
 
     /**
