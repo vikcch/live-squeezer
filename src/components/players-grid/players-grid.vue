@@ -50,7 +50,10 @@
 					<div class="divTableHead"></div>
 					<div class="divTableHead">Seat</div>
 					<div class="divTableHead">Name</div>
-					<div class="divTableHead">Stack</div>
+					<div
+						:class="['divTableHead', setStackButtonStyle]"
+						@click="setStacks_Click"
+					>Stack</div>
 					<div class="divTableHead focus-short-cut">Cards</div>
 				</div>
 			</div>
@@ -82,7 +85,7 @@ import biz from '../../units/biz';
 import Player from '../../classes/player.js';
 import validation from '../../units/validations';
 import sitoutEase from '../../eases/sitout';
-
+import { displayAmount } from '../../units/vikFunctions';
 
 const autoFillerData = [
 	{ seat: '1', name: 'vik', stack: '1000', holeCards: '__ __' },
@@ -163,6 +166,38 @@ export default {
 		disable,
 		enable,
 		orderCardsDisplay,
+
+		async setStacks_Click() {
+
+			const { model } = this.$root.$data;
+			if (model.actionStarted) return;
+
+			const response = await this.$swal.fire({
+				title: `Players' Stack`,
+				html: `All players' stack will be set with the value:`,
+				showCloseButton: true,
+				showCancelButton: true,
+				input: 'text',
+			});
+
+			if (!response.isConfirmed) return;
+
+			const value = response.value.trim();
+
+			const isStack = validation.business.player.isStack(value);
+			const isInDecimalType = /^[0-9.]+$/g.test(value);
+
+			if (!isStack || !isInDecimalType) {
+
+				await this.$swal.fire({ title: 'Invalid Input', text: 'Please enter a valid number!' });
+				this.setStacks_Click();
+				return;
+			}
+
+			const stack = displayAmount(value);
+
+			this.inputs.forEach(v => v.stack = stack);
+		},
 
 		// Set Names as Positions or Seats
 		showInfo_Click(event) {
@@ -311,6 +346,10 @@ export default {
 			return this.positions.find(v => v.seat === seat)?.position ?? '';
 		},
 
+		clearSitouts() {
+
+			this.sitouts = [];
+		}
 	},
 
 	computed: {
@@ -330,6 +369,7 @@ export default {
 		},
 
 		isAddPlayerEnabled() {
+
 			const { view } = this.$root.$data;
 			const tableMax = view.mainInfoVue?.$data?.values?.tableMax;
 
@@ -350,6 +390,8 @@ export default {
 
 			if (!players.some(v => v.isButton)) return [];
 
+			if (players.length < 2) return [];
+
 			return biz.tablePositions(players);
 		},
 
@@ -358,6 +400,13 @@ export default {
 			const { model } = this.$root.$data;
 
 			return !model.actionStarted ? 'pointer underline' : 'light-color';
+		},
+
+		setStackButtonStyle() {
+
+			const { model } = this.$root.$data;
+
+			return !model.actionStarted ? 'pointer underline' : '';
 		}
 
 	},

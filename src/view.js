@@ -192,7 +192,9 @@ export default class View {
 
         const isPreFlop = street === 'PRE-FLOP';
 
-        const isStraddle = post && position !== 'BB' && position !== 'SB';
+        const isHeadsUp = model.histories.at(-1).players.length === 2;
+
+        const isStraddle = post && position !== 'BB' && position !== 'SB' && !isHeadsUp;
 
         const positionText = isStraddle && isPreFlop ? `${position} | S` : position;
 
@@ -609,6 +611,8 @@ export default class View {
         const tableMax = this.mainInfoVue.$data.values.tableMax;
 
         this.playersGridVue.fillPlayersInfo(tableMax);
+
+        this.playersGridVue.clearSitouts();
     }
 
     /**
