@@ -1,4 +1,14 @@
 import playersGridVue from '../../src/components/players-grid/players-grid.vue';
+import Swal from 'sweetalert2';
+import Vue from 'vue';
+import fns from '../../src/units/vikFunctions';
+
+// NOTE:: Precisa de configurar a prop `transformIgnorePatterns` em jest.config.js
+// Para poder usar `Vue.swal.fire()`
+import VueSweetalert2 from 'vue-sweetalert2';
+Vue.use(VueSweetalert2);
+
+
 
 describe('players-grid.js', function () {
 
@@ -13,7 +23,7 @@ describe('players-grid.js', function () {
                 { seat: '', name: '', stack: '' },
             ];
 
-            playersGridVue.methods.tryFillPlayersInfo.call({
+            playersGridVue.methods.fillPlayersInfo.call({
                 inputs,
                 hundredBlinds: 435
             }, '9-max');
@@ -34,7 +44,7 @@ describe('players-grid.js', function () {
                 { seat: '', name: '', stack: '' },
             ];
 
-            playersGridVue.methods.tryFillPlayersInfo.call({
+            playersGridVue.methods.fillPlayersInfo.call({
                 inputs,
                 hundredBlinds: 435
             }, '9-max');
@@ -86,4 +96,37 @@ describe('players-grid.js', function () {
             expect(actual).toStrictEqual(expected);
         });
     });
+
+    describe('# swal input stack - setStacks_Click', () => {
+
+        // NOTE:: Componente não simulado... metodo `setStacks_Click()` desce um nivel
+        // Para usar "$data.inputs" aqui, tinha tambem de usar no componente Vue
+
+        it('1. valor correcto - component só de um nivel', async () => {
+
+            const swalMock = jest.spyOn(Swal, 'fire').mockResolvedValue({
+                isConfirmed: true, value: '10000'
+            });
+
+            const component = {
+                inputs: [{ seat: '6', name: 'maria', stack: 1100, holeCards: '__ __' }],
+                $swal: Swal,
+                setStacks_Click: playersGridVue.methods.setStacks_Click,
+                $root: fns.makeComplexObject(['$data', 'model', 'actionStarted'], false)
+            };
+
+            await component.setStacks_Click();
+
+            const actual = component.inputs;
+
+            const expected = [{ seat: '6', name: 'maria', stack: 10000, holeCards: '__ __' }]
+
+            expect(actual).toStrictEqual(expected);
+
+            // Restaura o método original após o teste
+            swalMock.mockRestore();
+        });
+
+    });
+
 });
