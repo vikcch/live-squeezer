@@ -44,15 +44,26 @@ export default async function (event) {
 
     if (event.key === 'F8' && event.ctrlKey) {
 
+        if (!this.$refs['start-action'].$data.isEnabled) return;
+
         f8Ctrl.call(this);
     }
 
-    if (event.key === 'F9') {
+    if (event.key === 'F9' && !event.ctrlKey) {
 
         if (!this.$refs['start-action'].$data.isEnabled) return;
 
         const { controller } = this.$root.$data;
         controller.handleStartAction(event);
+    }
+
+    if (event.key === 'F9' && event.ctrlKey) {
+
+        if (this.$refs['start-action'].$data.isEnabled) return;
+
+        this.$refs['start-action'].restart_Click();
+
+        this.$refs['players-grid'].focusFirstPlayerInput();
     }
 
 }
