@@ -93,4 +93,29 @@ export const getLocalStorageMaxSize = function (errorr) {
         }
 
     });
+
 };
+
+// https://www.youtube.com/watch?v=s2W6Bce_T30
+export const mkCombinations = (items, slots) => {
+
+    const result = [];
+
+    const makeCombinations = (prefix, start) => {
+
+        if (prefix.length === slots) {
+
+            result.push(prefix);
+            return;
+        }
+
+        for (let i = start; i < items.length; i++) {
+
+            makeCombinations([...prefix, items.at(i)], i + 1);
+        }
+    };
+
+    makeCombinations([], 0);
+
+    return result;
+}

@@ -1,3 +1,5 @@
+import { mkCombinations } from '../extra/fns';
+
 /**
  * 
  *                          groupby    ranking
@@ -145,12 +147,28 @@ const rankUniquesValue = (flatDV) => {
 };
 
 
-/**
- * @param {string[]} cards
- */
-export default (cards) => {
+export const bestRanking = rankings => {
 
-    const cardsV = cards.map(v => ({ card: v, value: toValue(v.at(0)), suit: v.at(1) }));
+    const maxRanking = Math.max(...rankings.map(v => v.ranking));
+
+    const bests = rankings.filter(v => v.ranking === maxRanking);
+
+    const blend = kickers => kickers.map(v => `${v}`.padStart(2, '0')).join('');
+
+    const bestsBlended = bests.map(v => ({ ...v, blend: blend(v.kickers) }));
+
+    const maxKickers = Math.max(...bestsBlended.map(v => Number(v.blend)));
+
+    const best = bestsBlended.find(v => Number(v.blend) === maxKickers);
+
+    delete best.blend;
+
+    return best;
+};
+
+const mkRanking = fiveCards => {
+
+    const cardsV = fiveCards.map(v => ({ card: v, value: toValue(v.at(0)), suit: v.at(1) }));
 
     const groupBy = cardsV.reduce((acc, cur) => {
 
@@ -160,19 +178,30 @@ export default (cards) => {
 
     }, {});
 
-    const orderP = Object.values(groupBy)
+    const orderDV = Object.values(groupBy)
         .toSorted(([a], [b]) => b.value - a.value)
         .toSorted((a, b) => b.length - a.length);
 
-    const flatDV = orderP.flatMap(v => v);
+    const flatDV = orderDV.flatMap(v => v);
 
-    const hasDupes = orderP.length !== 5;
-
-    // TODO:: Usar kicker no ranking (kicker de ranking, inclui o par)
+    const hasDupes = orderDV.length !== 5;
 
     const ranking = hasDupes
-        ? rankDupesValue(flatDV, orderP.length)
+        ? rankDupesValue(flatDV, orderDV.length)
         : rankUniquesValue(flatDV);
 
     return { ...ranking, kickers: flatDV.map(v => v.value) };
+};
+
+
+/**
+ * @param {string[]} cards Length: 5, 6 or 7
+ */
+export default (cards) => {
+
+    const combinations = mkCombinations(cards, 5);
+
+    const rankings = combinations.map(v => mkRanking(v));
+
+    return bestRanking(rankings);
 };

@@ -1,4 +1,5 @@
 import ranking from "../../src/units/ranking";
+import { bestRanking } from "../../src/units/ranking";
 
 
 describe('ranking.js', () => {
@@ -71,6 +72,23 @@ describe('ranking.js', () => {
         const actual = ranking(['5s', 'As', '5d', '5c', 'Ah']);
 
         const expected = { ranking: 7, text: 'a full house, Fives full of Aces', kickers: [5, 5, 5, 14, 14] };
+
+        expect(actual).toEqual(expected);
+    });
+
+
+    describe('# bestRanking', () => {
+
+        const rankings = [
+            { ranking: 2, kickers: [13, 13, 5, 5, 10] },
+            { ranking: 2, kickers: [13, 13, 5, 5, 2] },
+            { ranking: 1, kickers: [13, 13, 9, 5, 14] },
+            { ranking: 2, kickers: [13, 13, 5, 5, 14] },
+        ];
+
+        const actual = bestRanking(rankings);
+
+        const expected = { ranking: 2, kickers: [13, 13, 5, 5, 14] };
 
         expect(actual).toEqual(expected);
     });
