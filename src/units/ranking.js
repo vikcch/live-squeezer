@@ -47,49 +47,50 @@ const valueToText = (value, { singular } = {}) => {
 
 const rankDupesValue = (flatDV, distintValues) => {
 
+    const [cardVi0, , cardVi2, cardVi3] = flatDV.map(v => v.value);
+
     const workMap = {
 
         '4': () => {
             // (a pair of Fives)
-            const cardV = valueToText(flatDV.at(0).value);
+            const textCard = valueToText(cardVi0);
 
-            return { ranking: 1, text: `a pair of ${cardV}` };
+            return { ranking: 1, text: `a pair of ${textCard}` };
         },
 
         '3': () => {
 
             // (three of a kind, Nines)
-            if (flatDV.at(0).value === flatDV.at(1).value) {
+            if (cardVi0 === cardVi2) {
 
-                const cardV = valueToText(flatDV.at(0).value);
+                const textCard = valueToText(cardVi0);
 
-                return { ranking: 3, text: `three of a kind, ${cardV}` };
+                return { ranking: 3, text: `three of a kind, ${textCard}` };
             }
 
             // (two pair, Kings and Fives)
-            const sorted = [flatDV.at(0).value, flatDV.at(2).value].sort((a, b) => b - a);
+            const highTextCard = valueToText(Math.max(cardVi0, cardVi2));
+            const lowTextCard = valueToText(Math.min(cardVi0, cardVi2));
 
-            const cardV1 = valueToText(sorted.at(0));
-            const cardV2 = valueToText(sorted.at(1));
+            return { ranking: 2, text: `two pair, ${highTextCard} and ${lowTextCard}` };
 
-            return { ranking: 2, text: `two pair, ${cardV1} and ${cardV2}` };
         },
 
         '2': () => {
 
             //  (four of a kind, Queens)
-            if (flatDV.at(0).value === flatDV.at(3).value) {
+            if (cardVi0 === cardVi3) {
 
-                const cardV = valueToText(flatDV.at(0).value);
+                const textCard = valueToText(cardVi0);
 
-                return { ranking: 8, text: `four of a kind, ${cardV}` };
+                return { ranking: 8, text: `four of a kind, ${textCard}` };
             }
 
             // (a full house, Threes full of Tens)
-            const cardV1 = valueToText(flatDV.at(0).value);
-            const cardV2 = valueToText(flatDV.at(3).value);
+            const tripsTextCard = valueToText(cardVi0);
+            const pairTextCard = valueToText(cardVi3);
 
-            return { ranking: 7, text: `a full house, ${cardV1} full of ${cardV2}` };
+            return { ranking: 7, text: `a full house, ${tripsTextCard} full of ${pairTextCard}` };
         }
     };
 
@@ -99,19 +100,22 @@ const rankDupesValue = (flatDV, distintValues) => {
 
 const rankUniquesValue = (flatDV) => {
 
+    const lowValueCard = flatDV.at(-1).value;
+    const highValueCard = flatDV.at(0).value;
+
     const isFlush = flatDV.every(v => v.suit === flatDV.at(0).suit);
-    const isStraight = flatDV.at(-1).value - flatDV.at(0).value === 4;
+    const isStraight = highValueCard - lowValueCard === 4;
     const isWheel = flatDV.every(v => [2, 3, 4, 5, 14].includes(v.value));
-    const isRoyal = isFlush && flatDV.every(v => [10, 11, 12, 13, 14].includes(v.value));
+    const isRoyal = isFlush && isStraight && lowValueCard === 10;
 
     // (a Royal Flush)
     if (isRoyal) return { ranking: 11, text: 'a Royal Flush' };
 
     // (a straight flush, Nine to King)
     if (isFlush && isStraight) {
-        const cardV1 = valueToText(flatDV.at(0).value, { singular: true });
-        const cardV2 = valueToText(flatDV.at(-1).value, { singular: true });
-        return { ranking: 10, text: `a straight flush, ${cardV1} to ${cardV2}` };
+        const lowTextCard = valueToText(lowValueCard, { singular: true });
+        const highTextCard = valueToText(highValueCard, { singular: true });
+        return { ranking: 10, text: `a straight flush, ${lowTextCard} to ${highTextCard}` };
     }
 
     // (a straight flush, Ace to Five)
@@ -120,24 +124,24 @@ const rankUniquesValue = (flatDV) => {
     // (a flush, Queen high)
     if (isFlush) {
 
-        const cardV = valueToText(flatDV.at(-1).value, { singular: true });
-        return { ranking: 6, text: `a flush, ${cardV} high` };
+        const textCard = valueToText(highValueCard, { singular: true });
+        return { ranking: 6, text: `a flush, ${textCard} high` };
     }
 
     // (a straight, Ten to Ace)
     if (isStraight) {
 
-        const cardV1 = valueToText(flatDV.at(0).value, { singular: true });
-        const cardV2 = valueToText(flatDV.at(-1).value, { singular: true });
-        return { ranking: 5, text: `a straight, ${cardV1} to ${cardV2}` };
+        const lowTextCard = valueToText(lowValueCard, { singular: true });
+        const highTextCard = valueToText(highValueCard, { singular: true });
+        return { ranking: 5, text: `a straight, ${lowTextCard} to ${highTextCard}` };
     }
 
     // (a straight, Ace to Five)
     if (isWheel) return { ranking: 4, text: `a straight, Ace to Five` };
 
     // (high card King)
-    const cardV = valueToText(flatDV.at(-1).value, { singular: true });
-    return { ranking: 0, text: `high card ${cardV}` };
+    const textCard = valueToText(highValueCard, { singular: true });
+    return { ranking: 0, text: `high card ${textCard}` };
 };
 
 
@@ -148,9 +152,7 @@ export default (cards) => {
 
     const cardsV = cards.map(v => ({ card: v, value: toValue(v.at(0)), suit: v.at(1) }));
 
-    const orderV = cardsV.toSorted((a, b) => b.value - a.value);
-
-    const groupBy = orderV.reduce((acc, cur) => {
+    const groupBy = cardsV.reduce((acc, cur) => {
 
         acc[cur.value] = acc[cur.value] ? [...acc[cur.value], cur] : [cur];
 
@@ -158,13 +160,19 @@ export default (cards) => {
 
     }, {});
 
-    const orderP = Object.values(groupBy).toSorted((a, b) => b.length - a.length);
+    const orderP = Object.values(groupBy)
+        .toSorted(([a], [b]) => b.value - a.value)
+        .toSorted((a, b) => b.length - a.length);
 
     const flatDV = orderP.flatMap(v => v);
 
     const hasDupes = orderP.length !== 5;
 
-    if (hasDupes) return rankDupesValue(flatDV, orderP.length);
+    // TODO:: Usar kicker no ranking (kicker de ranking, inclui o par)
 
-    else return rankUniquesValue(flatDV);
+    const ranking = hasDupes
+        ? rankDupesValue(flatDV, orderP.length)
+        : rankUniquesValue(flatDV);
+
+    return { ...ranking, kickers: flatDV.map(v => v.value) };
 };
