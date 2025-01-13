@@ -199,6 +199,8 @@ const mkRanking = fiveCards => {
  */
 export default (cards) => {
 
+    if (cards.length < 5) return;
+
     const combinations = mkCombinations(cards, 5);
 
     const rankings = combinations.map(v => mkRanking(v));

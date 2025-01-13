@@ -1,5 +1,6 @@
 import validations from '../units/validations.js';
 import History from '../classes/history.js';
+import biz from '../units/biz.js';
 
 class Street {
 
@@ -106,6 +107,15 @@ class Street {
         const streetIndex = histories[lastIndex].street + 1;
 
         return Street.STREETS[streetIndex];
+    }
+
+    static mkStreetCards(histories) {
+
+        const str = histories.filter(v => v.streetCards).map(v => v.streetCards).join('');
+
+        if (!str) return [];
+
+        return biz.stringToCards(str);
     }
 
 }

@@ -21,7 +21,7 @@ export default class Player {
 
         this.isAllIn = false;       // unstable, pode voltar a 'false' em 'setUncalledBet'
         this.wasAllIn = false;      // setado a 'true' só em 'setUncalledBet' se 
-                                    // 'isAllIn' for `true` que acaba por ficar `false`
+        // 'isAllIn' for `true` que acaba por ficar `false`
         this.moneyOnStreet = 0;
 
         this.holeCards = '__ __';   // só as instacias em mainInfo têm as holeCards
@@ -39,7 +39,6 @@ export default class Player {
             this.holeCards = biz.formatCards(value);
         }
     }
-
 
     static deepCopy(players) {
 
@@ -144,4 +143,10 @@ export default class Player {
         return { seat, name, stack, holeCards };
     }
 
+    static mkHoleCards(holeCards) {
+
+        if (holeCards === '__ __') return [];
+
+        return biz.stringToCards(holeCards);
+    }
 }

@@ -9,6 +9,8 @@
 
 		<app-dialog-body>
 
+			<div class="small-text gray bm-l"> Hand Ranking: <i>{{ranking}}</i> </div>
+
 			<div class="train bm-l">
 
 				<label class="train">
@@ -72,6 +74,9 @@ import DialogBody from './dialog-body.vue';
 import vikFunctions from '../../units/vikFunctions';
 import { head } from '../../units/absx';
 import validation from "../../units/validations.js";
+import mkRanking from '../../units/ranking.js';
+import Player from '../../classes/player.js';
+import Street from '../../eases/street.js';
 
 
 export default {
@@ -192,6 +197,30 @@ export default {
 		}
 	},
 
+	computed: {
+
+		ranking() {
+
+			const { model } = this.$root.$data;
+
+			const emptyRanking = 'Not Available';
+
+			if (!model.actionStarted) return emptyRanking;
+
+			const { holeCards } = model.getPlayerToAct();
+
+			const arrHolecards = Player.mkHoleCards(holeCards);
+
+			if (!arrHolecards.length) return emptyRanking;
+
+			const arrStreetCards = Street.mkStreetCards(model.histories);
+
+			const ranking = mkRanking([...arrHolecards, ...arrStreetCards]);
+
+			// return 'a straight flush, Ace to Five';
+			return ranking?.text ?? emptyRanking;
+		}
+	},
 
 	updated() { },
 
@@ -203,4 +232,7 @@ export default {
 </script>
 
 <style scoped>
+.gray {
+	color: darkgray;
+}
 </style>
