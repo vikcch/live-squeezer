@@ -151,19 +151,24 @@ export const bestRanking = rankings => {
 
     const maxRanking = Math.max(...rankings.map(v => v.ranking));
 
-    const bests = rankings.filter(v => v.ranking === maxRanking);
+    const bestsRank = rankings.filter(v => v.ranking === maxRanking);
 
     const blend = kickers => kickers.map(v => `${v}`.padStart(2, '0')).join('');
 
-    const bestsBlended = bests.map(v => ({ ...v, blend: blend(v.kickers) }));
+    const bestsBlended = bestsRank.map(v => ({ ...v, blend: blend(v.kickers) }));
 
     const maxKickers = Math.max(...bestsBlended.map(v => Number(v.blend)));
+
+    const bests = bestsBlended.filter(v => Number(v.blend) === maxKickers);
 
     const best = bestsBlended.find(v => Number(v.blend) === maxKickers);
 
     delete best.blend;
 
-    return best;
+    if (bests.length === 1) return best;
+    
+    // NOTE:: "multiple" aka "splitPot" quando vem de `winners-popup.js`
+    else return { ...best, multiple: true };
 };
 
 const mkRanking = fiveCards => {

@@ -3,7 +3,9 @@ import vikFunctions from '../units/vikFunctions.js';
 import validation from '../units/validations';
 import Vue from 'vue';
 import { tail } from '../units/absx.js';
-
+import Street from './street.js';
+import Player from '../classes/player.js';
+import mkRanking, { bestRanking } from '../units/ranking.js';
 
 const winnersHandler = function () {
 
@@ -18,7 +20,7 @@ const getPlayersAvailable = (histories, conclusion) => {
 
     const seatsAvailable = lastHistory.players
         .filter(isOnShowdown)
-        .map(p => ({ seat: p.seat, name: p.name }))
+        .map(p => ({ seat: p.seat, name: p.name, holeCards: p.holeCards }))
         .sort((a, b) => a.seat - b.seat);
 
     return seatsAvailable;
@@ -26,9 +28,14 @@ const getPlayersAvailable = (histories, conclusion) => {
 
 const markTag = makeTextTag('mark');
 
-const getHtmlText = function (phase, seatsAvailableTagged, playersAvailable) {
+const mkSeatsAvailableTagged = seats => seats.map(markTag).join(' ');
+
+// ONGOING:: 
+export const mkHtmlText = function (phase, playersAvailable, bestRankingPlayer, singlePot) {
 
     const seats = playersAvailable.map(v => v.seat);
+
+    const seatsAvailableTagged = mkSeatsAvailableTagged(seats);
 
     const coloredSeats = /* html */ `<span class="colored-seat"> ${seatsAvailableTagged} </span>`;
 
@@ -43,15 +50,29 @@ const getHtmlText = function (phase, seatsAvailableTagged, playersAvailable) {
 
     const bottomTextStyled = /* html */ `<div class="tm-l small-text"> ${bottomText} </div>`;
 
-    return `${topText}${playersStyled}${bottomTextStyled}`;
+    // NOTE:: "bestRankingPlayer.multiple" aka "splitPot"
+    const winner = !singlePot || !bestRankingPlayer || bestRankingPlayer.multiple ? ''
+        : /* html */ `<div class="colored-seat tm-l"> Winner: ${markTag(bestRankingPlayer.player.seat)} ${bestRankingPlayer.player.name}
+                        <br><span class="small-text">(${bestRankingPlayer.text})</span>
+                      </div>`;
+
+
+    return `${topText}${playersStyled}${bottomTextStyled}${winner}`;
 };
 
-const getWinnersFromPrompt = (htmlText) => Vue.swal.fire({
+// ONGOING:: 
+export const getWinnersFromPrompt = (htmlText, bestSeat) => Vue.swal.fire({
 
     html: htmlText,
     input: 'text',
+    inputValue: bestSeat,
     allowOutsideClick: false,
     allowEscapeKey: false,
+
+    onOpen: (saEl) => {
+        const input = saEl.querySelector('.swal2-input');
+        input.select();
+    },
 
     onBeforeOpen: (saEl) => {
 
@@ -82,6 +103,27 @@ const resolveInput = function (value) {
         .filter(s => s);
 };
 
+const tryGetBestRankingPlayer = (histories, playersAvailable) => {
+
+    const arrStreetCards = Street.mkStreetCards(histories);
+
+    const rankings = playersAvailable.map(player => {
+
+        const arrHolecards = Player.mkHoleCards(player.holeCards);
+
+        const ranking = mkRanking([...arrHolecards, ...arrStreetCards]);
+
+        return { ...ranking, player };
+    });
+
+    const hasHoleCards = player => Player.mkHoleCards(player.holeCards).length;
+
+    if (playersAvailable.some(v => !hasHoleCards(v))) return null;
+
+    return bestRanking(rankings);
+};
+
+
 const core = async (histories, conclusion) => {
 
     const winners = [];
@@ -90,21 +132,23 @@ const core = async (histories, conclusion) => {
 
     const seatsAvailable = playersAvailable.map(v => v.seat);
 
-    const seatsAvailableTagged = seatsAvailable
-        .map(markTag)
-        .join(' ');
+    const bestRankingPlayer = tryGetBestRankingPlayer(histories, playersAvailable);
 
     for (const index of conclusion.pots.keys()) {
 
-        const phase = conclusion.pots.length === 1
+        const singlePot = conclusion.pots.length === 1;
+
+        const phase = singlePot
             ? ' '
             : index === 0 ? ' (Main Pot) ' : ` (Side Pot ${index}) `;
 
         do {
 
-            const htmlText = getHtmlText(phase, seatsAvailableTagged, playersAvailable);
+            const htmlText = mkHtmlText(phase, playersAvailable, bestRankingPlayer, singlePot);
 
-            const input = await getWinnersFromPrompt(htmlText);
+            const bestSeat = singlePot ? bestRankingPlayer.player.seat : '';
+
+            const input = await getWinnersFromPrompt(htmlText, bestSeat);
 
             // Em split pot é mais que um por isso nome em plural (winnerSeats)
             // não confundir com main pot / side pot (que é outro index do 'for of')
@@ -124,7 +168,7 @@ const core = async (histories, conclusion) => {
             } else await Vue.swal.fire({
                 icon: 'error',
                 title: 'Incorrect data!',
-                html: `Valid seats: ${seatsAvailableTagged}`
+                html: `Valid seats: ${mkSeatsAvailableTagged(seatsAvailable)}`
             });
 
         } while (winners.length === index);
@@ -136,3 +180,8 @@ const core = async (histories, conclusion) => {
 
 
 export default core;
+
+export const testables = {
+
+    tryGetBestRankingPlayer
+};
