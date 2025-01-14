@@ -39,8 +39,7 @@ describe('biz.js', function () {
 
     describe('# pickAvailableName', function () {
 
-        const allNames = ['maria', 'diana', 'micaela', 'adriana', 'ruth',
-            'teresa', 'sara', 'madonna', 'britney', 'adele'];
+        const allNames = biz.getDefaultNames();
 
         it('1.', () => {
 
@@ -56,8 +55,8 @@ describe('biz.js', function () {
 
         it('2.', () => {
 
-            const actual = biz.pickAvailableName(['maria', 'diana', 'micaela', 'adriana',
-                'ruth', 'teresa', 'sara', 'britney', 'adele']);
+            const actual = biz.pickAvailableName(['vik', 'rita', 'joana', 'maria', 'diana',
+                'micaela', 'adriana', 'ruth', 'teresa', 'sara', 'britney', 'adele']);
 
             const expected = 'madonna';
 
@@ -66,8 +65,8 @@ describe('biz.js', function () {
 
         it('3.', () => {
 
-            const actual = biz.pickAvailableName(['diana', 'micaela', 'adriana',
-                'ruth', 'teresa', 'sara', 'madonna', 'britney', 'adele']);
+            const actual = biz.pickAvailableName(['vik', 'rita', 'joana', 'diana', 'micaela',
+                'adriana', 'ruth', 'teresa', 'sara', 'madonna', 'britney', 'adele']);
 
             const expected = 'maria';
 
@@ -76,8 +75,8 @@ describe('biz.js', function () {
 
         it('4.', () => {
 
-            const actual = biz.pickAvailableName(['maria', 'diana', 'micaela', 'adriana',
-                'ruth', 'teresa', 'sara', 'madonna', 'britney']);
+            const actual = biz.pickAvailableName(['vik', 'rita', 'joana', 'maria', 'diana',
+                'micaela', 'adriana', 'ruth', 'teresa', 'sara', 'madonna', 'britney']);
 
             const expected = 'adele';
 

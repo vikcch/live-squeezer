@@ -30,8 +30,9 @@ const markTag = makeTextTag('mark');
 
 const mkSeatsAvailableTagged = seats => seats.map(markTag).join(' ');
 
-// ONGOING:: 
-export const mkHtmlText = function (phase, playersAvailable, bestRankingPlayer, singlePot) {
+const mkHtmlText = function (phase, playersAvailable, bestRankingPlayer, singlePot) {
+
+    // OPTIMIZE:: Meter component vue dentro de sweetalert
 
     const seats = playersAvailable.map(v => v.seat);
 
@@ -60,8 +61,7 @@ export const mkHtmlText = function (phase, playersAvailable, bestRankingPlayer, 
     return `${topText}${playersStyled}${bottomTextStyled}${winner}`;
 };
 
-// ONGOING:: 
-export const getWinnersFromPrompt = (htmlText, bestSeat) => Vue.swal.fire({
+const getWinnersFromPrompt = (htmlText, bestSeat) => Vue.swal.fire({
 
     html: htmlText,
     input: 'text',

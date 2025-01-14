@@ -22,7 +22,8 @@ describe('winners-popup.js', () => {
                 player: players.at(0),
                 ranking: 7,
                 text: 'a full house, Aces full of Queens',
-                kickers: [14, 14, 14, 12, 12]
+                kickers: [14, 14, 14, 12, 12],
+                multiple: false
             };
 
             expect(actual).toStrictEqual(expected);
@@ -83,6 +84,29 @@ describe('winners-popup.js', () => {
 
             expect(actual).toStrictEqual(expected);
         });
+
+        it('5. high card, Ace vs Straight', () => {
+
+            const histories = [{ streetCards: '2h3c4d5s7d' }];
+
+            const players = [
+                { seat: 2, holeCards: 'Ah9h' },
+                { seat: 7, holeCards: '6d7c' }
+            ];
+
+            const actual = tryGetBestRankingPlayer(histories, players);
+
+            const expected = {
+                player: players.at(1),
+                ranking: 5,
+                text: 'a straight, Three to Seven',
+                kickers: [7, 6, 5, 4, 3],
+                multiple: false
+            };
+
+            expect(actual).toStrictEqual(expected);
+        });
+
 
     });
 

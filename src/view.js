@@ -182,6 +182,8 @@ export default class View {
 
         this.updatePlayersGridActivity({ isStreet: false }, model);
 
+        // OPTIMIZE:: CRIAR COMPONENTE dialog-action-title
+
         const { seat, name, position, post, holeCards } = model.getPlayerToAct();
 
         const markItalic = makeTextTag('mark', 'em');

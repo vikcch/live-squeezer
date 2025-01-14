@@ -146,7 +146,11 @@ const rankUniquesValue = (flatDV) => {
     return { ranking: 0, text: `high card ${textCard}` };
 };
 
-
+/**
+ * Usado para "player vs himself" e "player vs player"
+ * 
+ * @param { {ranking:number, kickers:number[], text:string} } rankings
+ */
 export const bestRanking = rankings => {
 
     const maxRanking = Math.max(...rankings.map(v => v.ranking));
@@ -165,13 +169,11 @@ export const bestRanking = rankings => {
 
     delete best.blend;
 
-    if (bests.length === 1) return best;
-    
-    // NOTE:: "multiple" aka "splitPot" quando vem de `winners-popup.js`
-    else return { ...best, multiple: true };
+    // NOTE:: Quando vem de `winners-popup.js` "multiple" aka "splitPot" é util 
+    return { ...best, multiple: bests.length > 1 };
 };
 
-const mkRanking = fiveCards => {
+const mkFiveCardsRank = fiveCards => {
 
     const cardsV = fiveCards.map(v => ({ card: v, value: toValue(v.at(0)), suit: v.at(1) }));
 
@@ -208,7 +210,7 @@ export default (cards) => {
 
     const combinations = mkCombinations(cards, 5);
 
-    const rankings = combinations.map(v => mkRanking(v));
+    const rankings = combinations.map(v => mkFiveCardsRank(v));
 
     return bestRanking(rankings);
 };
