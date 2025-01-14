@@ -155,6 +155,7 @@ export default {
 			actionSeat: null,
 			sitouts: [],
 			folds: [],
+			namesAsPositions: false
 		};
 	},
 
@@ -215,15 +216,17 @@ export default {
 
 			const hasDealer = this.inputs.some(v => v.seat == this.dealerSeat);
 
-			const isSeat = option === 'seats';
+			const isSeats = option === 'seats';
 
-			if (!isSeat && !hasDealer) return this.$swal.fire({
+			if (!isSeats && !hasDealer) return this.$swal.fire({
 
 				title: `The button has not been set.`,
 				text: 'Please set an available button/dealer seat from the combobox!'
 			});
 
-			const getValue = seat => isSeat ? `Seat_${seat}` : this.getPosition(seat);
+			this.namesAsPositions = !isSeats;
+
+			const getValue = seat => isSeats ? `Seat_${seat}` : this.getPosition(seat);
 
 			const positions = biz.getPositions().map(v => v.replace('+', 'UTG_'));
 			const seats = [...new Array(10)].map((v, i) => `Seat_${i + 1}`);
@@ -409,6 +412,14 @@ export default {
 			return !model.actionStarted ? 'pointer underline' : '';
 		}
 
+	},
+
+	watch: {
+
+		dealerSeat(current, previous) {
+
+			if (this.namesAsPositions) this.setNamesAs_Click('positions');
+		}
 	},
 
 	created() {

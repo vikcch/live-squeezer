@@ -23,7 +23,7 @@ export default {
 
 	methods: {
 
-		onChange() {
+		onChange(event) {
 
 			if (this.attrs.key === 'tableMax') {
 
