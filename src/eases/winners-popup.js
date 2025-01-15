@@ -146,7 +146,7 @@ const core = async (histories, conclusion) => {
 
             const htmlText = mkHtmlText(phase, playersAvailable, bestRankingPlayer, singlePot);
 
-            const bestSeat = singlePot ? bestRankingPlayer.player.seat : '';
+            const bestSeat = singlePot ? bestRankingPlayer?.player.seat ?? '' : '';
 
             const input = await getWinnersFromPrompt(htmlText, bestSeat);
 
