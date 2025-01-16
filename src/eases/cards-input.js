@@ -1,6 +1,7 @@
 import state from '../units/state.js';
 import fxnl from '../units/fxnl.js';
 import absx from '../units/absx.js';
+import SettingsStore from '../store/simple/settings.js';
 
 const { pipe, cap, capFloor, add, iffLackValue, iffFns } = fxnl;
 const { increment, decrement } = absx;
@@ -27,27 +28,79 @@ const placeChar = function (char, spliceIndex, advanceCaret = 0) {
 
 const isCharValid = function (value, index) {
 
+    const { sideKeyCards } = SettingsStore.getters;
+
     if (value.length !== 1) return false;
 
     if (index === 0 || index === 3 || index === 6) {
 
-        return value.match(/[2-9akqjt]/i) !== null;
+        // STOPSHIP::
+        // return value.match(/[2-9akqjt]/i) !== null;
+        // return value.match(/[mpy/hnoiulkj.,]/i) !== null;
+
+        if (sideKeyCards) return value.match(/[mpy/hnoiulkj.,]/i) !== null;
+
+        else return value.match(/[2-9akqjt]/i) !== null;
     }
 
     const lastsCardChar = spacesOptions[this.maxLength].map(decrement);
 
     if (lastsCardChar.includes(index) || index >= this.maxLength - 1) {
 
-        return value.match(/[dhsc]/i) !== null;
+        // STOPSHIP::
+        // return value.match(/[dhsc]/i) !== null;
+        // return value.match(/[dfsc]/i) !== null;
+
+        if (sideKeyCards) return value.match(/[dfsc]/i) !== null;
+
+        else return value.match(/[dhsc]/i) !== null;
     }
 
 };
 
 const cardCharFormat = (value) => {
 
-    return value
+    const replace = char => {
+
+        const workMap = {
+            'm': 'A',
+            'p': 'K',
+            'y': 'Q',
+            '/': 'Q',
+            'h': 'J',
+            'n': 'T',
+            'o': '9',
+            'i': '8',
+            'u': '7',
+            'l': '6',
+            'k': '5',
+            'j': '4',
+            '.': '3',
+            ',': '2',
+
+            'f': 'h'
+        };
+
+        return workMap[char.toLowerCase()];
+    };
+
+    const { sideKeyCards } = SettingsStore.getters;
+
+    if (sideKeyCards) return value
+        .replace(/[mpy/hnoiulkj.,]/i, match => replace(match))
+        .replace(/[f]/i, match => replace(match))
+        .replace(/[DSC]/, match => match.toLowerCase());
+
+    else return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
         .replace(/[DHSC]/g, match => match.toLowerCase());
+
+    // return value
+    //     // .replace(/[akqjt]/g, match => match.toUpperCase())
+    //     // .replace(/[DHSC]/g, match => match.toLowerCase());
+    //     .replace(/[mpy/hnoiulkj.,]/i, match => replace(match))
+    //     .replace(/[f]/i, match => replace(match))
+    //     .replace(/[DSC]/, match => match.toLowerCase());
 
 }
 

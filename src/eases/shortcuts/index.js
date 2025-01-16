@@ -1,9 +1,10 @@
+import SettingsStore from '../../store/simple/settings';
 import biz from '../../units/biz';
 import f8Ctrl from './f8-ctrl';
 
 export default async function (event) {
 
-    if (event.key === 'F2') {
+    if (event.key === 'F2' && !event.ctrlKey) {
 
         // NOTE:: `.Vue` chama `$children[0]`
         const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
@@ -16,6 +17,16 @@ export default async function (event) {
 
         // NOTE:: Podia ser "sync"... é só para dar um tempinho
         setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
+    }
+
+    if (event.key === 'F2' && event.ctrlKey) {
+
+        const result = prompt('Alternative key cards: (on/off)', 'off');
+
+        // `null` -> Cancel
+        if (result === null) return;
+
+        SettingsStore.setters.sideKeyCards = result.trim().toLowerCase() === 'on';
     }
 
     if (event.key === 'F4') {

@@ -11,10 +11,11 @@
 
 // Baseado em: https://youtu.be/mS9-fTrgjrA
 
-const settingStore = {
+const SettingsStore = {
 
     data: {
         optionalTime: false,
+        sideKeyCards: false
     },
 
     setters: {
@@ -23,16 +24,28 @@ const settingStore = {
          * @param {boolean} value
          */
         set optionalTime(value) {
-            settingStore.data.optionalTime = value;
-            settingStore.methods.saveSettings();
+            SettingsStore.data.optionalTime = value;
+            SettingsStore.methods.saveSettings();
+        },
+
+        /**
+         * @param {boolean} value
+         */
+        set sideKeyCards(value) {
+            SettingsStore.data.sideKeyCards = value;
+            SettingsStore.methods.saveSettings();
         },
     },
 
     getters: {
 
         get optionalTime() {
-            return settingStore.data.optionalTime;
+            return SettingsStore.data.optionalTime;
         },
+
+        get sideKeyCards() {
+            return SettingsStore.data.sideKeyCards;
+        }
     },
 
     methods: {
@@ -44,7 +57,7 @@ const settingStore = {
             if (settings) {
 
                 const settingsParsed = { ...JSON.parse(settings) };
-                const keys = Object.keys(settingStore.getters);
+                const keys = Object.keys(SettingsStore.getters);
                 const every = keys.every(key => key in settingsParsed);
 
                 // NOTE:: Têm que verificar todas, porque posso querer
@@ -52,7 +65,7 @@ const settingStore = {
                 if (every) return;
             }
 
-            const stringifyed = JSON.stringify(settingStore.data);
+            const stringifyed = JSON.stringify(SettingsStore.data);
             localStorage.setItem('live-squeezer-settings', stringifyed);
         },
 
@@ -65,7 +78,7 @@ const settingStore = {
                 // NOTE:: Destruction para evitar hack de editar o item da localstorage
                 // e `settingStore.data` ficar não sendo um objecto "{}" dando erro 
                 // posteriormento no setting
-                settingStore.data = { ...JSON.parse(settings) };
+                SettingsStore.data = { ...JSON.parse(settings) };
 
             } catch (error) {
 
@@ -77,11 +90,11 @@ const settingStore = {
 
         saveSettings() {
 
-            const stringifyed = JSON.stringify(settingStore.data);
+            const stringifyed = JSON.stringify(SettingsStore.data);
 
             localStorage.setItem('live-squeezer-settings', stringifyed);
         }
     }
 };
 
-export default settingStore;
+export default SettingsStore;
