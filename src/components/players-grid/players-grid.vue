@@ -250,6 +250,19 @@ export default {
 			el.focus();
 		},
 
+		focusPlayerInputUTG() {
+
+			if (this.$children.length === 0) return;
+
+			const utgIndex = this.inputs.findIndex(v => this.getPosition(v.seat) === 'UTG');
+
+			const index = utgIndex === -1 ? 0 : utgIndex;
+
+			const el = this.$children[index].$refs['hole-cards'];
+
+			el.focus();
+		},
+
 		sitout() {
 
 			const { view } = this.$root.$data;

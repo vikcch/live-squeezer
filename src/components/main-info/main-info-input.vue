@@ -90,6 +90,10 @@ export default {
 
 		tryFormatTime() {
 
+			const { view } = this.$root.$data;
+
+			view.playersGridVue.focusPlayerInputUTG();
+
 			if (/^\d\:\d{2}$/.test(this.text)) this.text = `0:0${this.text}`;
 
 			if (/^\d{2}\:\d{2}$/.test(this.text)) this.text = `0:${this.text}`;
