@@ -38,7 +38,7 @@ const isCharValid = function (value, index) {
         // return value.match(/[2-9akqjt]/i) !== null;
         // return value.match(/[mpy/hnoiulkj.,]/i) !== null;
 
-        if (sideKeyCards) return value.match(/[mpy/hnoiulkj.,]/i) !== null;
+        if (sideKeyCards) return value.match(/[akqjtoiulgf.,]/i) !== null;
 
         else return value.match(/[2-9akqjt]/i) !== null;
     }
@@ -51,7 +51,7 @@ const isCharValid = function (value, index) {
         // return value.match(/[dhsc]/i) !== null;
         // return value.match(/[dfsc]/i) !== null;
 
-        if (sideKeyCards) return value.match(/[dfsc]/i) !== null;
+        if (sideKeyCards) return value.match(/[dhsc]/i) !== null;
 
         else return value.match(/[dhsc]/i) !== null;
     }
@@ -62,23 +62,34 @@ const cardCharFormat = (value) => {
 
     const replace = char => {
 
+        // const workMap = {
+        //     'm': 'A',
+        //     'p': 'K',
+        //     'y': 'Q',
+        //     '/': 'Q',
+        //     'h': 'J',
+        //     'n': 'T',
+        //     'o': '9',
+        //     'i': '8',
+        //     'u': '7',
+        //     'l': '6',
+        //     'k': '5',
+        //     'j': '4',
+        //     '.': '3',
+        //     ',': '2',
+
+        //     'f': 'h'
+        // };
+
         const workMap = {
-            'm': 'A',
-            'p': 'K',
-            'y': 'Q',
-            '/': 'Q',
-            'h': 'J',
-            'n': 'T',
             'o': '9',
             'i': '8',
             'u': '7',
             'l': '6',
-            'k': '5',
-            'j': '4',
+            'g': '5',
+            'f': '4',
             '.': '3',
             ',': '2',
-
-            'f': 'h'
         };
 
         return workMap[char.toLowerCase()];
@@ -87,9 +98,9 @@ const cardCharFormat = (value) => {
     const { sideKeyCards } = SettingsStore.getters;
 
     if (sideKeyCards) return value
-        .replace(/[mpy/hnoiulkj.,]/i, match => replace(match))
-        .replace(/[f]/i, match => replace(match))
-        .replace(/[DSC]/, match => match.toLowerCase());
+        .replace(/[akqjt]/g, match => match.toUpperCase())
+        .replace(/[oiulgf.,]/i, match => replace(match))
+        .replace(/[DSCH]/, match => match.toLowerCase());
 
     else return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
