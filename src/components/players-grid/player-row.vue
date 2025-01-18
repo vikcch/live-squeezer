@@ -124,6 +124,8 @@ import biz from '../../units/biz.js';
 import vikFunctions from '../../units/vikFunctions';
 import History from '@/classes/history';
 import state from '../../units/state.js';
+// import ShiftedSeat from '@/classes/shiftedSeat.js'
+import SS from '@/classes/ss.js'
 
 export default {
 	props: ["intel"],
@@ -132,7 +134,7 @@ export default {
 
 		return {
 
-			text: '',
+			text: ''
 		};
 	},
 
@@ -235,7 +237,9 @@ export default {
 			return History.isInputCardsTaken(holeCards, fakeHistories);
 		},
 
-		onHoldCardsInput() {
+		onHoldCardsInput(e) {
+
+			console.log(e);
 
 			const { view, model } = this.$root.$data;
 
@@ -328,6 +332,19 @@ export default {
 			if (this.isDealer) return null;
 
 			return this.intel.position.replace('UTG', 'UG');
+		}
+	},
+
+	watch: {
+
+		'intel.input.seat'(current, previous) {
+
+			this.$parent.inputs.sort((a, b) => a.seat - b.seat);
+
+			// new ShiftedSeat(current, this.$parent);
+
+			const ss = new SS();
+			ss.trySetSeat(current, this.$parent);
 		}
 	},
 

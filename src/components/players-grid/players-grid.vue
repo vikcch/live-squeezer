@@ -250,6 +250,17 @@ export default {
 			el.focus();
 		},
 
+		focusSeatInput(seat) {
+
+			if (this.$children.length === 0) return;
+
+			const index = this.inputs.findIndex(v => v.seat == seat);
+
+			const el = this.$children[index].$refs['seat'];
+
+			el.focus();
+		},
+
 		focusPlayerInputUTG() {
 
 			if (this.$children.length === 0) return;
