@@ -81,7 +81,7 @@ const attrs_ = [
 			{ value: '2-max', text: '2-max' },
 			{ value: '6-max', text: '6-max' },
 			{ value: '9-max', text: '9-max' },
-			{ value: '10-max', text: '10-max' },
+			// { value: '10-max', text: '10-max' },
 		]
 	},
 

@@ -30,7 +30,7 @@
 					name="seat"
 					@input="forced"
 					@focus="$event.target.select()"
-					maxlength="2"
+					maxlength="1"
 					inputmode="numeric"
 					ref="seat"
 					class="text-right small-input"
