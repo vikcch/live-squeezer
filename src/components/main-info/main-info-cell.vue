@@ -1,7 +1,7 @@
 <template>
 	<div class="cell">
 
-		<label class="train bm-s">
+		<label class="train">
 			<span>{{props.slotAttrs.label}}</span>
 
 			<i
@@ -133,7 +133,7 @@ label {
 	height: 28px;
 	/* width: 107px; */
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 4px;
 	width: 100%;
 }
 .absolute-right {

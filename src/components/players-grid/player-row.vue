@@ -381,6 +381,14 @@ export default {
 </script>
 
 <style scoped>
+input {
+	padding: 0px 2px;
+}
+
+.button-icon {
+	padding: 8px 11px;
+}
+
 .divTableCell:first-child {
 	width: 36px;
 }

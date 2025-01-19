@@ -1,6 +1,6 @@
 <template>
 
-	<fieldset>
+	<fieldset class="bm-m">
 
 		<app-mi-slot
 			class="main-info-wrapper"
