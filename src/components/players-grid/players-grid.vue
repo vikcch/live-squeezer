@@ -155,7 +155,8 @@ export default {
 			actionSeat: null,
 			sitouts: [],
 			folds: [],
-			namesAsPositions: false
+			namesAsPositions: false,
+			shiftedSeatsTime: null
 		};
 	},
 
@@ -253,6 +254,12 @@ export default {
 		focusSeatInput(seat) {
 
 			if (this.$children.length === 0) return;
+
+			const { shiftedSeatsTime } = this;
+
+			if (!(shiftedSeatsTime === null || shiftedSeatsTime + 100 < Date.now())) return;
+
+			this.shiftedSeatsTime = Date.now();
 
 			const index = this.inputs.findIndex(v => v.seat == seat);
 
