@@ -16,7 +16,6 @@
 				<label class="train">
 					<span class="rm-s">Action:</span>
 					<input
-						class="input--large"
 						type="text"
 						autocomplete="new-password"
 						ref="player-action"
@@ -42,6 +41,10 @@
 					aria-hidden="true"
 					@click="actionInfoClick"
 				></i>
+
+				<span class="flex-1 text-right gray small-text">
+					<i> {{amountToCall}} </i>
+				</span>
 			</div>
 
 			<div class="train divorced bm-l">
@@ -72,7 +75,7 @@
 
 import DialogHeader from './dialog-header.vue';
 import DialogBody from './dialog-body.vue';
-import vikFunctions from '../../units/vikFunctions';
+import vikFunctions, { displayAmount } from '../../units/vikFunctions';
 import { head } from '../../units/absx';
 import validation from "../../units/validations.js";
 import mkRanking from '../../units/ranking.js';
@@ -259,6 +262,21 @@ export default {
 
 			// return 'a straight flush, Ace to Five';
 			return ranking?.text ?? emptyRanking;
+		},
+
+		amountToCall() {
+
+			const { model } = this.$root.$data;
+
+			const lastHistory = model.histories.at(-1);
+
+			if (!lastHistory.currentBet) return '';
+
+			const player = model.getPlayerToAct();
+
+			const toCall = lastHistory.currentBet - player?.moneyOnStreet;
+
+			return `${displayAmount(toCall)} To Call`;
 		}
 	},
 
@@ -272,7 +290,19 @@ export default {
 </script>
 
 <style scoped>
+input {
+	width: 128px !important;
+}
+
 .gray {
 	color: darkgray;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.text-right {
+	text-align: right;
 }
 </style>

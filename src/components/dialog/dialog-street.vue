@@ -218,4 +218,7 @@ export default {
 </script>
 
 <style scoped>
+input {
+	width: 128px !important;
+}
 </style>

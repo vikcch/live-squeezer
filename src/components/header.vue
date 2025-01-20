@@ -57,7 +57,7 @@
 				</p>
 
 				<button
-					:class="['button-hidden']"
+					class="button-hidden"
 					title="Hide Text"
 					@click="headerText = false"
 				>
@@ -131,11 +131,6 @@ header {
 	margin-bottom: 8px;
 }
 
-h1 {
-	font-weight: normal;
-	font-size: 28px;
-}
-
 .github {
 	position: absolute;
 	top: 2px;
@@ -161,6 +156,7 @@ h1 {
 	cursor: pointer;
 	border: 0;
 	border-radius: 4px;
+	font-size: 15px;
 }
 
 .copied {
@@ -175,6 +171,7 @@ h1 {
 	padding: 4px 8px;
 	margin-left: 2px;
 	border-radius: 4px;
+	font-size: 15px;
 }
 
 .button-hidden:hover {
