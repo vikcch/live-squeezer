@@ -38,7 +38,11 @@ const isCharValid = function (value, index) {
         // return value.match(/[2-9akqjt]/i) !== null;
         // return value.match(/[mpy/hnoiulkj.,]/i) !== null;
 
-        if (sideKeyCards) return value.match(/[akqjtoiulgf.,]/i) !== null;
+        // if (sideKeyCards) return value.match(/[akqjtoiulgf.,]/i) !== null;
+
+        // else return value.match(/[2-9akqjt]/i) !== null;
+
+        if (sideKeyCards) return value.match(/[amqntoiukjl.,]/i) !== null;
 
         else return value.match(/[2-9akqjt]/i) !== null;
     }
@@ -51,9 +55,11 @@ const isCharValid = function (value, index) {
         // return value.match(/[dhsc]/i) !== null;
         // return value.match(/[dfsc]/i) !== null;
 
-        if (sideKeyCards) return value.match(/[dhsc]/i) !== null;
+        // if (sideKeyCards) return value.match(/[dhsc]/i) !== null;
 
-        else return value.match(/[dhsc]/i) !== null;
+        // else return value.match(/[dhsc]/i) !== null;
+
+        return value.match(/[dhsc]/i) !== null;
     }
 
 };
@@ -82,14 +88,17 @@ const cardCharFormat = (value) => {
         // };
 
         const workMap = {
+            'm': 'K',
+            'n': 'J',
+
             'o': '9',
             'i': '8',
             'u': '7',
             'l': '6',
-            'g': '5',
-            'f': '4',
+            'k': '5',
+            'j': '4',
             '.': '3',
-            ',': '2',
+            ',': '2'
         };
 
         return workMap[char.toLowerCase()];
@@ -98,8 +107,8 @@ const cardCharFormat = (value) => {
     const { sideKeyCards } = SettingsStore.getters;
 
     if (sideKeyCards) return value
-        .replace(/[akqjt]/g, match => match.toUpperCase())
-        .replace(/[oiulgf.,]/i, match => replace(match))
+        .replace(/[aqt]/g, match => match.toUpperCase())
+        .replace(/[nmoiulkj.,]/i, match => replace(match))
         .replace(/[DSCH]/, match => match.toLowerCase());
 
     else return value

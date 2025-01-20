@@ -24,6 +24,7 @@
 						v-model="text"
 						@keyup="onKeyUp"
 						@input="forced"
+						@keydown="onKeyDown"
 					>
 				</label>
 
@@ -77,6 +78,7 @@ import validation from "../../units/validations.js";
 import mkRanking from '../../units/ranking.js';
 import Player from '../../classes/player.js';
 import Street from '../../eases/street.js';
+import SettingsStore from '@/store/simple/settings';
 
 
 export default {
@@ -117,6 +119,44 @@ export default {
 
 			if (this.text.toLocaleLowerCase() === 'c') this.text = 'calls';
 			if (this.text.toLocaleLowerCase() === 'cc') this.text = 'calls';
+
+
+		},
+
+		onKeyDown(event) {
+
+			// https://www.toptal.com/developers/keycode
+
+			// NOTE:: Subtituidas antes de "@input='forced'", "force validation" ignorado
+
+			if (!SettingsStore.getters.sideKeyCards) return;
+
+			const { code } = event;
+
+			const work = {
+
+				KeyO: () => this.text += '9',
+				KeyI: () => this.text += '8',
+				KeyU: () => this.text += '7',
+				KeyL: () => this.text += '6',
+				KeyK: () => this.text += '5',
+				KeyJ: () => this.text += '4',
+				Period: () => this.text += '3',
+				Comma: () => this.text += '2',
+				KeyM: () => this.text += '1',
+				KeyN: () => this.text += '0',
+
+				KeyP: () => this.text += '.',
+				Space: () => this.text += '000',
+			};
+
+			code in work && work[code].call();
+
+			if (code in work) {
+
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		},
 
 		onKeyUp(event) {

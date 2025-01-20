@@ -237,8 +237,6 @@ export default {
 
 		onHoldCardsInput(e) {
 
-			console.log(e);
-
 			const { view, model } = this.$root.$data;
 
 			const { seat, holeCards } = this.intel.input;
