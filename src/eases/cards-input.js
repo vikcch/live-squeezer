@@ -34,15 +34,7 @@ const isCharValid = function (value, index) {
 
     if (index === 0 || index === 3 || index === 6) {
 
-        // STOPSHIP::
-        // return value.match(/[2-9akqjt]/i) !== null;
-        // return value.match(/[mpy/hnoiulkj.,]/i) !== null;
-
-        // if (sideKeyCards) return value.match(/[akqjtoiulgf.,]/i) !== null;
-
-        // else return value.match(/[2-9akqjt]/i) !== null;
-
-        if (sideKeyCards) return value.match(/[amqntoiukjl.,]/i) !== null;
+        if (sideKeyCards) return value.match(/[akqjtwer5yuio]/i) !== null;
 
         else return value.match(/[2-9akqjt]/i) !== null;
     }
@@ -50,14 +42,6 @@ const isCharValid = function (value, index) {
     const lastsCardChar = spacesOptions[this.maxLength].map(decrement);
 
     if (lastsCardChar.includes(index) || index >= this.maxLength - 1) {
-
-        // STOPSHIP::
-        // return value.match(/[dhsc]/i) !== null;
-        // return value.match(/[dfsc]/i) !== null;
-
-        // if (sideKeyCards) return value.match(/[dhsc]/i) !== null;
-
-        // else return value.match(/[dhsc]/i) !== null;
 
         return value.match(/[dhsc]/i) !== null;
     }
@@ -68,37 +52,16 @@ const cardCharFormat = (value) => {
 
     const replace = char => {
 
-        // const workMap = {
-        //     'm': 'A',
-        //     'p': 'K',
-        //     'y': 'Q',
-        //     '/': 'Q',
-        //     'h': 'J',
-        //     'n': 'T',
-        //     'o': '9',
-        //     'i': '8',
-        //     'u': '7',
-        //     'l': '6',
-        //     'k': '5',
-        //     'j': '4',
-        //     '.': '3',
-        //     ',': '2',
-
-        //     'f': 'h'
-        // };
-
         const workMap = {
-            'm': 'K',
-            'n': 'J',
 
             'o': '9',
             'i': '8',
             'u': '7',
-            'l': '6',
-            'k': '5',
-            'j': '4',
-            '.': '3',
-            ',': '2'
+            'y': '6',
+            '5': '5',
+            'r': '4',
+            'e': '3',
+            'w': '2'
         };
 
         return workMap[char.toLowerCase()];
@@ -107,20 +70,13 @@ const cardCharFormat = (value) => {
     const { sideKeyCards } = SettingsStore.getters;
 
     if (sideKeyCards) return value
-        .replace(/[aqt]/g, match => match.toUpperCase())
-        .replace(/[nmoiulkj.,]/i, match => replace(match))
+        .replace(/[akqjt]/g, match => match.toUpperCase())
+        .replace(/[wer5yuio]/i, match => replace(match))
         .replace(/[DSCH]/, match => match.toLowerCase());
 
     else return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
         .replace(/[DHSC]/g, match => match.toLowerCase());
-
-    // return value
-    //     // .replace(/[akqjt]/g, match => match.toUpperCase())
-    //     // .replace(/[DHSC]/g, match => match.toLowerCase());
-    //     .replace(/[mpy/hnoiulkj.,]/i, match => replace(match))
-    //     .replace(/[f]/i, match => replace(match))
-    //     .replace(/[DSC]/, match => match.toLowerCase());
 
 }
 

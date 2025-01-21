@@ -154,10 +154,10 @@ export default {
 				Period: () => this.text += '3',
 				Comma: () => this.text += '2',
 				KeyM: () => this.text += '1',
-				KeyN: () => this.text += '0',
+				Space: () => this.text += '0',
 
 				KeyP: () => this.text += '.',
-				Space: () => this.text += '000',
+				KeyN: () => this.text += '000',
 			};
 
 			code in work && work[code].call();
