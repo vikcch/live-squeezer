@@ -98,7 +98,7 @@ export default {
 			const postsEl = this.$refs['output-posts'];
 			postsEl.innerHTML = '';
 
-			const postsLabel = ['posts small blind', 'posts big blind', 'posts a straddle'];
+			const postsLabel = ['posts small blind', 'posts big blind', 'posts straddle'];
 
 			const { ante, bbAnte, smallBlind, bigBlind, straddles } = mainInfo.stakes;
 

@@ -115,26 +115,33 @@ export default {
 		forced(event) {
 
 			this.text = validation.force.onlyActionChars(this.text);
-
-			// NOTE:: Evita multiplos 'ff' ou 'cc'
-			if (this.text.toLocaleLowerCase() === 'f') this.text = 'folds';
-			if (this.text.toLocaleLowerCase() === 'ff') this.text = 'folds';
-
-			if (this.text.toLocaleLowerCase() === 'c') this.text = 'calls';
-			if (this.text.toLocaleLowerCase() === 'cc') this.text = 'calls';
-
-
 		},
 
 		onKeyDown(event) {
 
 			// https://www.toptal.com/developers/keycode
 
+			const { code } = event;
+
+			if (code === 'KeyC' || code === 'KeyF') {
+
+				const { model } = this.$root.$data;
+				const lastHistory = model.histories.at(-1);
+				const wordC = lastHistory.currentBet ? 'calls' : 'checks';
+
+				if (code === 'KeyF') this.text = 'folds';
+				if (code === 'KeyC') this.text = wordC;
+
+				event.preventDefault();
+				event.stopPropagation();
+
+				return;
+			}
+
+
 			// NOTE:: Subtituidas antes de "@input='forced'", "force validation" ignorado
 
 			if (!SettingsStore.getters.sideKeyCards) return;
-
-			const { code } = event;
 
 			const work = {
 
