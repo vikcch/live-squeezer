@@ -142,6 +142,11 @@ const orderCardsDisplay = function () {
 	});
 };
 
+const setStacksHandler = function () {
+
+	this.value = validation.force.onlyNumbersAndDot(this.value);
+};
+
 export default {
 	components: {
 		'app-player-row': PlayerRow
@@ -180,6 +185,21 @@ export default {
 				showCloseButton: true,
 				showCancelButton: true,
 				input: 'text',
+				onBeforeOpen: (saEl) => {
+
+					const input = saEl.querySelector('.swal2-input');
+					input.setAttribute('inputmode', 'numeric');
+
+					input.addEventListener('input', setStacksHandler);
+				},
+
+				onClose: (saEl) => {
+
+					const input = saEl.querySelector('.swal2-input');
+
+					input.removeEventListener('input', setStacksHandler);
+				}
+
 			});
 
 			if (!response.isConfirmed) return;
@@ -191,7 +211,10 @@ export default {
 
 			if (!isStack || !isInDecimalType) {
 
-				await this.$swal.fire({ title: 'Invalid Input', text: 'Please enter a valid number!' });
+				await this.$swal.fire({
+					title: 'Invalid Input',
+					text: 'Please enter a valid number! (max 2 decimals)'
+				});
 				this.setStacks_Click();
 				return;
 			}

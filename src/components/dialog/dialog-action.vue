@@ -283,6 +283,8 @@ export default {
 
 			const toCall = lastHistory.currentBet - player?.moneyOnStreet;
 
+			if (!toCall) return '';
+
 			return `${displayAmount(toCall)} To Call`;
 		}
 	},
