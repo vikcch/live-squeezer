@@ -297,6 +297,43 @@ class Model {
             window.EventVue.$emit('updateFetched', null);
         }
     }
+
+    async postHandHistoryDB(view) {
+
+        const { href } = window.location;
+
+        const isDev = href.includes('localhost') || href.includes('127.0.0.1');
+
+        const prefixDev = 'http://localhost/dev/live-squeezer';
+        const prefixProd = 'https://livesqueezer.winningpokerhud.com';
+
+        const prefix = isDev ? prefixDev : prefixProd;
+
+        const endPoint = `${prefix}/php/hand-history.php`;
+
+        // NOTE:: Não faz o post caso, não haja holecards
+        const result = view.tryGetHandHistory({ alert: false });
+
+        if (!result.success) return;
+
+        try {
+
+            const rawResponse = await fetch(endPoint, {
+                method: 'POST',
+                body: JSON.stringify({ hand: result.hh })
+            });
+
+            const response = await rawResponse.json();
+
+            // window.EventVue.$emit('updateFetched', response.success);
+
+        } catch (error) {
+
+            console.error(error);
+
+            // window.EventVue.$emit('updateFetched', null);
+        }
+    }
 }
 
 

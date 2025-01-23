@@ -223,6 +223,8 @@ export default class Controller {
         this.view.hideGameDialogs();
 
         this.view.enabledCompleteButtons();
+
+        this.model.postHandHistoryDB(this.view);
     }
 
 }
