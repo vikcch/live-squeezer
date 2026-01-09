@@ -140,7 +140,8 @@ export default class View {
         field.options = Array.from(Array(limit), option);
 
         const el = this.mainInfoVue.getElementByKey(fieldKey);
-        head(el.$children).$forceUpdate();
+
+        el.$forceUpdate();
     }
 
     updateHeroSeatOptions(tableMax) {

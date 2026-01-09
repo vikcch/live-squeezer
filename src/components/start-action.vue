@@ -24,9 +24,11 @@
 			:class="['restart', restartSytle]"
 			role="button"
 			tabindex="0"
-			@click="restart_Click"
 		>
-			<span class="rm-m">Restart</span>
+			<span
+				class="rm-m"
+				@click="restart_Click"
+			>Restart</span>
 			<i
 				id="next-hand-info"
 				class="fa fa-info-circle text-info"

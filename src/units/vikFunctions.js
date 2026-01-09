@@ -99,7 +99,9 @@ const vikFunctions = {
             else return { [cur]: { ...acc } };
 
         }, value);
-    }
+    },
+
+    unixTimestamp: () => Math.round(Date.now() / 1000)
 };
 
 
@@ -117,7 +119,8 @@ export const {
     sum_rdc,
     fixValue,
     displayAmount,
-    makeComplexObject
+    makeComplexObject,
+    unixTimestamp
 } = vikFunctions;
 
 

@@ -15,7 +15,8 @@ const SettingsStore = {
 
     data: {
         optionalTime: false,
-        sideKeyCards: false
+        sideKeyCards: false,
+        tableMax10: false
     },
 
     setters: {
@@ -35,6 +36,14 @@ const SettingsStore = {
             SettingsStore.data.sideKeyCards = value;
             SettingsStore.methods.saveSettings();
         },
+        
+        /**
+         * @param {boolean} value
+         */
+        set tableMax10(value) {
+            SettingsStore.data.tableMax10 = value;
+            SettingsStore.methods.saveSettings();
+        },
     },
 
     getters: {
@@ -45,6 +54,10 @@ const SettingsStore = {
 
         get sideKeyCards() {
             return SettingsStore.data.sideKeyCards;
+        },
+        
+        get tableMax10() {
+            return SettingsStore.data.tableMax10;
         }
     },
 

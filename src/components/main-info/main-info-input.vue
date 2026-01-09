@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import vikFunctions from '@/units/vikFunctions.js';
 import validation from "../../units/validations.js";
 
 export default {
@@ -125,7 +125,7 @@ export default {
 
 			const work = {
 
-				handId: () => this.text = Date.now(),
+				handId: () => this.text = vikFunctions.unixTimestamp(),
 
 				handDate: () => this.setHandDate(),
 

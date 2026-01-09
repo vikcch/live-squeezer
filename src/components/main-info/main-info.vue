@@ -26,14 +26,34 @@
 
 import MainInfoSlot from './main-info-slot.vue';
 import MainInfoCell from './main-info-cell.vue';
+import SettingsStore from '@/store/simple/settings';
 import { head } from '../../units/absx.js';
+import vikFunctions from '@/units/vikFunctions';
+
 
 const numberOption = (v, k) => ({ value: k + 1, text: k + 1 });
-const oneToNineOptions = Array.from(Array(9), numberOption);
+// NOTE:: Tem que ser function, para funcionar no inicio
+const getInitialTableMax = () => SettingsStore.getters.tableMax10 ? 10 : 9;
+const oneToXOptions = Array.from(Array(getInitialTableMax()), numberOption);
 
-const attrs_ = [
+const getTableMaxOptions = () => {
+
+	const options = [
+		{ value: '2-max', text: '2-max' },
+		{ value: '6-max', text: '6-max' },
+		{ value: '9-max', text: '9-max' },
+	];
+
+	// NOTE:: Settar "campo" `tableMax10:true` no localStorage "live-squeezer-settings"
+	if (getInitialTableMax() === 10) options.push({ value: '10-max', text: '10-max' });
+
+	return options;
+};
+
+
+const attrs_ = () => [
 	{
-		key: 'handId', label: 'Hand Id:', text: Date.now(),
+		key: 'handId', label: 'Hand Id:', text: vikFunctions.unixTimestamp(),
 		el: 'app-mi-input', maxlength: '20', inputmode: 'numeric'
 	},
 
@@ -62,7 +82,7 @@ const attrs_ = [
 
 	{
 		key: 'heroSeat', label: 'Hero Seat:', el: 'app-mi-select', text: '1',
-		options: oneToNineOptions
+		options: oneToXOptions
 	},
 
 	/* 	{
@@ -72,17 +92,18 @@ const attrs_ = [
 
 	{
 		key: 'dealer', label: 'Button:', el: 'app-mi-select', text: '1',
-		options: oneToNineOptions
+		options: oneToXOptions
 	},
 
 	{
 		key: 'tableMax', label: 'Table Max:', el: 'app-mi-select', text: '9-max',
-		options: [
-			{ value: '2-max', text: '2-max' },
-			{ value: '6-max', text: '6-max' },
-			{ value: '9-max', text: '9-max' },
-			// { value: '10-max', text: '10-max' },
-		]
+		// options: [
+		// 	{ value: '2-max', text: '2-max' },
+		// 	{ value: '6-max', text: '6-max' },
+		// 	{ value: '9-max', text: '9-max' },
+		// 	// NOTE:: Pode incluir “10-max” com base no localStorage (tableMax10: true)
+		// ]
+		options: getTableMaxOptions()
 	},
 
 	{
@@ -104,7 +125,7 @@ export default {
 
 		attributes() {
 
-			return attrs_;
+			return attrs_();
 		},
 	},
 
