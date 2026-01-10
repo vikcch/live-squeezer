@@ -108,7 +108,7 @@ const attrs_ = () => [
 
 	{
 		key: 'handTime', label: 'Time:', text: '00:00:00',
-		el: 'app-mi-input', maxlength: '8', optional: true
+		placeholder: '00:00:00', el: 'app-mi-input', maxlength: '8', optional: true
 	}
 
 ];

@@ -87,8 +87,15 @@ export default {
 
 			const text = this.enabled ? '' : this.props.slotAttrs.text;
 
+			if (this.enabled) setTimeout(() => {
+
+				window.EventVue.$emit(`${this.props.slotAttrs.key}MainInfoHighlight`);
+
+			}, 100);
+
 			// NOTE:: Nem todos os inputs tém "EventVue.$on"
 			window.EventVue.$emit(`${this.props.slotAttrs.key}MainInfoText`, text);
+
 		},
 
 		choice(props) {
