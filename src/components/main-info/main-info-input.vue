@@ -92,7 +92,8 @@ export default {
 
 			const { view } = this.$root.$data;
 
-			view.playersGridVue.focusPlayerInputUTG();
+			// NOTE:: UTG ou hero - dependendo da perspectiva (input holecards)
+			view.playersGridVue.focusPlayerInput();
 
 			if (/^\d\:\d{2}$/.test(this.text)) this.text = `0:0${this.text}`;
 

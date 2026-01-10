@@ -295,9 +295,17 @@ export default {
 
 			if (this.$children.length === 0) return;
 
-			const utgIndex = this.inputs.findIndex(v => this.getPosition(v.seat) === 'UTG');
+			const findUTG = v => this.getPosition(v.seat) === 'UTG';
+			const findHero = v => Number(v.seat) === heroSeat;
 
-			const index = utgIndex === -1 ? 0 : utgIndex;
+			const { view } = this.$root.$data;
+			const heroSeat = Number(view.mainInfoVue.values.heroSeat);
+
+			const isHeroPerspective = view.mainInfoVue.values.perspective === 'hero';
+
+			const targetIndex = this.inputs.findIndex(isHeroPerspective ? findHero : findUTG);
+
+			const index = targetIndex === -1 ? 0 : targetIndex;
 
 			const el = this.$children[index].$refs['hole-cards'];
 
