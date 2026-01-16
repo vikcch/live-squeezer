@@ -154,6 +154,13 @@ export default {
 			return head(this.$children).$children.find(childrenHasKey);
 		},
 
+		getTextByKey(key) {
+
+			const cellVue = this.getElementByKey(key);
+			
+			return head(cellVue.$children).text;
+		},
+
 		resetCell(key) {
 
 			const cellVue = this.getElementByKey(key);

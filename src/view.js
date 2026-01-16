@@ -630,6 +630,14 @@ export default class View {
 
         if (!fromNextHand && !fromRestartHand) this.mainInfoVue.reset();
 
+        if (fromRestartHand) {
+
+            const handId = this.mainInfoVue.getTextByKey('handId');
+            const isDefault = (handId)?.toString().length === 10;
+            
+            if (isDefault) this.mainInfoVue.resetCell('handId');
+        }
+
         if (fromNextHand) {
             this.mainInfoVue.resetCell('handId');
             this.mainInfoVue.resetCell('handTime');
