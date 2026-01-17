@@ -291,7 +291,7 @@ export default {
 			el.focus();
 		},
 
-		focusPlayerInputUTG() {
+		focusPlayerInput() {
 
 			if (this.$children.length === 0) return;
 

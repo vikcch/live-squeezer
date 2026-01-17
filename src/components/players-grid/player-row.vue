@@ -30,7 +30,7 @@
 					name="seat"
 					@input="forced"
 					@focus="$event.target.select()"
-					maxlength="1"
+					:maxlength="seatMaxLength"
 					inputmode="numeric"
 					ref="seat"
 					class="text-right small-input"
@@ -328,6 +328,15 @@ export default {
 			if (this.isDealer) return null;
 
 			return this.intel.position.replace('UTG', 'UG');
+		},
+
+		seatMaxLength() {
+
+			const { view } = this.$root.$data;
+
+			const text = view.mainInfoVue?.getTextByKey('tableMax');
+
+			return text === '10-max' ? 2 : 1;
 		}
 	},
 
