@@ -44,30 +44,32 @@ const isCharValid = function (value, index) {
 
     if (lastsCardChar.includes(index) || index >= this.maxLength - 1) {
 
-        return value.match(/[sdch456+]/i) !== null;
+        if (sideKeyCards) return value.match(/[sdch4526]/i) !== null;
+
+        else return value.match(/[sdch]/i) !== null;
     }
 
 };
 
-// STOPSHIP:: Deixa entrar 55 no sideKeyCards:false...
-
 const cardCharFormat = (value, selectionStart) => {
+
+    // STOPSHIP:: Tem bug quando a "casa" está selecionada não faz o "map"
 
     const replace = char => {
 
         const rankMap = {
             '1': 'A',
-            '/': 'K',
+            '-': 'K',
             '*': 'Q',
-            '-': 'J',
+            '/': 'J',
             '0': 'T',
         };
 
         const suitMap = {
             '4': 's',
             '5': 'd',
-            '6': 'c',
-            '+': 'h',
+            '2': 'c',
+            '6': 'h',
         };
 
         const isRank = [0, 3, 6].includes(selectionStart);
@@ -81,7 +83,7 @@ const cardCharFormat = (value, selectionStart) => {
 
     if (sideKeyCards) return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
-        .replace(/[0-9\/\*\-\+]/i, match => replace(match))
+        .replace(/[0-9/*-]/i, match => replace(match))
         .replace(/[DSCH]/, match => match.toLowerCase());
 
     else return value
@@ -119,6 +121,23 @@ const handleFocusout = function (event) {
     input.style.color = color;
 };
 
+/**
+ * @param {KeyboardEvent} event 
+ */
+const getKeyWithPaintMap = ({ key, altKey, code }) => {
+
+    if (!altKey) return key;
+
+    const paintMap = {
+
+        Numpad7: 'J',
+        Numpad8: 'K',
+        Numpad9: 'Q',
+    };
+
+    // NOTE:: Retorna `false` quando "code" não existe no map
+    return code in paintMap && paintMap[code];
+};
 
 
 
@@ -126,8 +145,10 @@ const handleKeypress = function (event) {
 
     event.preventDefault();
 
-    const { key } = event;
+    // const { key, code } = event;
     const { selectionStart } = this;
+
+    const key = getKeyWithPaintMap(event);
 
     if (!isCharValid.call(this, key, selectionStart)) return;
 
@@ -216,7 +237,8 @@ const createEvents = function (element) {
     element.addEventListener('focus', handleFocus);
     element.addEventListener('focusout', handleFocusout);
 
-    element.addEventListener('keypress', handleKeypress);
+    // ONGOING::
+    element.addEventListener('keyup', handleKeypress);
     element.addEventListener('keydown', handleKeydown);
 
     element.addEventListener('paste', preventDefault);
@@ -229,7 +251,7 @@ const removeEvents = function (element) {
     element.removeEventListener('focus', handleFocus);
     element.removeEventListener('focusout', handleFocusout);
 
-    element.removeEventListener('keypress', handleKeypress);
+    element.removeEventListener('keyup', handleKeypress);
     element.removeEventListener('keydown', handleKeydown);
 
     element.removeEventListener('paste', preventDefault);

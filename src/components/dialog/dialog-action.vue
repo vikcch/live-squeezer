@@ -175,38 +175,41 @@ export default {
 
 			// https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values#numeric_keypad_keys
 
-			const { code } = event;
+			const { code, key } = event;
 
-			console.log({ code });
-
-			const work = {
+			const codeWork = {
 
 				Backspace: () => this.text = this.text.replace(/calls|folds/, ''),
+
+				NumpadSubtract: () => controller.undo(),
+
+				NumpadDivide: () => submit('folds'),
+
+				NumpadMultiply: () => submit('calls'),
+
+				// « ou =
+				Equal: () => this.text = this.text.replace(/«|=/, '000'),
+				NumpadAdd: () => this.text = `${this.text}000`
+			};
+
+			// NOTE:: Uso de `key` e `code` para usar, ex: "shift+4" > folds (numpad)
+			const keyWork = {
 
 				ArrowUp: () => controller.undo(),
 
 				ArrowLeft: () => submit('folds'),
 
-				NumpadDivide: () => submit('folds'),
-
 				ArrowRight: () => submit('calls'),
 
-				NumpadMultiply: () => submit('calls'),
-
 				Enter: () => submit(this.text),
-
-				NumpadEnter: () => submit(this.text),
-
-				// « ou =
-				Equal: () => this.text = this.text.replace(/«|=/, '000'),
-
-				NumpadAdd: () => this.text = `${this.text}000`
 			};
 
 			const { controller } = this.$root.$data;
 			const submit = controller.handlePlayerActionSubmit(event);
 
-			code in work && work[code].call();
+			code in codeWork && codeWork[code].call();
+
+			key in keyWork && keyWork[key].call();
 		},
 
 		onFoldClick(event) {
