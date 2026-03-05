@@ -173,7 +173,11 @@ export default {
 
 			// https://www.toptal.com/developers/keycode
 
+			// https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values#numeric_keypad_keys
+
 			const { code } = event;
+
+			console.log({ code });
 
 			const work = {
 
@@ -183,14 +187,20 @@ export default {
 
 				ArrowLeft: () => submit('folds'),
 
+				NumpadDivide: () => submit('folds'),
+
 				ArrowRight: () => submit('calls'),
+
+				NumpadMultiply: () => submit('calls'),
 
 				Enter: () => submit(this.text),
 
 				NumpadEnter: () => submit(this.text),
 
 				// « ou =
-				Equal: () => this.text = this.text.replace(/«|=/, '000')
+				Equal: () => this.text = this.text.replace(/«|=/, '000'),
+
+				NumpadAdd: () => this.text = `${this.text}000`
 			};
 
 			const { controller } = this.$root.$data;

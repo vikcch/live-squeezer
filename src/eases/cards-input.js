@@ -34,7 +34,8 @@ const isCharValid = function (value, index) {
 
     if (index === 0 || index === 3 || index === 6) {
 
-        if (sideKeyCards) return value.match(/[akqjtwer5yuio]/i) !== null;
+        // NOTE:: "-" nas pontas não precisa de escape (inside brackets)
+        if (sideKeyCards) return value.match(/[0-9akqjt/*-]/i) !== null;
 
         else return value.match(/[2-9akqjt]/i) !== null;
     }
@@ -43,35 +44,44 @@ const isCharValid = function (value, index) {
 
     if (lastsCardChar.includes(index) || index >= this.maxLength - 1) {
 
-        return value.match(/[dhsc]/i) !== null;
+        return value.match(/[sdch456+]/i) !== null;
     }
 
 };
 
-const cardCharFormat = (value) => {
+// STOPSHIP:: Deixa entrar 55 no sideKeyCards:false...
+
+const cardCharFormat = (value, selectionStart) => {
 
     const replace = char => {
 
-        const workMap = {
-
-            'o': '9',
-            'i': '8',
-            'u': '7',
-            'y': '6',
-            '5': '5',
-            'r': '4',
-            'e': '3',
-            'w': '2'
+        const rankMap = {
+            '1': 'A',
+            '/': 'K',
+            '*': 'Q',
+            '-': 'J',
+            '0': 'T',
         };
 
-        return workMap[char.toLowerCase()];
+        const suitMap = {
+            '4': 's',
+            '5': 'd',
+            '6': 'c',
+            '+': 'h',
+        };
+
+        const isRank = [0, 3, 6].includes(selectionStart);
+
+        const workMap = isRank ? rankMap : suitMap;
+
+        return workMap[char] ?? char;
     };
 
     const { sideKeyCards } = SettingsStore.getters;
 
     if (sideKeyCards) return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
-        .replace(/[wer5yuio]/i, match => replace(match))
+        .replace(/[0-9\/\*\-\+]/i, match => replace(match))
         .replace(/[DSCH]/, match => match.toLowerCase());
 
     else return value
@@ -121,7 +131,7 @@ const handleKeypress = function (event) {
 
     if (!isCharValid.call(this, key, selectionStart)) return;
 
-    const properChar = cardCharFormat(key);
+    const properChar = cardCharFormat(key, selectionStart);
 
     const capChars = cap(this.maxLength - 1);
 
