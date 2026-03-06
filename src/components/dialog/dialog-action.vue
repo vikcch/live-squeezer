@@ -185,7 +185,7 @@ export default {
 				Backspace: () => this.text = this.text.replace(/calls|folds/, ''),
 
 				NumpadSubtract: () => controller.undo(),
-				// Numpad8: () =>  controller.undo(),
+				Numpad8: () =>  controller.undo(),
 
 				NumpadDivide: () => submit('folds'),
 				Numpad4: () => event.altKey && submit('folds'),
@@ -196,8 +196,6 @@ export default {
 				// « ou =
 				Equal: () => this.text = this.text.replace(/«|=/, '000'),
 				NumpadAdd: () => this.text = `${this.text}000`
-
-				// TODO:: fazer "undo", ver se faz diferença ser em input de street
 			};
 
 			// NOTE:: Uso de `key` e `code` para usar, ex: "shift+4" > folds (numpad)
