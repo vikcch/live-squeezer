@@ -185,7 +185,7 @@ export default {
 				Backspace: () => this.text = this.text.replace(/calls|folds/, ''),
 
 				NumpadSubtract: () => controller.undo(),
-				Numpad8: () =>  controller.undo(),
+				Numpad8: () => event.altKey && controller.undo(),
 
 				NumpadDivide: () => submit('folds'),
 				Numpad4: () => event.altKey && submit('folds'),
