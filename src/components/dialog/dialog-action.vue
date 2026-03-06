@@ -171,6 +171,9 @@ export default {
 
 		onKeyUp(event) {
 
+			// NOTE:: Para "alt" não tirar o foco do input element
+			event.preventDefault();
+
 			// https://www.toptal.com/developers/keycode
 
 			// https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values#numeric_keypad_keys
@@ -182,14 +185,19 @@ export default {
 				Backspace: () => this.text = this.text.replace(/calls|folds/, ''),
 
 				NumpadSubtract: () => controller.undo(),
+				// Numpad8: () =>  controller.undo(),
 
 				NumpadDivide: () => submit('folds'),
+				Numpad4: () => event.altKey && submit('folds'),
 
 				NumpadMultiply: () => submit('calls'),
+				Numpad6: () => event.altKey && submit('calls'),
 
 				// « ou =
 				Equal: () => this.text = this.text.replace(/«|=/, '000'),
 				NumpadAdd: () => this.text = `${this.text}000`
+
+				// TODO:: fazer "undo", ver se faz diferença ser em input de street
 			};
 
 			// NOTE:: Uso de `key` e `code` para usar, ex: "shift+4" > folds (numpad)
