@@ -4,7 +4,14 @@ import f8Ctrl from './f8-ctrl';
 
 export default async function (event) {
 
-    if (event.key === 'F2' && !event.ctrlKey) {
+    const isZ = event.code === 'KeyZ';
+
+    const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
+    const fakeF2 = isZ && localStorageDialog.isSaveEnabled;
+
+    const fakeF9 = isZ && this.$refs['start-action'].$data.isEnabled;
+
+    if (fakeF2 || event.key === 'F2' && !event.ctrlKey) {
 
         // NOTE:: `.Vue` chama `$children[0]`
         const localStorageDialog = this.$refs['dialog-local-storage'].Vue;
@@ -19,6 +26,7 @@ export default async function (event) {
         setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
     }
 
+    // ONGOING:: Remover isto e nos settings
     if (event.key === 'F2' && event.ctrlKey) {
 
         const result = prompt('Alternative key cards: (on/off)', 'off');
@@ -60,7 +68,7 @@ export default async function (event) {
         f8Ctrl.call(this);
     }
 
-    if (event.key === 'F9' && !event.ctrlKey) {
+    if (fakeF9 || event.key === 'F9' && !event.ctrlKey) {
 
         if (!this.$refs['start-action'].$data.isEnabled) return;
 
