@@ -228,6 +228,8 @@ const handleKeydown = function (event) {
 
     key in work && work[key].call();
 
+    // NOTE:: Já não existe evento "keypress", fica combinado com este "keydown"
+    handleKeypress.call(this, event);
 };
 
 const preventDefault = event => event.preventDefault();
@@ -237,8 +239,6 @@ const createEvents = function (element) {
     element.addEventListener('focus', handleFocus);
     element.addEventListener('focusout', handleFocusout);
 
-    // ONGOING::
-    element.addEventListener('keyup', handleKeypress);
     element.addEventListener('keydown', handleKeydown);
 
     element.addEventListener('paste', preventDefault);
@@ -251,7 +251,6 @@ const removeEvents = function (element) {
     element.removeEventListener('focus', handleFocus);
     element.removeEventListener('focusout', handleFocusout);
 
-    element.removeEventListener('keyup', handleKeypress);
     element.removeEventListener('keydown', handleKeydown);
 
     element.removeEventListener('paste', preventDefault);
