@@ -11,11 +11,12 @@
 
 // Baseado em: https://youtu.be/mS9-fTrgjrA
 
+// OPTIMIZE:: usar a estrutura dos settings do replayer-rwd
+
 const SettingsStore = {
 
     data: {
         optionalTime: false,
-        sideKeyCards: false,
         tableMax10: false
     },
 
@@ -32,14 +33,6 @@ const SettingsStore = {
         /**
          * @param {boolean} value
          */
-        set sideKeyCards(value) {
-            SettingsStore.data.sideKeyCards = value;
-            SettingsStore.methods.saveSettings();
-        },
-        
-        /**
-         * @param {boolean} value
-         */
         set tableMax10(value) {
             SettingsStore.data.tableMax10 = value;
             SettingsStore.methods.saveSettings();
@@ -52,10 +45,6 @@ const SettingsStore = {
             return SettingsStore.data.optionalTime;
         },
 
-        get sideKeyCards() {
-            return SettingsStore.data.sideKeyCards;
-        },
-        
         get tableMax10() {
             return SettingsStore.data.tableMax10;
         }

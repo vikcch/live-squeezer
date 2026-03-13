@@ -137,36 +137,6 @@ export default {
 
 				return;
 			}
-
-
-			// NOTE:: Subtituidas antes de "@input='forced'", "force validation" ignorado
-
-			if (!SettingsStore.getters.sideKeyCards) return;
-
-			const work = {
-
-				KeyO: () => this.text += '9',
-				KeyI: () => this.text += '8',
-				KeyU: () => this.text += '7',
-				KeyL: () => this.text += '6',
-				KeyK: () => this.text += '5',
-				KeyJ: () => this.text += '4',
-				Period: () => this.text += '3',
-				Comma: () => this.text += '2',
-				KeyM: () => this.text += '1',
-				Space: () => this.text += '0',
-
-				KeyP: () => this.text += '.',
-				KeyN: () => this.text += '000',
-			};
-
-			code in work && work[code].call();
-
-			if (code in work) {
-
-				event.preventDefault();
-				event.stopPropagation();
-			}
 		},
 
 		onKeyUp(event) {

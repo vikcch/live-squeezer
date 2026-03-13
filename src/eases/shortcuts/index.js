@@ -26,17 +26,6 @@ export default async function (event) {
         setTimeout(this.$refs['dialog-new-hand'].Vue.nextHand, 100);
     }
 
-    // ONGOING:: Remover isto e nos settings
-    if (event.key === 'F2' && event.ctrlKey) {
-
-        const result = prompt('Alternative key cards: (on/off)', 'off');
-
-        // `null` -> Cancel
-        if (result === null) return;
-
-        SettingsStore.setters.sideKeyCards = result.trim().toLowerCase() === 'on';
-    }
-
     if (event.key === 'F4') {
 
         if (!this.$refs['start-action'].$data.isEnabled) return;

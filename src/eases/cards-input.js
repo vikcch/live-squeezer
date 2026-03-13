@@ -28,32 +28,24 @@ const placeChar = function (char, spliceIndex, advanceCaret = 0) {
 
 const isCharValid = function (value, index) {
 
-    const { sideKeyCards } = SettingsStore.getters;
-
     if (value.length !== 1) return false;
 
     if (index === 0 || index === 3 || index === 6) {
 
         // NOTE:: "-" nas pontas não precisa de escape (inside brackets)
-        if (sideKeyCards) return value.match(/[0-9akqjt/*-]/i) !== null;
-
-        else return value.match(/[2-9akqjt]/i) !== null;
+        return value.match(/[0-9akqjt/*-]/i) !== null;
     }
 
     const lastsCardChar = spacesOptions[this.maxLength].map(decrement);
 
     if (lastsCardChar.includes(index) || index >= this.maxLength - 1) {
 
-        if (sideKeyCards) return value.match(/[sdch4526]/i) !== null;
-
-        else return value.match(/[sdch]/i) !== null;
+        return value.match(/[sdch4526]/i) !== null;
     }
 
 };
 
 const cardCharFormat = (value, selectionStart) => {
-
-    // STOPSHIP:: Tem bug quando a "casa" está selecionada não faz o "map"
 
     const replace = char => {
 
@@ -79,17 +71,10 @@ const cardCharFormat = (value, selectionStart) => {
         return workMap[char] ?? char;
     };
 
-    const { sideKeyCards } = SettingsStore.getters;
-
-    if (sideKeyCards) return value
+    return value
         .replace(/[akqjt]/g, match => match.toUpperCase())
         .replace(/[0-9/*-]/i, match => replace(match))
         .replace(/[DSCH]/, match => match.toLowerCase());
-
-    else return value
-        .replace(/[akqjt]/g, match => match.toUpperCase())
-        .replace(/[DHSC]/g, match => match.toLowerCase());
-
 }
 
 const handleFocus = function (event) {
