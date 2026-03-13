@@ -128,9 +128,9 @@ const getKeyWithPaintMap = ({ key, altKey, code }) => {
 
 const handleKeypress = function (event) {
 
-    event.preventDefault();
+    // NOTE:: Não pode ser para todos, "TAB" é preciso para mudar "holecards"
+    if (event.code === "AltLeft") event.preventDefault();
 
-    // const { key, code } = event;
     const { selectionStart } = this;
 
     const key = getKeyWithPaintMap(event);
