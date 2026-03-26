@@ -169,12 +169,26 @@ export default class View {
             .map(v => v.seat);
 
         this.playersGridVue.setFolds(folds);
+
+
+        const actedSeat = history.player?.seat ?? null;
+
+        const isPassive = ['checks', 'calls'].includes(history.action);
+
+        if (isPassive) this.playersGridVue.addPassivePlayer(actedSeat);
+
+        const isAgro = ['raises', 'bets'].includes(history.action);
+
+        if (isAgro) this.playersGridVue.resetPreRaiseActions(actedSeat);
+
+        if (isStreet) this.playersGridVue.resetPreRaiseActions();
     }
 
     resetPlayersGridActivity() {
 
         this.playersGridVue.setFolds([]);
         this.playersGridVue.setActionSeat(null);
+        this.playersGridVue.resetPreRaiseActions();
     }
 
     displayDialogAction(model) {
@@ -634,7 +648,7 @@ export default class View {
 
             const handId = this.mainInfoVue.getTextByKey('handId');
             const isDefault = (handId)?.toString().length === 10;
-            
+
             if (isDefault) this.mainInfoVue.resetCell('handId');
         }
 

@@ -1,6 +1,6 @@
 <template>
 
-	<div :class="['divTableRow', { action: hasAction, playing: isPlaying }]">
+	<div :class="['divTableRow', { action: hasAction }, playColorStyleState]">
 
 		<div class="divTableCell">
 
@@ -323,6 +323,13 @@ export default {
 			return !this.intel.hasFolded && actionTime;
 		},
 
+		playColorStyleState() {
+
+			if (this.intel.toPlay && this.isPlaying) return 'to-play';
+
+			return this.isPlaying ? 'playing' : '';
+		},
+
 		position() {
 
 			if (this.isDealer) return null;
@@ -446,7 +453,13 @@ input {
 }
 
 .divTableRow.playing {
-	background-color: #e0e9e0;
+	/* NOTE:: Old green quando só havia um */
+	/* background-color: #e0e9e0; */
+	background-color: #e8efe8;
+}
+
+.divTableRow.to-play {
+	background-color: #cddccd;
 }
 
 /* .divTableRow.folded {

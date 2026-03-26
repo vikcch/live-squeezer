@@ -66,7 +66,8 @@
 					:intel="{ 
 						input, index, isEditable, dealerSeat, actionSeat, 
 						hasFolded: hasFolded(input.seat), 
-						position: getPosition(input.seat) 
+						position: getPosition(input.seat),
+						toPlay: toPlay(input.seat)
 					}"
 				></app-player-row>
 
@@ -160,6 +161,7 @@ export default {
 			actionSeat: null,
 			sitouts: [],
 			folds: [],
+			preRaiseActions: [],
 			namesAsPositions: false,
 			shiftedSeatsTime: null
 		};
@@ -404,6 +406,27 @@ export default {
 		hasFolded(seat) {
 
 			return this.folds.includes(seat);
+		},
+
+		addPassivePlayer(seat) {
+
+			this.preRaiseActions.push(seat);
+
+			console.log('passive', this.preRaiseActions);
+		},
+
+		toPlay(seat) {
+
+			if (this.hasFolded(seat)) return false;
+
+			return !this.preRaiseActions.includes(seat);
+		},
+
+		resetPreRaiseActions(seat = null) {
+
+			this.preRaiseActions = [];
+
+			if (seat) this.preRaiseActions.push(seat);
 		},
 
 		getPosition(seat) {
