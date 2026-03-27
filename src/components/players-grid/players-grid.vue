@@ -68,8 +68,7 @@
 						hasFolded: hasFolded(input.seat), 
 						position: getPosition(input.seat),
 						toPlay: toPlay(input.seat),
-						isWinner: isWinner(input.seat),
-						isShowdownLoser: isShowdownLoser(input.seat)
+						endgame: getEndgame(input.seat)
 					}"
 				></app-player-row>
 
@@ -431,14 +430,25 @@ export default {
 			if (seat) this.preRaiseActions.push(seat);
 		},
 
-		isWinner(seat) {
+		// isWinner(seat) {
 
-			return this.endgame.winners.includes(seat);
-		},
+		// 	return this.endgame.winners.includes(seat);
+		// },
 
-		isShowdownLoser(seat) {
+		// isShowdownLoser(seat) {
 
-			return this.endgame.showdownLosers.includes(seat);
+		// 	return this.endgame.showdownLosers.includes(seat);
+		// },
+
+		getEndgame(seat) {
+
+			const isWinner = this.endgame.winners.includes(seat);
+			const isShowdownLoser = this.endgame.showdownLosers.includes(seat);
+
+			if (isWinner) return 'winner';
+			if (isShowdownLoser) return 'loser';
+
+			return '';
 		},
 
 		setEndgame(winners, showdownLosers) {

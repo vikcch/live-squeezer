@@ -332,11 +332,7 @@ export default {
 
 		endGameColorStyleState() {
 
-			if (this.intel.isWinner) return 'winner';
-
-			if (this.intel.isShowdownLoser) return 'loser';
-
-			return '';
+			return this.intel.endgame;
 		},
 
 		position() {
