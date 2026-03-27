@@ -12,6 +12,7 @@ import validation from './units/validations';
 import Street from './eases/street';
 import { getLocalStorageMaxSize } from './extra/fns';
 import { bytes } from './units/vikFunctions';
+import Model from './model';
 
 
 export default class View {
@@ -189,6 +190,27 @@ export default class View {
         this.playersGridVue.setFolds([]);
         this.playersGridVue.setActionSeat(null);
         this.playersGridVue.resetPreRaiseActions();
+    }
+
+    /**
+     * @param {import('@/model.js').default} model
+     */
+    updatePlayersGridConclusionColors(model) {
+
+        const { players } = model.histories.at(-1);
+
+        const showdownPlayers = players
+            .filter(v => model.conclusion.isOnShowdown(model.histories)(v))
+            .map(v => v.seat);
+
+
+        const winners = model.conclusion.winners.flat().map(v => v.seat);
+
+        const showdownLosers = [... (new Set(showdownPlayers)).difference(new Set(winners))];
+
+        console.log({ winners, showdownLosers });
+
+        this.playersGridVue.setEndgame(winners, showdownLosers);
     }
 
     displayDialogAction(model) {

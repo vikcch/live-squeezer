@@ -10,6 +10,8 @@ export default class Conclusion {
 
     constructor() {
 
+        // OPTIMIZE:: replace ShowDown por Showdown
+
         this.uncalledBet = 0;
         this.uncalledPlayer = null;
         this.pots = [];

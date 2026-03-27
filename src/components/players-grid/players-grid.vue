@@ -67,7 +67,9 @@
 						input, index, isEditable, dealerSeat, actionSeat, 
 						hasFolded: hasFolded(input.seat), 
 						position: getPosition(input.seat),
-						toPlay: toPlay(input.seat)
+						toPlay: toPlay(input.seat),
+						isWinner: isWinner(input.seat),
+						isShowdownLoser: isShowdownLoser(input.seat)
 					}"
 				></app-player-row>
 
@@ -160,8 +162,10 @@ export default {
 			dealerSeat: 1,
 			actionSeat: null,
 			sitouts: [],
+			// ONGOING:: JUNTAR ABAIXO E CRIAR OUTRO PARA ALL-IN
 			folds: [],
 			preRaiseActions: [],
+			endgame: { winners: [], showdownLosers: [] },
 			namesAsPositions: false,
 			shiftedSeatsTime: null
 		};
@@ -411,8 +415,6 @@ export default {
 		addPassivePlayer(seat) {
 
 			this.preRaiseActions.push(seat);
-
-			console.log('passive', this.preRaiseActions);
 		},
 
 		toPlay(seat) {
@@ -427,6 +429,22 @@ export default {
 			this.preRaiseActions = [];
 
 			if (seat) this.preRaiseActions.push(seat);
+		},
+
+		isWinner(seat) {
+
+			return this.endgame.winners.includes(seat);
+		},
+
+		isShowdownLoser(seat) {
+
+			return this.endgame.showdownLosers.includes(seat);
+		},
+
+		setEndgame(winners, showdownLosers) {
+
+			this.endgame.winners = winners;
+			this.endgame.showdownLosers = showdownLosers;
 		},
 
 		getPosition(seat) {

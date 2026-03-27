@@ -1,6 +1,6 @@
 <template>
 
-	<div :class="['divTableRow', { action: hasAction }, playColorStyleState]">
+	<div :class="['divTableRow', { action: hasAction }, playColorStyleState, endGameColorStyleState]">
 
 		<div class="divTableCell">
 
@@ -330,6 +330,15 @@ export default {
 			return this.isPlaying ? 'playing' : '';
 		},
 
+		endGameColorStyleState() {
+
+			if (this.intel.isWinner) return 'winner';
+
+			if (this.intel.isShowdownLoser) return 'loser';
+
+			return '';
+		},
+
 		position() {
 
 			if (this.isDealer) return null;
@@ -460,6 +469,18 @@ input {
 
 .divTableRow.to-play {
 	background-color: #cddccd;
+}
+
+.divTableRow.all-in {
+	background-color: #ffe2e2;
+}
+
+.divTableRow.winner {
+	background-color: #fef3c6;
+}
+
+.divTableRow.loser {
+	background-color: #e7e7e7;
 }
 
 /* .divTableRow.folded {

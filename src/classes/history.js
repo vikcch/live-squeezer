@@ -4,6 +4,11 @@ import Player from './player.js';
 
 class History {
 
+    /**
+     * 
+     * @param {Player[]} players 
+     * @param {Player} player 
+     */
     constructor(players = null, currentBet = 0, street = 0,
         streetCards = null, log = '', action = '', player = null) {
 

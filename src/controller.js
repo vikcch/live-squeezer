@@ -218,6 +218,8 @@ export default class Controller {
 
         this.model.hasSummary = true;
 
+        this.view.updatePlayersGridConclusionColors(this.model);
+
         this.view.resetPlayersGridActivity();
 
         this.view.hideGameDialogs();
