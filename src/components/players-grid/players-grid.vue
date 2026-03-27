@@ -430,16 +430,6 @@ export default {
 			if (seat) this.preRaiseActions.push(seat);
 		},
 
-		// isWinner(seat) {
-
-		// 	return this.endgame.winners.includes(seat);
-		// },
-
-		// isShowdownLoser(seat) {
-
-		// 	return this.endgame.showdownLosers.includes(seat);
-		// },
-
 		getEndgame(seat) {
 
 			const isWinner = this.endgame.winners.includes(seat);

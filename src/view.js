@@ -190,12 +190,15 @@ export default class View {
         this.playersGridVue.setFolds([]);
         this.playersGridVue.setActionSeat(null);
         this.playersGridVue.resetPreRaiseActions();
+        this.playersGridVue.setEndgame([], []);
     }
 
     /**
      * @param {import('@/model.js').default} model
      */
     updatePlayersGridConclusionColors(model) {
+
+        this.resetPlayersGridActivity();
 
         const { players } = model.histories.at(-1);
 

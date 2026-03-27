@@ -184,6 +184,8 @@ export default class Controller {
 
     handleNewHand = () => {
 
+        this.view.resetPlayersGridActivity();
+
         this.view.resetPlayers();
 
         this.view.resetControls();
@@ -192,6 +194,8 @@ export default class Controller {
     }
 
     handleNextHand = () => {
+
+        this.view.resetPlayersGridActivity();
 
         this.view.nextHand(this.model.lastHistory, this.model.mainInfo.nextButton);
 
@@ -219,8 +223,6 @@ export default class Controller {
         this.model.hasSummary = true;
 
         this.view.updatePlayersGridConclusionColors(this.model);
-
-        this.view.resetPlayersGridActivity();
 
         this.view.hideGameDialogs();
 
